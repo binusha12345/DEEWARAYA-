@@ -1,0 +1,7 @@
+client/node_modules/
+server/node_modules/
+server/.env
+.vscode/
+server/uploads/
+.DS_Store
+Thumbs.db
