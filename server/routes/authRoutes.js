@@ -17,12 +17,12 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/check-name/:name", checkNameAvailability); 
 
-// ✅ Forgot Password Routes
+// Forgot Password Routes
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
 
 
-// ✅ NEW - Upload routes (require authentication)
+//  NEW - Upload routes (require authentication)
 router.post(
   "/upload-profile-picture",
   protect,

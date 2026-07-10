@@ -17,7 +17,7 @@ import MaintenanceEngine from "./Pages/Public/owner/MaintenanceEngine";
 import MaintenanceSpareParts from "./Pages/Public/owner/MaintenanceSpareParts";
 import MaintenanceBodyParts from "./Pages/Public/owner/MaintenanceBodyParts";
 import Weather from "./pages/public/Weather";
-// ✅ New imports
+//  New imports
 import ForgotPassword from "./Pages/Public/ForgotPassword";
 import ResetPassword from "./Pages/Public/ResetPassword";
 import Profile from "./Pages/Public/Profile";
@@ -43,7 +43,7 @@ function App() {
         <Route path="/maintenance/spare-parts" element={<MaintenanceSpareParts />} />
         <Route path="/maintenance/body-parts" element={<MaintenanceBodyParts />} />
         <Route path="/weather/:boatId" element={<Weather />} />
-                {/* ✅ New routes */}
+                {/* New routes */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       

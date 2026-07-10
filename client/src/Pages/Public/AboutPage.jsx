@@ -35,7 +35,7 @@ const AboutPage = () => {
       {/* Top Navbar */}
       <HomeNavBar />
 
-      {/* ═══════════ HERO SECTION ═══════════ */}
+      {/* HERO SECTION */}
       <section className="relative max-w-7xl mx-auto px-6 lg:px-10 py-12 lg:py-16 overflow-hidden">
         {/* Decorative Blobs */}
         <div className="absolute top-10 -left-20 w-72 h-72 bg-blue-300/20 rounded-full blur-3xl"></div>
@@ -148,7 +148,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════════ OPERATIONAL EXCELLENCE ═══════════ */}
+      {/*  OPERATIONAL EXCELLENCE */}
       <section className="bg-white/60 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           
@@ -321,7 +321,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════════ MODERNIZING THE HIGH SEAS ═══════════ */}
+      {/* MODERNIZING THE HIGH SEAS */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           
@@ -458,7 +458,7 @@ const AboutPage = () => {
   );
 };
 
-// ═══════════ Reusable Animated Component ═══════════
+//  Reusable Animated Component 
 const FeatureItem = ({ text }) => (
   <motion.div
     variants={fadeInUp}

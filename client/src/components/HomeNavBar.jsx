@@ -15,7 +15,7 @@ const HomeNavBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
-  // ✅ Close dropdown when clicking outside
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,20 +27,20 @@ const HomeNavBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✅ Handle logout
+  // Handle logout
   const handleLogout = () => {
     logout();
     setShowDropdown(false);
     navigate("/");
   };
 
-  // ✅ Navigate to profile
+  // Navigate to profile
   const handleProfileClick = () => {
     setShowDropdown(false);
     navigate("/profile");
   };
 
-  // ✅ Navigate to dashboard based on role
+  // Navigate to dashboard based on role
   const handleDashboardClick = () => {
     setShowDropdown(false);
     if (user?.role === "owner") {
@@ -118,9 +118,9 @@ const HomeNavBar = () => {
           </button>
         </div>
 
-        {/* ✅ CONDITIONAL RENDERING - Login/Register OR Profile */}
+        {/* CONDITIONAL RENDERING - Login/Register OR Profile */}
         {!isLoggedIn() ? (
-          // ❌ NOT LOGGED IN - Show Login & Register
+          // NOT LOGGED IN - Show Login & Register
           <>
             <Link
               to="/login"
@@ -147,7 +147,7 @@ const HomeNavBar = () => {
             </Link>
           </>
         ) : (
-          // ✅ LOGGED IN - Show Profile Dropdown
+          // LOGGED IN - Show Profile Dropdown
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setShowDropdown(!showDropdown)}
@@ -179,7 +179,7 @@ const HomeNavBar = () => {
               />
             </button>
 
-            {/* ✅ DROPDOWN MENU */}
+            {/* DROPDOWN MENU */}
             {showDropdown && (
               <div className="
                 absolute right-0 mt-3 w-64 

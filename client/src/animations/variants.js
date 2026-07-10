@@ -1,8 +1,4 @@
-// ═══════════════════════════════════════════════════════════════
-// 🎨 ANIMATION VARIANTS - Slower & Smoother
-// ═══════════════════════════════════════════════════════════════
-
-// ─── Fade Animations (SLOWER) ────────────────────────────────────
+// Fade Animations (SLOWER) 
 export const fadeIn = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
@@ -33,7 +29,7 @@ export const fadeInRight = {
   transition: { duration: 1.4, ease: "easeOut" },
 };
 
-// ─── Scale Animations (SLOWER) ───────────────────────────────────
+// Scale Animations (SLOWER) 
 export const scaleIn = {
   initial: { opacity: 0, scale: 0.8 },
   animate: { opacity: 1, scale: 1 },
@@ -46,7 +42,7 @@ export const zoomOut = {
   transition: { duration: 3, ease: "easeOut" },
 };
 
-// ─── Stagger Container (SLOWER) ──────────────────────────────────
+// Stagger Container (SLOWER)
 export const staggerContainer = {
   initial: {},
   animate: {
@@ -66,7 +62,7 @@ export const staggerFast = {
   },
 };
 
-// ─── Hover Effects (Keep hover snappy) ───────────────────────────
+// Hover Effects (Keep hover snappy) 
 export const hoverScale = {
   whileHover: { scale: 1.05, y: -5 },
   whileTap: { scale: 0.95 },
@@ -83,7 +79,7 @@ export const hoverLift = {
   transition: { type: "spring", stiffness: 300 },
 };
 
-// ─── Continuous Animations (Floating) ────────────────────────────
+// Continuous Animations (Floating) 
 export const floatUp = {
   animate: { y: [0, -15, 0] },
   transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
@@ -99,7 +95,7 @@ export const floatDown = {
   },
 };
 
-// ─── Viewport Config ─────────────────────────────────────────────
+// Viewport Config
 export const viewportConfig = {
   once: true,
   amount: 0.3,

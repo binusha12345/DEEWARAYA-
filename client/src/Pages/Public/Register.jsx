@@ -89,7 +89,7 @@ const Register = () => {
 
       <div className="relative z-10 flex-1 flex items-stretch w-full p-7.5 gap-16">
 
-        {/* ═══════════ LEFT: HERO ═══════════ */}
+        {/*  LEFT: HERO  */}
         <motion.div
           className="flex-1 flex flex-col justify-center px-16 xl:px-24 py-16 text-white"
           initial="initial"
@@ -197,7 +197,7 @@ const Register = () => {
           </motion.div>
         </motion.div>
 
-        {/* ═══════════ RIGHT: REGISTER FORM ═══════════ */}
+        {/*  RIGHT: REGISTER FORM  */}
         <motion.div
           className="w-[46%] rounded-2xl p-8 shadow-2xl bg-white/50 backdrop-blur-xl"
           initial={{ opacity: 0, x: 60, scale: 0.95 }}

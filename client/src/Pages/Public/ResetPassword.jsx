@@ -4,7 +4,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPassword = () => {
-  const { token } = useParams();      // ✅ Get token from URL
+  const { token } = useParams();      // Get token from URL
   const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
@@ -62,7 +62,7 @@ const ResetPassword = () => {
     }
   };
 
-  // ✅ Success Screen
+  //  Success Screen
   if (isSuccess) {
     return (
       <div style={styles.container}>

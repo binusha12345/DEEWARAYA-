@@ -39,7 +39,7 @@ const ForgotPassword = () => {
     }
   };
 
-  // ✅ Success Screen
+  //  Success Screen
   if (isEmailSent) {
     return (
       <div style={styles.container}>

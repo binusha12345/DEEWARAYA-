@@ -4,7 +4,7 @@ const User = require("../models/User");
 const crypto = require("crypto"); 
 const sendEmail = require("../utils/sendEmail");
 
-// ✅ Token generate function
+// Token generate function
 const generateToken = (user) => {
   return jwt.sign(
     { id: user._id, role: user.role },
@@ -32,7 +32,7 @@ const uploadProfilePicture = async (req, res) => {
       });
     }
 
-    // ✅ Save file path
+    // Save file path
     user.profilePicture = `/uploads/profiles/${req.file.filename}`;
     await user.save();
 
@@ -61,9 +61,8 @@ const uploadProfilePicture = async (req, res) => {
   }
 };
 
-// ================================================
-// ✅ Upload Cover Photo
-// ================================================
+
+// Upload Cover Photo
 const uploadCoverPhoto = async (req, res) => {
   try {
     if (!req.file) {
@@ -114,7 +113,7 @@ const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    // 1️⃣ Validate email input
+    //  Validate email input
     if (!email) {
       return res.status(400).json({
         success: false,
@@ -122,12 +121,12 @@ const forgotPassword = async (req, res) => {
       });
     }
 
-    // 2️⃣ Find user by email
+    //  Find user by email
     const user = await User.findOne({
       email: email.trim().toLowerCase(),
     });
 
-    // 3️⃣ If user not found
+    //  If user not found
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -135,24 +134,24 @@ const forgotPassword = async (req, res) => {
       });
     }
 
-    // 4️⃣ Generate random reset token (32 bytes = 64 chars)
+    // Generate random reset token (32 bytes = 64 chars)
     const resetToken = crypto.randomBytes(32).toString("hex");
 
-    // 5️⃣ Hash token before saving to DB (security)
+    //  Hash token before saving to DB (security)
     const hashedToken = crypto
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
 
-    // 6️⃣ Save hashed token + expiry (15 minutes)
+    //  Save hashed token + expiry (15 minutes)
     user.resetPasswordToken = hashedToken;
     user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 min
     await user.save();
 
-    // 7️⃣ Create reset URL with unhashed token
+    // Create reset URL with unhashed token
     const resetURL = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
-    // 8️⃣ Create email HTML content
+    //  Create email HTML content
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="background: #1e40af; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
@@ -201,14 +200,14 @@ const forgotPassword = async (req, res) => {
       </div>
     `;
 
-    // 9️⃣ Send email
+    // Send email
     await sendEmail({
       toEmail: user.email,
       subject: "🔑 Password Reset Request - Deewaraya",
       htmlContent,
     });
 
-    // 🔟 Success response
+    // Success response
     res.status(200).json({
       success: true,
       message: "Password reset link sent to your email. Check your inbox!",
@@ -245,15 +244,13 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// ================================================
-// ✅ RESET PASSWORD - Set new password
-// ================================================
+// RESET PASSWORD - Set new password
 const resetPassword = async (req, res) => {
   try {
     const { token } = req.params;
     const { password, confirmPassword } = req.body;
 
-    // 1️⃣ Validate inputs
+    //  Validate inputs
     if (!password || !confirmPassword) {
       return res.status(400).json({
         success: false,
@@ -261,7 +258,7 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // 2️⃣ Password match check
+    // Password match check
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
@@ -270,7 +267,7 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // 3️⃣ Password length check
+    // Password length check
     if (password.length < 5) {
       return res.status(400).json({
         success: false,
@@ -279,19 +276,19 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // 4️⃣ Hash the token from URL to compare with DB
+    //  Hash the token from URL to compare with DB
     const hashedToken = crypto
       .createHash("sha256")
       .update(token)
       .digest("hex");
 
-    // 5️⃣ Find user with matching token AND not expired
+    //  Find user with matching token AND not expired
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
       resetPasswordExpire: { $gt: Date.now() }, // greater than current time
     });
 
-    // 6️⃣ If no user found = token invalid or expired
+    //  If no user found = token invalid or expired
     if (!user) {
       return res.status(400).json({
         success: false,
@@ -299,7 +296,7 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // 7️⃣ Check if new password is same as old
+    //  Check if new password is same as old
     const isSamePassword = await bcrypt.compare(password, user.password);
     if (isSamePassword) {
       return res.status(400).json({
@@ -308,17 +305,17 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // 8️⃣ Hash new password
+    //  Hash new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // 9️⃣ Update password and clear reset token
+    //  Update password and clear reset token
     user.password = hashedPassword;
     user.resetPasswordToken = null;    // ✅ clear token
     user.resetPasswordExpire = null;   // ✅ clear expiry
     await user.save();
 
-    // 🔟 Success response
+    // Success response
     res.status(200).json({
       success: true,
       message: "Password reset successful! You can now login with your new password.",
@@ -335,7 +332,7 @@ const resetPassword = async (req, res) => {
 
 
 
-// ✅ Check if name is available (real-time check)
+// Check if name is available (real-time check)
 const checkNameAvailability = async (req, res) => {
   try {
     const { name } = req.params;
@@ -371,7 +368,7 @@ const checkNameAvailability = async (req, res) => {
   }
 };
 
-// ✅ Register User
+// Register User
 const registerUser = async (req, res) => {
   try {
     const {
@@ -385,9 +382,8 @@ const registerUser = async (req, res) => {
       role,
     } = req.body;
 
-    // =========================================
-    // ✅ STEP 1: Check all required fields
-    // =========================================
+ 
+    // STEP 1: Check all required fields    
     if (!name || !email || !phone || !password || !confirmPassword || !role || !nic || !address) {
       return res.status(400).json({
         success: false,
@@ -395,19 +391,16 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 2: Clean / Format inputs
-    // =========================================
+
+    // STEP 2: Clean / Format inputs
     const cleanName    = name.trim();
     const cleanEmail   = email.trim().toLowerCase();
     const cleanPhone   = phone.trim();
     const cleanNic     = nic.trim();
     const cleanAddress = address.trim();
 
-    // =========================================
-    // ✅ STEP 3: Phone number validation
-    // =========================================
-
+  
+    // STEP 3: Phone number validation
     // Check phone is exactly 10 digits
     if (cleanPhone.length !== 10) {
       return res.status(400).json({
@@ -426,10 +419,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 4: NIC validation
-    // =========================================
 
+    // STEP 4: NIC validation
     // Check NIC is exactly 12 characters
     if (cleanNic.length !== 12) {
       return res.status(400).json({
@@ -448,9 +439,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 5: Password match check
-    // =========================================
+   
+    // STEP 5: Password match check
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
@@ -459,9 +449,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 6: Check duplicate NAME
-    // =========================================
+  
+    // STEP 6: Check duplicate NAME
     const existingName = await User.findOne({
       name: { $regex: new RegExp(`^${cleanName}$`, "i") },
     });
@@ -474,9 +463,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 7: Check duplicate EMAIL
-    // =========================================
+
+    // STEP 7: Check duplicate EMAIL
     const existingEmail = await User.findOne({
       email: cleanEmail,
     });
@@ -489,9 +477,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 8: Check duplicate PHONE
-    // =========================================
+  
+    // STEP 8: Check duplicate PHONE
     const existingPhone = await User.findOne({
       phone: cleanPhone,
     });
@@ -504,9 +491,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 9: Check duplicate NIC
-    // =========================================
+
+    //  STEP 9: Check duplicate NIC
     const existingNic = await User.findOne({
       nic: cleanNic,
     });
@@ -519,15 +505,13 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // =========================================
-    // ✅ STEP 10: Hash password
-    // =========================================
+
+    //  STEP 10: Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // =========================================
-    // ✅ STEP 11: Create user
-    // =========================================
+ 
+    //  STEP 11: Create user
     const user = await User.create({
       name:     cleanName,
       email:    cleanEmail,
@@ -538,9 +522,8 @@ const registerUser = async (req, res) => {
       role,
     });
 
-    // =========================================
-    // ✅ STEP 12: Generate token & send response
-    // =========================================
+
+    // STEP 12: Generate token & send response
     const token = generateToken(user);
 
     res.status(201).json({
@@ -561,7 +544,7 @@ const registerUser = async (req, res) => {
   } catch (error) {
     console.error("Register Error:", error);
 
-    // ✅ MongoDB duplicate key error backup
+    //  MongoDB duplicate key error backup
     if (error.code === 11000) {
       const duplicateField = Object.keys(error.keyPattern)[0];
 
@@ -579,7 +562,7 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // ✅ Mongoose validation error handler
+    //  Mongoose validation error handler
     if (error.name === "ValidationError") {
       const messages = Object.values(error.errors).map((err) => err.message);
       return res.status(400).json({
@@ -595,7 +578,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-// ✅ Login User
+//  Login User
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body || {};

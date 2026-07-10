@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, "Phone number is required"],  // ✅ make it required
+      required: [true, "Phone number is required"],  // make it required
       unique: true,    
       trim: true,
       minlength: [10, "Phone number must be at least 10 characters"],
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Address is required"],
       trim: true,
-      // ✅ Removed default: "" because it's required
+      // Removed default: "" because it's required
     },
     password: {
       type: String,
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
       enum: ["owner", "driver"],
       required: [true, "Role is required"],
     },
-        // ✅ Forgot Password Fields
+        // Forgot Password Fields
     resetPasswordToken: {
       type: String,
       default: null,

@@ -114,7 +114,7 @@ const Login = () => {
           </motion.p>
         </motion.div>
 
-        {/* ═══════════ RIGHT LOGIN CARD ═══════════ */}
+        {/*  RIGHT LOGIN CARD */}
         <motion.div
           className="w-[40%] h-auto min-h-[70vh] rounded-2xl p-18 shadow-2xl bg-white/50 backdrop-blur-xl"
           initial={{ opacity: 0, x: 100, scale: 0.9 }}

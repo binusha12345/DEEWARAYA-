@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 const BoatDriverDashboard = () => {
-  const { user } = useAuth(); // ✅ ADD THIS
+  const { user } = useAuth(); // ADD THIS
 
   return (
     <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
@@ -34,7 +34,7 @@ const BoatDriverDashboard = () => {
           {/* Dashboard Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
-              {/* ✅ Show welcome message with user name */}
+              {/* Show welcome message with user name */}
               <h1 className="text-3xl font-bold text-slate-900 mb-2">
                 Welcome, {user?.name || 'Driver'}! ⚓
               </h1>

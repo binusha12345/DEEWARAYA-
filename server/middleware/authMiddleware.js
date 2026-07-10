@@ -6,7 +6,7 @@ const protect = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
 
-    // ✅ Check if token exists
+    // Check if token exists
     if (!token) {
       return res.status(401).json({ 
         success: false,
@@ -14,15 +14,15 @@ const protect = async (req, res, next) => {
       });
     }
 
-    // ✅ Handle Bearer prefix
+    // Handle Bearer prefix
     if (token.startsWith("Bearer ")) {
       token = token.split(" ")[1];
     }
 
-    // ✅ Verify token
+    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // ✅ Get user from database (fresh data)
+    // Get user from database (fresh data)
     const user = await User.findById(decoded.id).select("-password");
 
     if (!user) {
@@ -32,7 +32,7 @@ const protect = async (req, res, next) => {
       });
     }
 
-    // ✅ Attach full user object to request
+    // Attach full user object to request
     req.user = user;
     
     next();

@@ -34,7 +34,7 @@ const HomePage = () => {
     <div className="min-h-screen font-sans text-slate-800 bg-white">
       <main>
 
-        {/* ═══════════ HERO SECTION ═══════════ */}
+        {/*  HERO SECTION  */}
         <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
           
           {/* Background Image with zoom animation */}
@@ -122,7 +122,7 @@ const HomePage = () => {
           </motion.div>
         </section>
 
-        {/* ═══════════ FEATURES SECTION ═══════════ */}
+        {/*  FEATURES SECTION  */}
         <div className="features relative py-24 bg-gradient-to-br from-slate-100 via-blue-300/20 to-slate-100 overflow-hidden">
           
           {/* Decorative Background Elements */}
@@ -215,7 +215,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* ═══════════ STEPS SECTION ═══════════ */}
+        {/*  STEPS SECTION  */}
         <div className="relative py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50 overflow-hidden">
           {/* Decorative Background Elements */}
           <div className="absolute top-0 left-0 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -367,7 +367,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* ═══════════ CTA SECTION ═══════════ */}
+        {/*  CTA SECTION  */}
         <div className="py-24 bg-white overflow-hidden">
           <div className="container mx-auto px-6 lg:px-10 max-w-7xl">
             <motion.div 
@@ -460,7 +460,7 @@ const HomePage = () => {
 }
 
 
-// ═══════════ Reusable Animated Components ═══════════
+// Reusable Animated Components
 
 const FeatureCard = ({ icon, title, desc }) => (
   <motion.div 

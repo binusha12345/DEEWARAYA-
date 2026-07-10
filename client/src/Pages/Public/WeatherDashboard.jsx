@@ -79,7 +79,7 @@ const WeatherDashboard = () => {
   const [filteredBoats, setFilteredBoats] = useState([]);
   const searchRef = useRef(null);
   const [mapStyle, setMapStyle] = useState("street");
-  // ─── Fetch ALL boats (works for both owner & driver) ────────────
+  //  Fetch ALL boats (works for both owner & driver) 
   useEffect(() => {
     const fetchBoats = async () => {
       try {
@@ -113,7 +113,7 @@ const WeatherDashboard = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ─── Search Handler ─────────────────────────────────────────────
+  // Search Handler 
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -136,7 +136,7 @@ const WeatherDashboard = () => {
     }
   };
 
-  // ─── Select Boat directly (No DB verification) ──────────────────
+  // Select Boat directly (No DB verification) 
   const handleSelectBoat = (boat) => {
     setShowDropdown(false);
     setSearchQuery(`${boat.boatName} - ${boat.registrationNumber}`);
@@ -145,7 +145,7 @@ const WeatherDashboard = () => {
     setError("");
   };
 
-  // ─── Clear Search ───────────────────────────────────────────────
+  // Clear Search 
   const handleClearSearch = () => {
     setSearchQuery("");
     setSelectedBoat(null);
@@ -154,8 +154,8 @@ const WeatherDashboard = () => {
     setError("");
   };
 
-  // ─── Fetch Place Name ───────────────────────────────────────────
-// ─── Fetch Place Name (with multiple fallbacks) ────────────────────
+  //  Fetch Place Name 
+//  Fetch Place Name (with multiple fallbacks) 
       const fetchPlaceName = async (lat, lon) => {
         // Try 1: OpenStreetMap Nominatim (FREE, no API key, very reliable)
         try {
@@ -236,7 +236,7 @@ const WeatherDashboard = () => {
         // Final fallback: show coordinates
         return `Location (${Number(lat).toFixed(3)}, ${Number(lon).toFixed(3)})`;
       };
-  // ─── See Weather ────────────────────────────────────────────────
+  //  See Weather 
   const handleSeeWeather = () => {
     if (!selectedBoatId) {
       setError("Please search and select a boat first.");
@@ -316,7 +316,7 @@ const WeatherDashboard = () => {
               </p>
             </div>
 
-            {/* ═══════════════ Search & Select Boat ═══════════════ */}
+            {/* Search & Select Boat */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
 
               <div className="flex items-center justify-between mb-4">
@@ -685,7 +685,7 @@ const WeatherDashboard = () => {
                   )}
                 </div>
 
-                {/* ═══════════════ Weather Map ═══════════════ */}
+                {/* Weather Map */}
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 text-slate-800 font-bold">

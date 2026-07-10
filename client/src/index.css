@@ -23,10 +23,10 @@ html.dark body {
   color: #f1f5f9;
 }
 
-/* ============================================
-   LESSON 2: SOLID BACKGROUNDS
-   Fix all white/light backgrounds
-   ============================================ */
+/* 
+   SOLID BACKGROUNDS
+   
+  */
 html.dark .bg-white {
   background-color: #0f172a !important;
 }
@@ -45,10 +45,10 @@ html.dark .bg-white.p-8 {
   background-color: #1e293b !important;
 }
 
-/* ============================================
-   LESSON 3: TRANSPARENT WHITE BACKGROUNDS
-   These use / for opacity - MUST escape with \/
-   ============================================ */
+/* 
+   TRANSPARENT WHITE BACKGROUNDS
+   
+    */
 
 /* bg-white/10, bg-white/20, bg-white/30 etc. */
 html.dark .bg-white\/10 {
@@ -83,10 +83,10 @@ html.dark .bg-white\/90 {
   background-color: rgba(30, 41, 59, 0.9) !important;
 }
 
-/* ============================================
-   LESSON 4: GRADIENTS
-   Change light gradients to dark
-   ============================================ */
+/* 
+    GRADIENTS
+   
+    */
 html.dark [class*="from-slate-100"] {
   --tw-gradient-from: #0f172a !important;
 }
@@ -119,9 +119,9 @@ html.dark [class*="to-white"] {
   --tw-gradient-to: #1e293b !important;
 }
 
-/* ============================================
-   LESSON 5: HEADINGS - Always White
-   ============================================ */
+/* 
+    HEADINGS - Always White
+    */
 html.dark h1,
 html.dark h2,
 html.dark h3,
@@ -131,10 +131,10 @@ html.dark h6 {
   color: #ffffff !important;
 }
 
-/* ============================================
-   LESSON 6: TEXT COLORS
-   Convert dark text to light text
-   ============================================ */
+/* 
+    TEXT COLORS
+   
+    */
 
 /* VERY DARK text -> WHITE */
 html.dark .text-black,
@@ -190,11 +190,10 @@ html.dark .text-blue-200 {
   color: #dbeafe !important;
 }
 
-/* ============================================
-   LESSON 7: SPECIAL CASE - HERO SECTION
-   Hero has image background, keep text LIGHT
-   Don't change text inside hero image area
-   ============================================ */
+/* 
+  SPECIAL CASE - HERO SECTION
+  
+    */
 
 /* Text on hero image should stay white */
 html.dark section .text-white,
@@ -207,9 +206,9 @@ html.dark .bg-white\/30 .text-slate-600 {
   color: #f1f5f9 !important;
 }
 
-/* ============================================
-   LESSON 8: BORDERS
-   ============================================ */
+/* 
+  BORDERS
+    */
 html.dark .border-gray-100,
 html.dark .border-gray-200,
 html.dark .border-gray-300,
@@ -228,9 +227,9 @@ html.dark .border-white\/60 {
   border-color: rgba(148, 163, 184, 0.3) !important;
 }
 
-/* ============================================
-   LESSON 9: ICON BACKGROUNDS
-   ============================================ */
+/* 
+    ICON BACKGROUNDS
+    */
 html.dark .bg-blue-50 {
   background-color: rgba(30, 58, 138, 0.3) !important;
 }
@@ -249,9 +248,9 @@ html.dark .bg-cyan-200\/30 {
   background-color: rgba(30, 58, 138, 0.15) !important;
 }
 
-/* ============================================
-   LESSON 10: FORM ELEMENTS
-   ============================================ */
+/* 
+    FORM ELEMENTS
+   */
 html.dark input,
 html.dark textarea,
 html.dark select {
@@ -265,9 +264,9 @@ html.dark textarea::placeholder {
   color: #94a3b8 !important;
 }
 
-/* ============================================
+/* 
    LESSON 11: HOVER STATES
-   ============================================ */
+   */
 html.dark .hover\:bg-white\/20:hover {
   background-color: rgba(30, 41, 59, 0.2) !important;
 }
@@ -276,9 +275,9 @@ html.dark .hover\:bg-white\/60:hover {
   background-color: rgba(30, 41, 59, 0.6) !important;
 }
 
-/* ============================================
+/* 
    LESSON 12: SHADOWS - Stronger in dark
-   ============================================ */
+    */
 html.dark .shadow,
 html.dark .shadow-sm,
 html.dark .shadow-md,
@@ -310,9 +309,9 @@ html.dark [class*="bg-[#E"] {
   background-color: #1e293b !important;
 }
 
-/* ============================================
-   LESSON 14: HARDCODED HEX TEXT COLORS
-   ============================================ */
+/* 
+    HARDCODED HEX TEXT COLORS
+    */
 
 /* Dark hex text -> Light */
 html.dark [class*="text-[#0"],
@@ -323,10 +322,10 @@ html.dark [class*="text-[#4"] {
   color: #f1f5f9 !important;
 }
 
-/* ============================================
-   LESSON 15: SPECIFIC CARDS - Force Text Visibility
-   For cards with bg-[#f8fafc] make sure ALL text inside is visible
-   ============================================ */
+/*  
+    SPECIFIC CARDS - Force Text Visibility
+  
+    */
 
 html.dark .bg-\[\#f8fafc\] h1,
 html.dark .bg-\[\#f8fafc\] h2,
@@ -351,11 +350,9 @@ html.dark [class*="bg-[#f"] h4 {
   color: #ffffff !important;
 }
 
-/* ============================================
-   LESSON 16: NESTED DARK CARDS
-   Cards inside cards (like Ocean Queen, The Mariner)
-   These already look dark, keep them dark
-   ============================================ */
+/* 
+    NESTED DARK CARDS
+ */
 
 html.dark .bg-slate-900,
 html.dark .bg-slate-800,
@@ -364,9 +361,9 @@ html.dark .bg-\[\#1e293b\] {
   background-color: #0f172a !important;
 }
 
-/* ============================================
-   LESSON 17: BORDERS for hex backgrounds
-   ============================================ */
+/* 
+    BORDERS for hex backgrounds
+    */
 
 html.dark .border-slate-200,
 html.dark .border-slate-100 {
@@ -379,9 +376,9 @@ html.dark .text-blue-950 {
 }@import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
 
-/* ============================================
+/* 
    BASE THEME
-   ============================================ */
+    */
 html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
   min-height: 100vh;
@@ -398,9 +395,9 @@ html.dark body {
   color: #f1f5f9;
 }
 
-/* ============================================
+/* 
    BACKGROUNDS
-   ============================================ */
+   */
 html.dark .bg-white,
 html.dark [class*="bg-[#f"],
 html.dark [class*="bg-[#F"],
@@ -433,9 +430,9 @@ html.dark .bg-blue-100 {
   background-color: rgba(30, 58, 138, 0.3) !important;
 }
 
-/* ============================================
+/* 
    GRADIENTS
-   ============================================ */
+    */
 html.dark [class*="from-slate-50"],
 html.dark [class*="from-slate-100"],
 html.dark [class*="from-white"] {
@@ -453,9 +450,9 @@ html.dark [class*="to-slate-100"] {
   --tw-gradient-to: #0f172a !important;
 }
 
-/* ============================================
+/* 
    HEADINGS - Always White
-   ============================================ */
+    */
 html.dark h1,
 html.dark h2,
 html.dark h3,
@@ -465,9 +462,9 @@ html.dark h6 {
   color: #ffffff !important;
 }
 
-/* ============================================
+/* 
    TEXT COLORS
-   ============================================ */
+    */
 
 /* Dark text -> White */
 html.dark .text-black,
@@ -520,9 +517,9 @@ html.dark .text-white {
   color: #ffffff !important;
 }
 
-/* ============================================
+/* 
    BORDERS
-   ============================================ */
+    */
 html.dark .border-gray-100,
 html.dark .border-gray-200,
 html.dark .border-gray-300,
@@ -536,9 +533,9 @@ html.dark [class*="border-white\/"] {
   border-color: rgba(148, 163, 184, 0.3) !important;
 }
 
-/* ============================================
+/* 
    FORM ELEMENTS
-   ============================================ */
+   */
 html.dark input,
 html.dark textarea,
 html.dark select {
@@ -552,9 +549,9 @@ html.dark textarea::placeholder {
   color: #94a3b8 !important;
 }
 
-/* ============================================
+/* 
    SHADOWS
-   ============================================ */
+    */
 html.dark .shadow,
 html.dark .shadow-sm,
 html.dark .shadow-md,
@@ -565,9 +562,9 @@ html.dark .shadow-2xl {
               0 2px 4px -1px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* ============================================
+/* 
    ABOUT PAGE FIXES
-   ============================================ */
+    */
 
 /* Fix section backgrounds */
 html.dark section {

@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Load user from localStorage when app starts
+  //  Load user from localStorage when app starts
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // ✅ Login - saves user data and token
+  //  Login - saves user data and token
   const login = (data) => {
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     setUser(data.user);
   };
 
-  // ✅ Logout - clears everything
+  // Logout - clears everything
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  // ✅ Check if user is currently logged in
+  // Check if user is currently logged in
   const isLoggedIn = () => {
     return !!token && !!user;
   };

@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 
 const sendEmail = async ({ toEmail, subject, htmlContent }) => {
   try {
-    // ✅ Create transporter with Brevo
+    //  Create transporter with Brevo
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
@@ -14,7 +14,7 @@ const sendEmail = async ({ toEmail, subject, htmlContent }) => {
       },
     });
 
-    // ✅ Email options
+    // Email options
     const mailOptions = {
       from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM}>`,
       to: toEmail,
@@ -22,7 +22,7 @@ const sendEmail = async ({ toEmail, subject, htmlContent }) => {
       html: htmlContent,
     };
 
-    // ✅ Send email
+    // Send email
     const info = await transporter.sendMail(mailOptions);
     console.log("✅ Email sent successfully to:", toEmail);
     console.log("📧 Message ID:", info.messageId);

@@ -2,14 +2,14 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// ✅ Create upload folders if not exist
+// Create upload folders if not exist
 const profileDir = "uploads/profiles";
 const coverDir = "uploads/covers";
 
 if (!fs.existsSync(profileDir)) fs.mkdirSync(profileDir, { recursive: true });
 if (!fs.existsSync(coverDir)) fs.mkdirSync(coverDir, { recursive: true });
 
-// ✅ Storage config
+// Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Different folders for profile vs cover
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// ✅ File filter - only images
+// File filter - only images
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|gif|webp/;
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
@@ -39,7 +39,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// ✅ Upload middleware
+// Upload middleware
 const upload = multer({
   storage,
   fileFilter,
