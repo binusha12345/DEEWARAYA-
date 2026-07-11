@@ -45,6 +45,7 @@ const boatSchema = new mongoose.Schema(
     boatStatus: {
       type: String,
       enum: ["ACTIVE", "MAINTENANCE", "NON-ACTIVE"],
+      default: "ACTIVE",
     },
     latitude: {
     type: Number,

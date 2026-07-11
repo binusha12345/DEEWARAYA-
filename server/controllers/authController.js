@@ -311,8 +311,8 @@ const resetPassword = async (req, res) => {
 
     //  Update password and clear reset token
     user.password = hashedPassword;
-    user.resetPasswordToken = null;    // ✅ clear token
-    user.resetPasswordExpire = null;   // ✅ clear expiry
+    user.resetPasswordToken = null;    // clear token
+    user.resetPasswordExpire = null;   // clear expiry
     await user.save();
 
     // Success response

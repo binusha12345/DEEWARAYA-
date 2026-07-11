@@ -1,5 +1,4 @@
 
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -7,6 +6,9 @@ const connectDB = require("./config/db");
 const path = require("path");
 const weatherRoutes = require("./routes/weatherRoutes");
 const app = express();
+// Routes
+const adminRoutes = require('./routes/adminRoutes');
+
 
 // connect database
 connectDB();
@@ -26,6 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/boats", require("./routes/boatRoutes"));
 app.use("/api/weather", require("./routes/weatherRoutes"));
+// Routes
+app.use('/api/admin', adminRoutes);
 // ✅ Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/tracking", require("./routes/trackingRoutes"));
