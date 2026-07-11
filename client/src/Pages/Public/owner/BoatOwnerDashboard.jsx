@@ -183,6 +183,15 @@ const BoatOwnerDashboard = () => {
                   Weather Forecast
                 </p>
 
+
+                // Emergency button on user dashboard
+                <button
+                  onClick={sendEmergency}
+                  className="bg-red-600 text-white p-6 rounded-xl text-2xl font-bold"
+                >
+                  🚨 SEND EMERGENCY
+                </button>
+
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-lg font-bold">Partly Cloudy</h3>
                   <Cloud className="text-white/70" size={32} />

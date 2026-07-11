@@ -661,3 +661,262 @@ html.dark [class*="to-blue-50"] {
   animation: float-delayed 5s ease-in-out infinite;
   animation-delay: 1s;
 }
+
+
+{/*Admin AreaA styles*/}
+/* ============================================
+   THEME CONFIGURATION (Colors, Fonts, etc.)
+   ============================================ */
+@theme {
+  /* Custom Colors */
+  --color-brand-primary: #667eea;
+  --color-brand-secondary: #764ba2;
+  --color-brand-accent: #f093fb;
+  
+  /* Custom Fonts */
+  --font-family-display: 'Poppins', sans-serif;
+  --font-family-body: 'Inter', sans-serif;
+  
+  /* Custom Spacing */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  
+  /* Custom Border Radius */
+  --radius-4xl: 2rem;
+  
+  /* Custom Shadows */
+  --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.5);
+  --shadow-neon: 0 0 30px rgba(240, 147, 251, 0.6);
+}
+
+/* ============================================
+   CUSTOM ANIMATIONS
+   ============================================ */
+@theme {
+  /* Shake Animation */
+  --animate-shake: shake 0.5s ease-in-out;
+  
+  /* Fade In */
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  
+  /* Slide Down */
+  --animate-slide-down: slideDown 0.3s ease-out;
+  
+  /* Slide Up */
+  --animate-slide-up: slideUp 0.3s ease-out;
+  
+  /* Bounce Slow */
+  --animate-bounce-slow: bounce 2s infinite;
+  
+  /* Pulse Slow */
+  --animate-pulse-slow: pulse 3s infinite;
+  
+  /* Spin Slow */
+  --animate-spin-slow: spin 3s linear infinite;
+  
+  /* Wiggle */
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  
+  /* Float */
+  --animate-float: float 3s ease-in-out infinite;
+  
+  /* Gradient */
+  --animate-gradient: gradient 8s ease infinite;
+}
+
+/* ============================================
+   KEYFRAMES
+   ============================================ */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideDown {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideUp {
+  0% { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ============================================
+   BASE STYLES (Global)
+   ============================================ */
+@layer base {
+  /* Root Variables (Light Mode Default) */
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+  }
+
+  /* Dark Mode Variables */
+  .dark {
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #374151;
+  }
+
+  /* Body Styles */
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+  }
+
+  /* Selection Color */
+  ::selection {
+    background: #667eea;
+    color: white;
+  }
+}
+
+/* ============================================
+   CUSTOM COMPONENTS (Reusable Classes)
+   ============================================ */
+@layer components {
+  
+  /* Gradient Button */
+  .btn-gradient {
+    @apply px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 
+           text-white font-semibold rounded-lg shadow-lg 
+           hover:shadow-xl transform hover:-translate-y-0.5 
+           transition-all duration-200;
+  }
+
+  /* Card */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md 
+           p-6 border border-gray-200 dark:border-gray-700
+           transition-all duration-300;
+  }
+
+  /* Input Field */
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-gray-200 
+           dark:border-gray-600 rounded-lg 
+           focus:outline-none focus:border-indigo-500 
+           focus:ring-2 focus:ring-indigo-200 
+           dark:focus:ring-indigo-800
+           bg-white dark:bg-gray-700
+           text-gray-800 dark:text-white
+           transition-all duration-200;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600 
+           bg-clip-text text-transparent;
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  /* Glow Effect */
+  .glow {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+  }
+}
+
+/* ============================================
+   UTILITIES (Custom Utility Classes)
+   ============================================ */
+@layer utilities {
+  
+  /* Text Balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide Scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Custom Gradient Backgrounds */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .bg-gradient-secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  .bg-gradient-animated {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 400% 400%;
+    animation: gradient 8s ease infinite;
+  }
+}

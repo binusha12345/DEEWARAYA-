@@ -22,6 +22,14 @@ import ForgotPassword from "./Pages/Public/ForgotPassword";
 import ResetPassword from "./Pages/Public/ResetPassword";
 import Profile from "./Pages/Public/Profile";
 
+// Admin
+import AdminLogin from './Pages/AdminLogin';
+import AdminDashboard from './Pages/AdminDashboard';
+import AdminBoats from './Pages/AdminBoats';
+import AdminUsers from './Pages/AdminUsers';
+import AdminEmergencies from './Pages/AdminEmergencies';
+//import AdminBanner from './components/AdminBanner';
+  
 
 
 function App() {
@@ -46,7 +54,8 @@ function App() {
                 {/* New routes */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-      
+        <Route path="/dw-admin/login" element={<AdminLogin />} />
+        <Route path="/dw-admin/users" element={<AdminUsers />} />
         
           
         <Route
@@ -75,6 +84,41 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+          {/* Admin Routes */}
+          <Route path="/dw-admin" element={<AdminLogin />} />
+          <Route 
+            path="/dw-admin/dashboard" 
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dw-admin/boats" 
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminBoats />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dw-admin/users" 
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminUsers />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dw-admin/emergencies" 
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminEmergencies />
+              </ProtectedRoute>
+            } 
+          />
 
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
