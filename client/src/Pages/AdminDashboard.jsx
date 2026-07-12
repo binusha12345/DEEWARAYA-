@@ -47,7 +47,7 @@ const AdminDashboard = () => {
       shadowColor: 'shadow-cyan-500/30',
       path: '/dw-admin/boats',
     },
-    { 
+    /*{ 
       title: 'Emergency Center', 
       description: 'Monitor and respond to emergency alerts from boat operators',
       icon: HiOutlineExclamation, 
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
       color: 'from-amber-500 to-orange-500',
       shadowColor: 'shadow-amber-500/30',
       path: '/dw-admin/maintenance',
-    },
+    },*/,
     { 
       title: 'Weather Monitoring', 
       description: 'View real-time weather conditions and forecasts for fleet safety',
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
       shadowColor: 'shadow-sky-500/30',
       path: '/dw-admin/weather',
     },
-    { 
+    /*{ 
       title: 'Financial Reports', 
       description: 'Access revenue reports, income tracking, and financial analytics',
       icon: MdOutlineAttachMoney, 
@@ -111,7 +111,7 @@ const AdminDashboard = () => {
       color: 'from-slate-500 to-slate-600',
       shadowColor: 'shadow-slate-500/30',
       path: '/dw-admin/settings',
-    },
+    },*/
   ];
 
   return (

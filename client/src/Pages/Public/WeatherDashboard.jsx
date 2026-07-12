@@ -79,6 +79,8 @@ const WeatherDashboard = () => {
   const [filteredBoats, setFilteredBoats] = useState([]);
   const searchRef = useRef(null);
   const [mapStyle, setMapStyle] = useState("street");
+
+
   //  Fetch ALL boats (works for both owner & driver) 
   useEffect(() => {
     const fetchBoats = async () => {
@@ -240,51 +242,57 @@ const WeatherDashboard = () => {
       };
   //  See Weather 
   const handleSeeWeather = () => {
-    if (!selectedBoatId) {
-      setError("Please search and select a boat first.");
-      return;
-    }
-    if (!navigator.geolocation) {
-      setError("Geolocation is not supported by this browser.");
-      return;
-    }
+  if (!selectedBoatId) {
+    setError("Please search and select a boat first.");
+    return;
+  }
+  if (!navigator.geolocation) {
+    setError("Geolocation is not supported by this browser.");
+    return;
+  }
 
-    setLoadingWeather(true);
-    setError("");
+  setLoadingWeather(true);
+  setError("");
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const resolvedPlace = await fetchPlaceName(lat, lon);
-          setPlaceName(resolvedPlace);
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      try {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const resolvedPlace = await fetchPlaceName(lat, lon);
+        setPlaceName(resolvedPlace);
 
-          const res = await api.get("/weather/current", {
-            params: { boatId: selectedBoatId, lat, lon },
-          });
-          setData(res.data);
-        } catch (err) {
-          setError(err.response?.data?.message || "Weather data fetch failed");
-        } finally {
-          setLoadingWeather(false);
-        }
-      },
-      (gpsError) => {
+        // ✅ Pass placeName so admin can see the location name in logs
+        const res = await api.get("/weather/current", {
+          params: { 
+            boatId: selectedBoatId, 
+            lat, 
+            lon,
+            placeName: resolvedPlace, // ✅ ADDED THIS LINE
+          },
+        });
+        setData(res.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Weather data fetch failed");
+      } finally {
         setLoadingWeather(false);
-        if (gpsError.code === 1) {
-          setError("Location permission denied. Please allow location access.");
-        } else if (gpsError.code === 2) {
-          setError("Location unavailable.");
-        } else if (gpsError.code === 3) {
-          setError("Location request timed out.");
-        } else {
-          setError("Could not get current location.");
-        }
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
-  };
+      }
+    },
+    (gpsError) => {
+      setLoadingWeather(false);
+      if (gpsError.code === 1) {
+        setError("Location permission denied. Please allow location access.");
+      } else if (gpsError.code === 2) {
+        setError("Location unavailable.");
+      } else if (gpsError.code === 3) {
+        setError("Location request timed out.");
+      } else {
+        setError("Could not get current location.");
+      }
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+  );
+};
 
   const mapCenter = data
     ? [Number(data.location.latitude), Number(data.location.longitude)]

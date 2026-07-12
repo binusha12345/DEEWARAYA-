@@ -2,15 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Ship, Moon, Sun, User, LayoutDashboard, LogOut, ChevronDown } from "lucide-react";
 import { useThemeContext } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext"; // ✅ ADD THIS
+import { useAuth } from "../context/AuthContext"; 
 
 
 const API_URL = "http://localhost:5000"; 
 
 const HomeNavBar = () => {
   const { mode, toggleTheme } = useThemeContext();
-  const { user, isLoggedIn, logout } = useAuth(); // ✅ ADD THIS
-  const navigate = useNavigate(); // ✅ ADD THIS
+  const { user, isLoggedIn, logout } = useAuth(); 
+  const navigate = useNavigate(); 
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);

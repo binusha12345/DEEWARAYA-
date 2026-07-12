@@ -159,6 +159,8 @@ function App() {
         <Route path="/dw-admin" element={<AdminLogin />} />
         <Route path="/dw-admin/login" element={<AdminLogin />} />
         
+        <Route path="/dw-admin/weather" element={<AdminWeather />} />
+
         <Route
           path="/dw-admin/dashboard"
           element={

@@ -46,7 +46,7 @@ const AdminLogin = () => {
       );
 
       if (response.data.success) {
-        adminLogin({                    // ⬅️ CHANGED: login → adminLogin
+        adminLogin({                    // CHANGED: login → adminLogin
           token: response.data.token,
           user: response.data.user
         });
