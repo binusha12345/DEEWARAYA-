@@ -25,18 +25,23 @@ const boatSchema = new mongoose.Schema(
     modelYear: {
       type: String,
       required: true,
+      minlength: [4, "NIC must be at least 4 characters"],
+      maxlength: [4, "NIC cannot exceed 4 characters"],
     },
     engineSerial: {
       type: String,
       default: "",
+      required: [true, "Engine serial is required"],
     },
     fuelCapacity: {
       type: Number,
       default: 0,
+      required: true
     },
     horsepower: {
       type: Number,
-      default: 0,
+      required: [true, "Horsepower is required"],
+      min: [1, "Horsepower must be greater than 0"],
     },
     imageUrl: {
       type: String,
@@ -46,6 +51,11 @@ const boatSchema = new mongoose.Schema(
       type: String,
       enum: ["ACTIVE", "MAINTENANCE", "NON-ACTIVE"],
       default: "ACTIVE",
+      required: [true, "Boat status is required"],
+    },
+    engineType: {
+      type: String,
+      required: [true, "Engine type is required"],
     },
     latitude: {
     type: Number,

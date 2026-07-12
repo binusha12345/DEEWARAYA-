@@ -147,11 +147,15 @@ const getBoatImageUrl = (boat) => {
                       </h3>
 
                       <p className="text-[16px] text-slate-600 font-medium">
-                        {boat.boatType} • IMO {boat.registrationNumber}
+                        {boat.boatType} Registration No: {boat.registrationNumber}
                       </p>
 
                       <p className="text-[14px] text-slate-600 mt-2">
-                        Model/Year: {boat.modelYear}
+                        Boat Manufacture Year: {boat.modelYear}
+                      </p>
+
+                      <p className="text-[14px] text-slate-600 mt-2">
+                        Engine Type: {boat.engineType}
                       </p>
                     </div>
 

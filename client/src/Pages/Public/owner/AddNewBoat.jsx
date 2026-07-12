@@ -21,6 +21,7 @@ const initialFormData = {
   engineSerial: "",
   fuelCapacity: "",
   horsepower: "",
+  engineType: "", 
   imageFile: null,
   boatStatus: "ACTIVE",
 };
@@ -60,13 +61,44 @@ const AddNewBoat = () => {
   setError("");
   setSuccess("");
 
+    // ✅ DEBUG - See what's happening
+  const token = localStorage.getItem("token");
+  console.log("=".repeat(50));
+  console.log("🔑 TOKEN IN LOCALSTORAGE:", token);
+  console.log("🔑 TOKEN EXISTS:", !!token);
+  console.log("🔑 ALL LOCALSTORAGE KEYS:", Object.keys(localStorage));
+  console.log("=".repeat(50));
+
+  if (!token) {
+    setError("❌ You are not logged in. Please login first.");
+    setTimeout(() => navigate("/login"), 2000);
+    return;
+  }
+
   if (
     !formData.boatName ||
     !formData.registrationNumber ||
     !formData.boatType ||
-    !formData.modelYear
+    !formData.modelYear ||
+    !formData.engineSerial ||
+    !formData.fuelCapacity ||
+    !formData.horsepower ||
+    !formData.engineType ||
+    !formData.boatStatus
   ) {
     setError("Boat Name, Registration Number, Boat Type, Model/Year needed.");
+    return;
+  }
+
+    // ✅ Validate model year is 4 digits
+  if (formData.modelYear.length !== 4) {
+    setError("Model year must be exactly 4 digits.");
+    return;
+  }
+
+  // ✅ Validate numbers > 0
+  if (Number(formData.fuelCapacity) <= 0) {
+    setError("Fuel capacity must be greater than 0.");
     return;
   }
 
@@ -82,7 +114,7 @@ const AddNewBoat = () => {
     data.append("fuelCapacity", formData.fuelCapacity);
     data.append("horsepower", formData.horsepower);
     data.append("boatStatus", formData.boatStatus);
-
+    data.append("engineType", formData.engineType); 
     if (formData.imageFile) {
       data.append("image", formData.imageFile);
     }
@@ -224,6 +256,7 @@ const AddNewBoat = () => {
                     placeholder="2024"
                     type="number"
                   />
+
                 </div>
               </div>
 
@@ -289,9 +322,18 @@ const AddNewBoat = () => {
                     <span className="absolute right-12 bottom-4 text-[12px] font-bold text-slate-600 uppercase">
                       HP
                     </span>
+                  </div>
 
-
-
+                  <div className="flex flex-col gap-2">
+                  <FormInput 
+                    
+                    label="ENGINE TYPE"
+                    name="engineType"
+                    value={formData.engineType}
+                    onChange={handleChange}
+                    placeholder="Yamaha"
+                    
+                  />
                   </div>
                 </div>
               </div>
