@@ -55,7 +55,7 @@ const Login = () => {
 
   return (
     <div
-      className="h-screen flex flex-col overflow-hidden relative"
+      className="login-page h-screen flex flex-col overflow-hidden relative"
       style={{
         backgroundImage: `url(src/assets/login.avif)`,
         backgroundSize: "cover",
@@ -63,6 +63,9 @@ const Login = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {/* ✅ RESPONSIVE STYLES */}
+      <style>{responsiveStyles}</style>
+
       {/* DARK OVERLAY with fade-in */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -75,18 +78,18 @@ const Login = () => {
       <HomeNavBar />
 
       {/* MAIN CONTENT */}
-      <div className="relative z-10 flex flex-col-reverse md:flex-row justify-end items-start w-full h-full p-8 gap-8">
+      <div className="login-content relative z-10 flex flex-col-reverse md:flex-row justify-end items-start w-full h-full p-8 gap-8">
 
         {/* ═══════════ LEFT TEXT ═══════════ */}
         <motion.div
-          className="flex-1 flex flex-col justify-center text-white px-6 md:px-16 py-6 md:py-16 text-center md:text-left mt-60"
+          className="login-left flex-1 flex flex-col justify-center text-white px-6 md:px-16 py-6 md:py-16 text-center md:text-left mt-60"
           initial="initial"
           animate="animate"
           variants={staggerContainer}
         >
           <motion.h1
             variants={fadeInLeft}
-            className="text-[55px] font-extrabold leading-normal mb-2"
+            className="login-heading text-[55px] font-extrabold leading-normal mb-2"
             style={{ fontFamily: "Manrope, sans-serif" }}
           >
             Navigate The Digital <br /> Horizon{" "}
@@ -108,7 +111,7 @@ const Login = () => {
 
           <motion.p
             variants={fadeInLeft}
-            className="text-gray-200 text-[16px] mt-[-10px]"
+            className="login-subtext text-gray-200 text-[16px] mt-[-10px]"
           >
             Experience the precision of modern maritime ledgering and intelligence with Deewaraya.
           </motion.p>
@@ -116,7 +119,7 @@ const Login = () => {
 
         {/*  RIGHT LOGIN CARD */}
         <motion.div
-          className="w-[40%] h-auto min-h-[70vh] rounded-2xl p-18 shadow-2xl bg-white/50 backdrop-blur-xl"
+          className="login-card w-[40%] h-auto min-h-[70vh] rounded-2xl p-18 shadow-2xl bg-white/50 backdrop-blur-xl"
           initial={{ opacity: 0, x: 100, scale: 0.9 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
@@ -132,7 +135,7 @@ const Login = () => {
           >
             <motion.h2
               variants={fadeInUp}
-              className="text-[28px] font-extrabold text-[#001e40] mb-1 ml-40"
+              className="login-title text-[28px] font-extrabold text-[#001e40] mb-1 ml-40"
               style={{ fontFamily: "Manrope, sans-serif" }}
             >
               Login..!
@@ -140,7 +143,7 @@ const Login = () => {
 
             <motion.p
               variants={fadeInUp}
-              className="text-black-500 text-[14px] mb-10 ml-28"
+              className="login-subtitle text-black-500 text-[14px] mb-10 ml-28"
             >
               Access your maritime dashboard
             </motion.p>
@@ -286,5 +289,311 @@ const Login = () => {
     </div>
   );
 };
+
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Clean
+// ============================================================
+
+const responsiveStyles = `
+
+  /* ==============================
+     BASE - Make page scrollable 
+     on small screens
+     ============================== */
+  .login-page {
+    min-height: 100vh;
+  }
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+) 
+     - everything stays as original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    .login-card {
+      width: 45% !important;
+      padding: 2.5rem !important;
+      min-height: auto !important;
+    }
+
+    .login-heading {
+      font-size: 2.75rem !important;
+    }
+
+    .login-left {
+      margin-top: 10rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    .login-card {
+      width: 50% !important;
+      padding: 2rem !important;
+      min-height: auto !important;
+    }
+
+    .login-heading {
+      font-size: 2.25rem !important;
+      line-height: 1.3 !important;
+    }
+
+    .login-subtext {
+      font-size: 0.875rem !important;
+    }
+
+    .login-left {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+      margin-top: 8rem !important;
+    }
+
+    .login-title {
+      margin-left: 0 !important;
+      text-align: center !important;
+      font-size: 1.5rem !important;
+    }
+
+    .login-subtitle {
+      margin-left: 0 !important;
+      text-align: center !important;
+      margin-bottom: 1.5rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     - Stack layout vertically
+     - Card goes full width
+     - Left text goes below card
+     ============================== */
+  @media (max-width: 768px) {
+
+    .login-page {
+      height: auto !important;
+      min-height: 100vh !important;
+      overflow-y: auto !important;
+    }
+
+    .login-content {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      padding: 1.5rem !important;
+      padding-top: 6rem !important;
+      gap: 2rem !important;
+      height: auto !important;
+      min-height: calc(100vh - 4rem) !important;
+    }
+
+    /* Card - full width, centered */
+    .login-card {
+      width: 100% !important;
+      max-width: 480px !important;
+      min-height: auto !important;
+      padding: 2rem 1.75rem !important;
+      margin: 0 auto !important;
+      order: 1 !important;
+    }
+
+    .login-title {
+      margin-left: 0 !important;
+      text-align: center !important;
+      font-size: 1.5rem !important;
+    }
+
+    .login-subtitle {
+      margin-left: 0 !important;
+      text-align: center !important;
+      font-size: 0.8rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    /* Left text - below card */
+    .login-left {
+      order: 2 !important;
+      margin-top: 0 !important;
+      padding: 0 1rem !important;
+      text-align: center !important;
+      flex: none !important;
+    }
+
+    .login-heading {
+      font-size: 1.75rem !important;
+      line-height: 1.3 !important;
+    }
+
+    .login-heading br {
+      display: none !important;
+    }
+
+    .login-subtext {
+      font-size: 0.85rem !important;
+      margin-top: 0.5rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    .login-content {
+      padding: 1rem !important;
+      padding-top: 5.5rem !important;
+      gap: 1.5rem !important;
+    }
+
+    .login-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 1.75rem 1.25rem !important;
+      border-radius: 1rem !important;
+    }
+
+    .login-title {
+      font-size: 1.375rem !important;
+    }
+
+    .login-subtitle {
+      font-size: 0.75rem !important;
+      margin-bottom: 1.25rem !important;
+    }
+
+    /* Form inputs */
+    .login-card input {
+      padding: 0.625rem 0.875rem !important;
+      font-size: 0.875rem !important;
+    }
+
+    .login-card label {
+      font-size: 0.65rem !important;
+    }
+
+    /* Submit button */
+    .login-card button[type="submit"] {
+      padding-top: 0.625rem !important;
+      padding-bottom: 0.625rem !important;
+      font-size: 0.9rem !important;
+    }
+
+    /* Heading */
+    .login-heading {
+      font-size: 1.5rem !important;
+      line-height: 1.35 !important;
+    }
+
+    .login-subtext {
+      font-size: 0.8rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    .login-content {
+      padding: 0.75rem !important;
+      padding-top: 5rem !important;
+      gap: 1rem !important;
+    }
+
+    .login-card {
+      padding: 1.5rem 1rem !important;
+      border-radius: 0.875rem !important;
+    }
+
+    .login-title {
+      font-size: 1.25rem !important;
+    }
+
+    .login-subtitle {
+      font-size: 0.7rem !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .login-card input {
+      padding: 0.5rem 0.75rem !important;
+      font-size: 0.8rem !important;
+      border-radius: 0.625rem !important;
+    }
+
+    .login-card label {
+      font-size: 0.6rem !important;
+      margin-bottom: 0.25rem !important;
+    }
+
+    .login-card button[type="submit"] {
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+      font-size: 0.85rem !important;
+    }
+
+    .login-card .space-y-4 > * + * {
+      margin-top: 0.75rem !important;
+    }
+
+    .login-heading {
+      font-size: 1.25rem !important;
+    }
+
+    .login-subtext {
+      font-size: 0.75rem !important;
+    }
+
+    /* Forgot password & register links */
+    .login-card a {
+      font-size: 0.75rem !important;
+    }
+
+    .login-card .text-center.text-sm {
+      font-size: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    .login-content {
+      padding: 0.5rem !important;
+      padding-top: 4.5rem !important;
+    }
+
+    .login-card {
+      padding: 1.25rem 0.75rem !important;
+    }
+
+    .login-title {
+      font-size: 1.125rem !important;
+    }
+
+    .login-card input {
+      padding: 0.5rem 0.625rem !important;
+      font-size: 0.75rem !important;
+    }
+
+    .login-heading {
+      font-size: 1.1rem !important;
+    }
+  }
+`;
 
 export default Login;
