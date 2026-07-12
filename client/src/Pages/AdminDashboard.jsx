@@ -21,7 +21,7 @@ import { IoBoatOutline } from 'react-icons/io5';
 import { MdOutlineAttachMoney, MdOutlineBuild } from 'react-icons/md';
 
 const AdminDashboard = () => {
-  const { user, logout } = useAuth();
+  const { adminUser: user, adminLogout: logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {

@@ -160,8 +160,7 @@ const Login = () => {
               </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-
+            <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
               {/* EMAIL FIELD */}
               <motion.div variants={fadeInUp}>
                 <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block mb-2">
@@ -173,6 +172,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email"
+                  autoComplete="off"
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                   className="w-full bg-white rounded-xl px-4 py-2 text-sm text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400 mb-2"
@@ -192,6 +192,7 @@ const Login = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Enter your password"
+                    autoComplete="new-password"
                     whileFocus={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300 }}
                     className="w-full bg-white rounded-xl px-4 py-2 pr-12 text-sm text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"

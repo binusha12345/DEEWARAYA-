@@ -59,7 +59,7 @@ const AdminBoats = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/boats`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`
           }
         }
       );
@@ -78,7 +78,7 @@ const AdminBoats = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/boats/${boatId}/approve`,
         {},
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       showNotification('Boat approved successfully', 'success');
@@ -94,7 +94,7 @@ const AdminBoats = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/boats/${actionBoatId}/suspend`,
         { reason: suspendReason },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       showNotification('Boat suspended successfully', 'success');
@@ -112,7 +112,7 @@ const AdminBoats = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/boats/${boatId}/approve`,
         {},
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       showNotification('Boat reactivated successfully', 'success');
@@ -129,7 +129,7 @@ const AdminBoats = () => {
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/admin/boats/${boatId}`,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       

@@ -64,7 +64,7 @@ const AdminUsers = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/users`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`
           }
         }
       );
@@ -84,7 +84,7 @@ const AdminUsers = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/users/${actionUserId}/ban`,
         { reason: banReason },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       showNotification('User banned successfully', 'success');
@@ -103,7 +103,7 @@ const AdminUsers = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/users/${userId}/unban`,
         {},
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       showNotification('User unbanned successfully', 'success');
@@ -121,7 +121,7 @@ const AdminUsers = () => {
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/admin/users/${userId}`,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       
@@ -149,7 +149,7 @@ const AdminUsers = () => {
         `${import.meta.env.VITE_API_URL}/api/admin/users/${actionUserId}/message`,
         messageData,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
         }
       );
       showNotification('Message sent successfully', 'success');

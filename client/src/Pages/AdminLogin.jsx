@@ -24,7 +24,7 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { adminLogin } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -46,11 +46,12 @@ const AdminLogin = () => {
       );
 
       if (response.data.success) {
-        login({
+        adminLogin({                    // ⬅️ CHANGED: login → adminLogin
           token: response.data.token,
           user: response.data.user
         });
         navigate('/dw-admin/dashboard');
+
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');
@@ -253,7 +254,7 @@ const AdminLogin = () => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
               
               {/* Email */}
               <div>
@@ -270,6 +271,7 @@ const AdminLogin = () => {
                     onChange={handleChange}
                     placeholder="admin@deewaraya.com"
                     required
+                    autoComplete="off"    
                     className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder:text-blue-200/40 focus:outline-none focus:border-cyan-400/50 focus:bg-white/10 focus:ring-2 focus:ring-cyan-400/20 transition-all"
                   />
                 </div>
@@ -290,6 +292,7 @@ const AdminLogin = () => {
                     onChange={handleChange}
                     placeholder="Enter your password"
                     required
+                    autoComplete="off"
                     className="w-full pl-11 pr-11 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder:text-blue-200/40 focus:outline-none focus:border-cyan-400/50 focus:bg-white/10 focus:ring-2 focus:ring-cyan-400/20 transition-all"
                   />
                   <button

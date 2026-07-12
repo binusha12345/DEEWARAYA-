@@ -87,7 +87,9 @@ const WeatherDashboard = () => {
         setError("");
 
         // Use /boats/all endpoint - returns ALL boats regardless of role
-        const res = await api.get("/boats/all");
+        // Owner sees only his boats, Driver sees all boats
+        const endpoint = userRole === "driver" ? "/boats/all" : "/boats";
+        const res = await api.get(endpoint);
         const allBoats = Array.isArray(res.data) ? res.data : [];
 
         setBoats(allBoats);

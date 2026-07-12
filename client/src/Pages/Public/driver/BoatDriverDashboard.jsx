@@ -148,14 +148,6 @@ const BoatDriverDashboard = () => {
                   <p className="text-sm text-slate-500">Ambient deck temperature</p>
                 </div>
 
-                // Emergency button on user dashboard
-                <button
-                  onClick={sendEmergency}
-                  className="bg-red-600 text-white p-6 rounded-xl text-2xl font-bold"
-                >
-                  🚨 SEND EMERGENCY
-                </button>
-
               </div>
             </div>
 
