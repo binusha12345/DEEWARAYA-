@@ -1,0 +1,922 @@
+@import "tailwindcss";
+
+
+@variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   LESSON 1: BASE THEME SETUP
+   Set default colors for html and body
+   ============================================ */
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+html {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+html.dark,
+html.dark body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* 
+   SOLID BACKGROUNDS
+   
+  */
+html.dark .bg-white {
+  background-color: #0f172a !important;
+}
+
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark .bg-slate-50,
+html.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+/* Feature cards - lighter than page bg */
+html.dark .bg-white.p-4,
+html.dark .bg-white.p-6,
+html.dark .bg-white.p-8 {
+  background-color: #1e293b !important;
+}
+
+/* 
+   TRANSPARENT WHITE BACKGROUNDS
+   
+    */
+
+/* bg-white/10, bg-white/20, bg-white/30 etc. */
+html.dark .bg-white\/10 {
+  background-color: rgba(30, 41, 59, 0.1) !important;
+}
+
+html.dark .bg-white\/20 {
+  background-color: rgba(30, 41, 59, 0.2) !important;
+}
+
+html.dark .bg-white\/30 {
+  background-color: rgba(30, 41, 59, 0.3) !important;
+}
+
+html.dark .bg-white\/40 {
+  background-color: rgba(30, 41, 59, 0.4) !important;
+}
+
+html.dark .bg-white\/50 {
+  background-color: rgba(30, 41, 59, 0.5) !important;
+}
+
+html.dark .bg-white\/60 {
+  background-color: rgba(30, 41, 59, 0.6) !important;
+}
+
+html.dark .bg-white\/80 {
+  background-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+html.dark .bg-white\/90 {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+}
+
+/* 
+    GRADIENTS
+   
+    */
+html.dark [class*="from-slate-100"] {
+  --tw-gradient-from: #0f172a !important;
+}
+
+html.dark [class*="via-slate-100"] {
+  --tw-gradient-via: #1e293b !important;
+}
+
+html.dark [class*="to-slate-100"] {
+  --tw-gradient-to: #0f172a !important;
+}
+
+html.dark [class*="from-slate-50"] {
+  --tw-gradient-from: #0f172a !important;
+}
+
+html.dark [class*="via-white"] {
+  --tw-gradient-via: #1e293b !important;
+}
+
+html.dark [class*="to-blue-50"] {
+  --tw-gradient-to: #0f172a !important;
+}
+
+html.dark [class*="from-white"] {
+  --tw-gradient-from: #1e293b !important;
+}
+
+html.dark [class*="to-white"] {
+  --tw-gradient-to: #1e293b !important;
+}
+
+/* 
+    HEADINGS - Always White
+    */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #ffffff !important;
+}
+
+/* 
+    TEXT COLORS
+   
+    */
+
+/* VERY DARK text -> WHITE */
+html.dark .text-black,
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-gray-700 {
+  color: #f1f5f9 !important;
+}
+
+/* MEDIUM text -> LIGHT GRAY */
+html.dark .text-slate-600,
+html.dark .text-slate-500,
+html.dark .text-gray-600,
+html.dark .text-gray-500 {
+  color: #cbd5e1 !important;
+}
+
+/* LIGHT text -> MEDIUM GRAY */
+html.dark .text-slate-400,
+html.dark .text-slate-300,
+html.dark .text-gray-400,
+html.dark .text-gray-300 {
+  color: #94a3b8 !important;
+}
+
+/* Keep white text white */
+html.dark .text-white {
+  color: #ffffff !important;
+}
+
+/* Keep colored text visible */
+html.dark .text-blue-600,
+html.dark .text-blue-700,
+html.dark .text-blue-800,
+html.dark .text-blue-900 {
+  color: #60a5fa !important;
+}
+
+html.dark .text-cyan-300,
+html.dark .text-cyan-400,
+html.dark .text-cyan-500,
+html.dark .text-cyan-600,
+html.dark .text-cyan-700,
+html.dark .text-cyan-800 {
+  color: #67e8f9 !important;
+}
+
+html.dark .text-blue-100,
+html.dark .text-blue-200 {
+  color: #dbeafe !important;
+}
+
+/* 
+  SPECIAL CASE - HERO SECTION
+  
+    */
+
+/* Text on hero image should stay white */
+html.dark section .text-white,
+html.dark section [class*="text-white/"] {
+  color: #ffffff !important;
+}
+
+/* Badge on hero image - keep visible */
+html.dark .bg-white\/30 .text-slate-600 {
+  color: #f1f5f9 !important;
+}
+
+/* 
+  BORDERS
+    */
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-gray-300,
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+  border-color: #334155 !important;
+}
+
+/* Transparent white borders */
+html.dark .border-white\/20,
+html.dark .border-white\/30,
+html.dark .border-white\/40,
+html.dark .border-white\/50,
+html.dark .border-white\/60 {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+/* 
+    ICON BACKGROUNDS
+    */
+html.dark .bg-blue-50 {
+  background-color: rgba(30, 58, 138, 0.3) !important;
+}
+
+html.dark .bg-blue-100 {
+  background-color: rgba(30, 58, 138, 0.4) !important;
+}
+
+html.dark .bg-blue-100\/80 {
+  background-color: rgba(30, 58, 138, 0.4) !important;
+}
+
+/* Decorative blobs - reduce brightness */
+html.dark .bg-blue-200\/30,
+html.dark .bg-cyan-200\/30 {
+  background-color: rgba(30, 58, 138, 0.15) !important;
+}
+
+/* 
+    FORM ELEMENTS
+   */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-color: #475569 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* 
+   LESSON 11: HOVER STATES
+   */
+html.dark .hover\:bg-white\/20:hover {
+  background-color: rgba(30, 41, 59, 0.2) !important;
+}
+
+html.dark .hover\:bg-white\/60:hover {
+  background-color: rgba(30, 41, 59, 0.6) !important;
+}
+
+/* 
+   LESSON 12: SHADOWS - Stronger in dark
+    */
+html.dark .shadow,
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Very light backgrounds (#f8fafc, #f5f5f5, etc.) */
+html.dark .bg-\[\#f8fafc\],
+html.dark .bg-\[\#f9fafb\],
+html.dark .bg-\[\#f4f7fb\],
+html.dark .bg-\[\#f5f5f5\],
+html.dark .bg-\[\#fafafa\],
+html.dark .bg-\[\#f0f0f0\],
+html.dark .bg-\[\#ffffff\],
+html.dark .bg-\[\#fff\] {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+/* Catch ALL light hex backgrounds automatically */
+html.dark [class*="bg-[#f"],
+html.dark [class*="bg-[#F"],
+html.dark [class*="bg-[#e"],
+html.dark [class*="bg-[#E"] {
+  background-color: #1e293b !important;
+}
+
+/* 
+    HARDCODED HEX TEXT COLORS
+    */
+
+/* Dark hex text -> Light */
+html.dark [class*="text-[#0"],
+html.dark [class*="text-[#1"],
+html.dark [class*="text-[#2"],
+html.dark [class*="text-[#3"],
+html.dark [class*="text-[#4"] {
+  color: #f1f5f9 !important;
+}
+
+/*  
+    SPECIFIC CARDS - Force Text Visibility
+  
+    */
+
+html.dark .bg-\[\#f8fafc\] h1,
+html.dark .bg-\[\#f8fafc\] h2,
+html.dark .bg-\[\#f8fafc\] h3,
+html.dark .bg-\[\#f8fafc\] h4,
+html.dark .bg-\[\#f8fafc\] h5,
+html.dark .bg-\[\#f8fafc\] h6 {
+  color: #ffffff !important;
+}
+
+html.dark .bg-\[\#f8fafc\] p,
+html.dark .bg-\[\#f8fafc\] span,
+html.dark .bg-\[\#f8fafc\] div {
+  color: #cbd5e1;
+}
+
+/* Universal - Any hex bg with dark text inside */
+html.dark [class*="bg-[#f"] h1,
+html.dark [class*="bg-[#f"] h2,
+html.dark [class*="bg-[#f"] h3,
+html.dark [class*="bg-[#f"] h4 {
+  color: #ffffff !important;
+}
+
+/* 
+    NESTED DARK CARDS
+ */
+
+html.dark .bg-slate-900,
+html.dark .bg-slate-800,
+html.dark .bg-\[\#0f172a\],
+html.dark .bg-\[\#1e293b\] {
+  background-color: #0f172a !important;
+}
+
+/* 
+    BORDERS for hex backgrounds
+    */
+
+html.dark .border-slate-200,
+html.dark .border-slate-100 {
+  border-color: #334155 !important;
+}
+
+/* Fix "Get Started Now" button text */
+html.dark .text-blue-950 {
+  color: #ffffff !important;
+}@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+/* 
+   BASE THEME
+    */
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+html {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+html.dark,
+html.dark body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* 
+   BACKGROUNDS
+   */
+html.dark .bg-white,
+html.dark [class*="bg-[#f"],
+html.dark [class*="bg-[#F"],
+html.dark [class*="bg-[#e"],
+html.dark [class*="bg-[#E"] {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark .bg-slate-50,
+html.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+/* Transparent white backgrounds (bg-white/10 to bg-white/90) */
+html.dark [class*="bg-white\/"] {
+  background-color: rgba(30, 41, 59, 0.6) !important;
+}
+
+/* Nested dark cards - keep dark */
+html.dark .bg-slate-900,
+html.dark .bg-slate-800 {
+  background-color: #0f172a !important;
+}
+
+/* Icon backgrounds */
+html.dark .bg-blue-50,
+html.dark .bg-blue-100 {
+  background-color: rgba(30, 58, 138, 0.3) !important;
+}
+
+/* 
+   GRADIENTS
+    */
+html.dark [class*="from-slate-50"],
+html.dark [class*="from-slate-100"],
+html.dark [class*="from-white"] {
+  --tw-gradient-from: #0f172a !important;
+}
+
+html.dark [class*="via-white"],
+html.dark [class*="via-slate-100"] {
+  --tw-gradient-via: #1e293b !important;
+}
+
+html.dark [class*="to-white"],
+html.dark [class*="to-blue-50"],
+html.dark [class*="to-slate-100"] {
+  --tw-gradient-to: #0f172a !important;
+}
+
+/* 
+   HEADINGS - Always White
+    */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #ffffff !important;
+}
+
+/* 
+   TEXT COLORS
+    */
+
+/* Dark text -> White */
+html.dark .text-black,
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-gray-700,
+html.dark [class*="text-[#0"],
+html.dark [class*="text-[#1"],
+html.dark [class*="text-[#2"],
+html.dark [class*="text-[#3"] {
+  color: #f1f5f9 !important;
+}
+
+/* Medium text -> Light Gray */
+html.dark .text-slate-600,
+html.dark .text-slate-500,
+html.dark .text-gray-600,
+html.dark .text-gray-500 {
+  color: #cbd5e1 !important;
+}
+
+/* Light text -> Medium Gray */
+html.dark .text-slate-400,
+html.dark .text-slate-300,
+html.dark .text-gray-400,
+html.dark .text-gray-300 {
+  color: #94a3b8 !important;
+}
+
+/* Keep colored text visible */
+html.dark .text-blue-600,
+html.dark .text-blue-700,
+html.dark .text-blue-800,
+html.dark .text-blue-900,
+html.dark .text-blue-950 {
+  color: #60a5fa !important;
+}
+
+html.dark .text-cyan-500,
+html.dark .text-cyan-600,
+html.dark .text-cyan-700,
+html.dark .text-cyan-800 {
+  color: #67e8f9 !important;
+}
+
+html.dark .text-white {
+  color: #ffffff !important;
+}
+
+/* 
+   BORDERS
+    */
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-gray-300,
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+  border-color: #334155 !important;
+}
+
+html.dark [class*="border-white\/"] {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+/* 
+   FORM ELEMENTS
+   */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-color: #475569 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* 
+   SHADOWS
+    */
+html.dark .shadow,
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 
+   ABOUT PAGE FIXES
+    */
+
+/* Fix section backgrounds */
+html.dark section {
+  background-color: transparent;
+}
+
+/* Force ALL text visibility in About page */
+html.dark section p,
+html.dark section span,
+html.dark section li {
+  color: #cbd5e1 !important;
+}
+
+/* Strong/bold text - brighter */
+html.dark section strong,
+html.dark section b {
+  color: #ffffff !important;
+}
+
+/* Fix decorative blur blobs - reduce brightness */
+html.dark .bg-blue-300\/20,
+html.dark .bg-cyan-300\/20,
+html.dark .bg-blue-400\/20,
+html.dark .bg-cyan-400\/20 {
+  background-color: rgba(30, 58, 138, 0.1) !important;
+}
+
+/* Fix badge backgrounds (PRECISION MARITIME SYSTEMS, INNOVATION AT SEA) */
+html.dark .bg-blue-100\/50,
+html.dark .bg-blue-100\/60,
+html.dark .bg-blue-100\/70,
+html.dark .bg-blue-100\/80 {
+  background-color: rgba(30, 58, 138, 0.4) !important;
+}
+
+/* Fix check icon backgrounds */
+html.dark .bg-blue-500\/10,
+html.dark .bg-blue-500\/20,
+html.dark .bg-cyan-500\/10,
+html.dark .bg-cyan-500\/20 {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Fix feature list text (Intelligent AI-driven..., etc.) */
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #e2e8f0 !important;
+}
+
+/* Fix the light gradient page background */
+html.dark [class*="from-blue-50"],
+html.dark [class*="via-blue-50"],
+html.dark [class*="to-blue-50"] {
+  --tw-gradient-from: #0f172a !important;
+  --tw-gradient-via: #1e293b !important;
+  --tw-gradient-to: #0f172a !important;
+}
+
+/* Custom animations for footer */
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -20px); }
+}
+
+.animate-wave {
+  animation: wave 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+
+{/*Admin AreaA styles*/}
+/* ============================================
+   THEME CONFIGURATION (Colors, Fonts, etc.)
+   ============================================ */
+@theme {
+  /* Custom Colors */
+  --color-brand-primary: #667eea;
+  --color-brand-secondary: #764ba2;
+  --color-brand-accent: #f093fb;
+  
+  /* Custom Fonts */
+  --font-family-display: 'Poppins', sans-serif;
+  --font-family-body: 'Inter', sans-serif;
+  
+  /* Custom Spacing */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  
+  /* Custom Border Radius */
+  --radius-4xl: 2rem;
+  
+  /* Custom Shadows */
+  --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.5);
+  --shadow-neon: 0 0 30px rgba(240, 147, 251, 0.6);
+}
+
+/* ============================================
+   CUSTOM ANIMATIONS
+   ============================================ */
+@theme {
+  /* Shake Animation */
+  --animate-shake: shake 0.5s ease-in-out;
+  
+  /* Fade In */
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  
+  /* Slide Down */
+  --animate-slide-down: slideDown 0.3s ease-out;
+  
+  /* Slide Up */
+  --animate-slide-up: slideUp 0.3s ease-out;
+  
+  /* Bounce Slow */
+  --animate-bounce-slow: bounce 2s infinite;
+  
+  /* Pulse Slow */
+  --animate-pulse-slow: pulse 3s infinite;
+  
+  /* Spin Slow */
+  --animate-spin-slow: spin 3s linear infinite;
+  
+  /* Wiggle */
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  
+  /* Float */
+  --animate-float: float 3s ease-in-out infinite;
+  
+  /* Gradient */
+  --animate-gradient: gradient 8s ease infinite;
+}
+
+/* ============================================
+   KEYFRAMES
+   ============================================ */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideDown {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideUp {
+  0% { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ============================================
+   BASE STYLES (Global)
+   ============================================ */
+@layer base {
+  /* Root Variables (Light Mode Default) */
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+  }
+
+  /* Dark Mode Variables */
+  .dark {
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #374151;
+  }
+
+  /* Body Styles */
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+  }
+
+  /* Selection Color */
+  ::selection {
+    background: #667eea;
+    color: white;
+  }
+}
+
+/* ============================================
+   CUSTOM COMPONENTS (Reusable Classes)
+   ============================================ */
+@layer components {
+  
+  /* Gradient Button */
+  .btn-gradient {
+    @apply px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 
+           text-white font-semibold rounded-lg shadow-lg 
+           hover:shadow-xl transform hover:-translate-y-0.5 
+           transition-all duration-200;
+  }
+
+  /* Card */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md 
+           p-6 border border-gray-200 dark:border-gray-700
+           transition-all duration-300;
+  }
+
+  /* Input Field */
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-gray-200 
+           dark:border-gray-600 rounded-lg 
+           focus:outline-none focus:border-indigo-500 
+           focus:ring-2 focus:ring-indigo-200 
+           dark:focus:ring-indigo-800
+           bg-white dark:bg-gray-700
+           text-gray-800 dark:text-white
+           transition-all duration-200;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600 
+           bg-clip-text text-transparent;
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  /* Glow Effect */
+  .glow {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+  }
+}
+
+/* ============================================
+   UTILITIES (Custom Utility Classes)
+   ============================================ */
+@layer utilities {
+  
+  /* Text Balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide Scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Custom Gradient Backgrounds */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .bg-gradient-secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  .bg-gradient-animated {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 400% 400%;
+    animation: gradient 8s ease infinite;
+  }
+}
