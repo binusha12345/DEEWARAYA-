@@ -58,6 +58,8 @@ const getBoatImageUrl = (boat) => {
 
   return (
     <div className="flex h-screen bg-[#f1f5f9] font-sans text-slate-800 overflow-hidden">
+
+      <style>{boatListStyles}</style>
       {/* Sidebar */}
       <OwnerSidebar />
 
@@ -179,5 +181,500 @@ const getBoatImageUrl = (boat) => {
     </div>
   );
 };
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Clean
+// ============================================================
+
+const boatListStyles = `
+
+  /* ==============================
+     BASE - Page foundation
+     ============================== */
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+)
+     - Everything stays original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    /* Main padding */
+    main {
+      padding: 2rem !important;
+    }
+
+    /* Header */
+    main h1 {
+      font-size: 1.75rem !important;
+    }
+
+    /* Header margin */
+    main > div:first-child {
+      margin-bottom: 2rem !important;
+    }
+
+    /* Boats grid */
+    main .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+      gap: 1.5rem !important;
+    }
+
+    /* Boat card image */
+    main .relative.h-48 {
+      height: 11rem !important;
+    }
+
+    /* Boat card content */
+    main .p-6 {
+      padding: 1.25rem !important;
+    }
+
+    /* Boat name */
+    main .text-\\[24px\\].font-bold {
+      font-size: 1.25rem !important;
+    }
+
+    /* Boat type */
+    main .text-\\[16px\\].text-slate-600 {
+      font-size: 0.875rem !important;
+    }
+
+    /* Boat model year */
+    main .text-\\[14px\\].text-slate-600 {
+      font-size: 0.8125rem !important;
+    }
+
+    /* Add boat button */
+    main button.bg-\\[\\#2056d3\\] {
+      padding: 0.5rem 1.25rem !important;
+      font-size: 0.8125rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    main {
+      padding: 1.75rem !important;
+    }
+
+    main h1 {
+      font-size: 1.625rem !important;
+    }
+
+    /* Header */
+    main > div:first-child {
+      margin-bottom: 1.75rem !important;
+    }
+
+    /* Grid - 2 columns */
+    main .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1.25rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-48 {
+      height: 10rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1.125rem !important;
+    }
+
+    /* Boat name */
+    main .text-\\[24px\\].font-bold {
+      font-size: 1.125rem !important;
+    }
+
+    /* Boat type */
+    main .text-\\[16px\\].text-slate-600 {
+      font-size: 0.8125rem !important;
+    }
+
+    /* Boat model year */
+    main .text-\\[14px\\].text-slate-600 {
+      font-size: 0.75rem !important;
+    }
+
+    /* Add button */
+    main button.bg-\\[\\#2056d3\\] {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+    }
+
+    /* View details button */
+    main button.bg-\\[\\#2b4fa9\\] {
+      padding: 0.5rem !important;
+      font-size: 0.6875rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     - Stack header
+     - 2 column grid
+     - Compact cards
+     ============================== */
+  @media (max-width: 768px) {
+
+    main {
+      padding: 1.25rem !important;
+    }
+
+    /* Header - stack vertically */
+    main > div:first-child {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 1rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.5rem !important;
+      line-height: 1.3 !important;
+    }
+
+    main p.text-\\[10px\\] {
+      font-size: 0.5625rem !important;
+    }
+
+    /* Add boat button - full width on tablet */
+    main button.bg-\\[\\#2056d3\\] {
+      width: 100% !important;
+      justify-content: center !important;
+      padding: 0.625rem 1rem !important;
+      font-size: 0.8125rem !important;
+      border-radius: 0.625rem !important;
+    }
+
+    /* Grid - 2 columns */
+    main .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-48 {
+      height: 9rem !important;
+    }
+
+    /* Status badge */
+    main .absolute.top-4.right-4 {
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+      padding: 0.2rem 0.5rem !important;
+      font-size: 0.5rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1rem !important;
+    }
+
+    /* Card margin bottom */
+    main .mb-6 {
+      margin-bottom: 0.875rem !important;
+    }
+
+    /* Boat name */
+    main .text-\\[24px\\].font-bold {
+      font-size: 1rem !important;
+      margin-bottom: 0.25rem !important;
+    }
+
+    /* Boat type */
+    main .text-\\[16px\\].text-slate-600 {
+      font-size: 0.75rem !important;
+    }
+
+    /* Boat model year */
+    main .text-\\[14px\\].text-slate-600 {
+      font-size: 0.6875rem !important;
+      margin-top: 0.25rem !important;
+    }
+
+    /* Action buttons */
+    main .flex.gap-2 {
+      gap: 0.375rem !important;
+    }
+
+    main button.bg-\\[\\#2b4fa9\\] {
+      padding: 0.5rem !important;
+      font-size: 0.625rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    main button.p-2\\.5.border {
+      padding: 0.5rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    /* Loading & error states */
+    main .p-4.rounded-lg {
+      padding: 0.875rem !important;
+      font-size: 0.8125rem !important;
+    }
+
+    main .p-6.rounded-xl {
+      padding: 1rem !important;
+      font-size: 0.8125rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    main {
+      padding: 1rem !important;
+    }
+
+    main h1 {
+      font-size: 1.375rem !important;
+    }
+
+    /* Grid - single column */
+    main .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+      gap: 0.875rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-48 {
+      height: 11rem !important;
+    }
+
+    /* Status badge */
+    main .absolute.top-4.right-4 {
+      top: 0.625rem !important;
+      right: 0.625rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1.125rem !important;
+    }
+
+    /* Boat name */
+    main .text-\\[24px\\].font-bold {
+      font-size: 1.125rem !important;
+    }
+
+    /* Boat type */
+    main .text-\\[16px\\].text-slate-600 {
+      font-size: 0.8125rem !important;
+    }
+
+    /* Boat model year */
+    main .text-\\[14px\\].text-slate-600 {
+      font-size: 0.75rem !important;
+    }
+
+    /* View details button */
+    main button.bg-\\[\\#2b4fa9\\] {
+      padding: 0.625rem !important;
+      font-size: 0.6875rem !important;
+    }
+
+    /* QR button */
+    main button.p-2\\.5.border {
+      padding: 0.625rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    main {
+      padding: 0.875rem !important;
+    }
+
+    main h1 {
+      font-size: 1.25rem !important;
+    }
+
+    main p.text-\\[10px\\] {
+      font-size: 0.5rem !important;
+    }
+
+    /* Add button */
+    main button.bg-\\[\\#2056d3\\] {
+      font-size: 0.75rem !important;
+      padding: 0.5rem 0.875rem !important;
+      gap: 0.375rem !important;
+    }
+
+    /* Grid */
+    main .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+      gap: 0.75rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-48 {
+      height: 10rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1rem !important;
+    }
+
+    /* Boat name */
+    main .text-\\[24px\\].font-bold {
+      font-size: 1.0625rem !important;
+    }
+
+    /* Boat type */
+    main .text-\\[16px\\].text-slate-600 {
+      font-size: 0.75rem !important;
+    }
+
+    /* Boat model year */
+    main .text-\\[14px\\].text-slate-600 {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Action buttons */
+    main button.bg-\\[\\#2b4fa9\\] {
+      padding: 0.5rem !important;
+      font-size: 0.625rem !important;
+      gap: 0.375rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    main button.p-2\\.5.border {
+      padding: 0.5rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    main .mb-6 {
+      margin-bottom: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    main {
+      padding: 0.625rem !important;
+    }
+
+    main h1 {
+      font-size: 1.125rem !important;
+    }
+
+    /* Header margin */
+    main > div:first-child {
+      margin-bottom: 1rem !important;
+      gap: 0.75rem !important;
+    }
+
+    /* Add button */
+    main button.bg-\\[\\#2056d3\\] {
+      font-size: 0.6875rem !important;
+      padding: 0.5rem 0.75rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-48 {
+      height: 9rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 0.875rem !important;
+    }
+
+    /* Boat name */
+    main .text-\\[24px\\].font-bold {
+      font-size: 1rem !important;
+    }
+
+    /* Boat type */
+    main .text-\\[16px\\].text-slate-600 {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Boat model year */
+    main .text-\\[14px\\].text-slate-600 {
+      font-size: 0.625rem !important;
+    }
+
+    /* Status badge */
+    main .absolute.top-4.right-4 {
+      font-size: 0.45rem !important;
+      padding: 0.15rem 0.4rem !important;
+    }
+
+    /* Action buttons */
+    main button.bg-\\[\\#2b4fa9\\] {
+      font-size: 0.5625rem !important;
+      padding: 0.5rem 0.375rem !important;
+    }
+
+    main button.p-2\\.5.border {
+      padding: 0.4rem !important;
+    }
+
+    main .flex.gap-2 {
+      gap: 0.25rem !important;
+    }
+  }
+
+
+  /* ==============================
+     ANIMATIONS
+     ============================== */
+  @keyframes boatListFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+
+  @keyframes cardSlideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  main {
+    animation: boatListFadeIn 0.3s ease forwards;
+  }
+
+  /* Staggered card animation */
+  main .grid > div:nth-child(1) { animation: cardSlideUp 0.3s ease 0.05s both; }
+  main .grid > div:nth-child(2) { animation: cardSlideUp 0.3s ease 0.10s both; }
+  main .grid > div:nth-child(3) { animation: cardSlideUp 0.3s ease 0.15s both; }
+  main .grid > div:nth-child(4) { animation: cardSlideUp 0.3s ease 0.20s both; }
+  main .grid > div:nth-child(5) { animation: cardSlideUp 0.3s ease 0.25s both; }
+  main .grid > div:nth-child(6) { animation: cardSlideUp 0.3s ease 0.30s both; }
+
+  /* Card hover lift */
+  main .grid > div {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  main .grid > div:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.10) !important;
+  }
+`;
 
 export default BoatOwnerBoats;

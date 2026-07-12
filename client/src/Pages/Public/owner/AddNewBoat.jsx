@@ -124,6 +124,8 @@ const AddNewBoat = () => {
 
   return (
     <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
+
+      <style>{addBoatStyles}</style> 
       {/* Sidebar */}
       <OwnerSidebar />
 
@@ -439,4 +441,623 @@ const FormInput = ({
     />
   </div>
 );
+
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Clean
+// ============================================================
+
+const addBoatStyles = `
+
+  /* ==============================
+     BASE - Page foundation
+     ============================== */
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+)
+     - Everything stays original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    /* Form padding */
+    form.flex-1 {
+      padding: 2rem !important;
+    }
+
+    /* Header */
+    form h1 {
+      font-size: 1.875rem !important;
+    }
+
+    form p.text-slate-600 {
+      font-size: 0.8125rem !important;
+    }
+
+    /* Header margin */
+    form > div:first-child {
+      margin-bottom: 2rem !important;
+    }
+
+    /* Main layout */
+    form .flex.flex-col.xl\\:flex-row {
+      gap: 1.5rem !important;
+    }
+
+    /* Right panel width */
+    form .w-full.xl\\:w-80 {
+      width: 18rem !important;
+    }
+
+    /* Card padding */
+    form .bg-white.rounded-xl.p-8 {
+      padding: 1.5rem !important;
+    }
+
+    form .bg-white.rounded-xl.p-6 {
+      padding: 1.25rem !important;
+    }
+
+    /* Section headings */
+    form h3.font-bold.text-\\[18px\\] {
+      font-size: 1rem !important;
+    }
+
+    /* Footer */
+    form footer {
+      margin-top: 1.5rem !important;
+      padding: 1rem 0 !important;
+    }
+
+    form footer button:last-child {
+      margin-right: 1.5rem !important;
+      padding: 0.5rem 1.75rem !important;
+    }
+
+    form footer button:first-child {
+      margin-left: 1.5rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    form.flex-1 {
+      padding: 1.75rem !important;
+    }
+
+    form h1 {
+      font-size: 1.75rem !important;
+    }
+
+    form p.text-slate-600 {
+      font-size: 0.75rem !important;
+    }
+
+    form > div:first-child {
+      margin-bottom: 1.75rem !important;
+    }
+
+    /* Stack layout vertically at 1024 */
+    form .flex.flex-col.xl\\:flex-row {
+      flex-direction: column !important;
+      gap: 1.25rem !important;
+    }
+
+    /* Right panel full width */
+    form .w-full.xl\\:w-80 {
+      width: 100% !important;
+    }
+
+    /* Right panel - side by side */
+    form .w-full.xl\\:w-80.space-y-6 {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1.25rem !important;
+    }
+
+    /* Card padding */
+    form .bg-white.rounded-xl.p-8 {
+      padding: 1.25rem !important;
+    }
+
+    form .bg-white.rounded-xl.p-6 {
+      padding: 1.125rem !important;
+    }
+
+    /* Section heading icons */
+    form .w-10.h-10.rounded-lg {
+      width: 2.25rem !important;
+      height: 2.25rem !important;
+    }
+
+    /* Section headings */
+    form h3.font-bold.text-\\[18px\\] {
+      font-size: 0.9375rem !important;
+    }
+
+    /* Input label */
+    form label.text-\\[12px\\] {
+      font-size: 0.625rem !important;
+    }
+
+    /* Input */
+    form input, form select {
+      font-size: 0.6875rem !important;
+      padding: 0.5rem !important;
+    }
+
+    /* Engine grid - 3 cols stays */
+    form .grid.grid-cols-1.md\\:grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    /* Footer */
+    form footer {
+      margin-top: 1.25rem !important;
+    }
+
+    form footer button:last-child {
+      margin-right: 1.25rem !important;
+      padding: 0.5rem 1.5rem !important;
+    }
+
+    form footer button:first-child {
+      margin-left: 1.25rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     - Stack everything vertically
+     - Compact all sections
+     ============================== */
+  @media (max-width: 768px) {
+
+    form.flex-1 {
+      padding: 1.25rem !important;
+    }
+
+    /* Header */
+    form > div:first-child {
+      margin-bottom: 1.25rem !important;
+    }
+
+    form h1 {
+      font-size: 1.5rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    form p.text-slate-600 {
+      font-size: 0.6875rem !important;
+      max-width: 100% !important;
+    }
+
+    form .flex.items-center.gap-2.text-blue-600 p {
+      font-size: 0.5625rem !important;
+    }
+
+    /* Error / success */
+    form .mb-6.rounded-lg {
+      margin-bottom: 1rem !important;
+      padding: 0.625rem 0.875rem !important;
+      font-size: 0.75rem !important;
+    }
+
+    /* Main layout - full stack */
+    form .flex.flex-col.xl\\:flex-row {
+      flex-direction: column !important;
+      gap: 1rem !important;
+    }
+
+    /* Right panel */
+    form .w-full.xl\\:w-80 {
+      width: 100% !important;
+    }
+
+    form .w-full.xl\\:w-80.space-y-6 {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem !important;
+    }
+
+    /* Card paddings */
+    form .bg-white.rounded-xl.p-8 {
+      padding: 1rem !important;
+      border-radius: 0.875rem !important;
+    }
+
+    form .bg-white.rounded-xl.p-6 {
+      padding: 1rem !important;
+      border-radius: 0.875rem !important;
+    }
+
+    /* Section icon + heading gap */
+    form .flex.items-center.gap-4.mb-8 {
+      gap: 0.75rem !important;
+      margin-bottom: 1rem !important;
+    }
+
+    /* Section icon */
+    form .w-10.h-10.rounded-lg {
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+
+    /* Section heading */
+    form h3.font-bold.text-\\[18px\\] {
+      font-size: 0.875rem !important;
+    }
+
+    /* Boat info grid - 2 cols */
+    form .grid.grid-cols-1.md\\:grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.875rem 1.25rem !important;
+    }
+
+    /* Engine grid - 2 cols on tablet */
+    form .grid.grid-cols-1.md\\:grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.875rem !important;
+    }
+
+    /* Input label */
+    form label.text-\\[12px\\] {
+      font-size: 0.5625rem !important;
+    }
+
+    /* Input & select */
+    form input, form select {
+      font-size: 0.6875rem !important;
+      padding: 0.5rem 0.625rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    /* Image upload area */
+    form .border-2.border-dashed {
+      padding: 1.25rem !important;
+      border-radius: 1rem !important;
+    }
+
+    /* Image preview */
+    form .mt-6.rounded-xl.h-32 {
+      height: 7rem !important;
+      margin-top: 0.875rem !important;
+    }
+
+    /* Compliance box */
+    form .bg-\\[\\#0f2a4a\\].rounded-xl.p-6 {
+      padding: 1rem !important;
+    }
+
+    form .bg-\\[\\#0f2a4a\\] p.text-\\[10px\\] {
+      font-size: 0.5625rem !important;
+    }
+
+    /* Liters / HP absolute labels */
+    form .relative span.absolute {
+      right: 0.625rem !important;
+      font-size: 0.5625rem !important;
+    }
+
+    /* Footer */
+    form footer {
+      margin-top: 1.25rem !important;
+      padding: 0.875rem 0 !important;
+      flex-direction: row !important;
+      align-items: center !important;
+    }
+
+    form footer button:first-child {
+      margin-left: 0.75rem !important;
+      font-size: 0.75rem !important;
+      padding: 0.5rem 0.75rem !important;
+    }
+
+    form footer button:last-child {
+      margin-right: 0.75rem !important;
+      padding: 0.5rem 1.25rem !important;
+      font-size: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    form.flex-1 {
+      padding: 1rem !important;
+    }
+
+    form h1 {
+      font-size: 1.375rem !important;
+    }
+
+    form p.text-slate-600 {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Right panel - stack vertically */
+    form .w-full.xl\\:w-80.space-y-6 {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.875rem !important;
+    }
+
+    /* Card padding */
+    form .bg-white.rounded-xl.p-8 {
+      padding: 0.875rem !important;
+    }
+
+    form .bg-white.rounded-xl.p-6 {
+      padding: 0.875rem !important;
+    }
+
+    /* Boat info grid - 1 col */
+    form .grid.grid-cols-1.md\\:grid-cols-2 {
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+
+    /* Engine grid - 1 col */
+    form .grid.grid-cols-1.md\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+
+    /* Section heading margin */
+    form .flex.items-center.gap-4.mb-8 {
+      margin-bottom: 0.875rem !important;
+    }
+
+    /* Input label */
+    form label.text-\\[12px\\] {
+      font-size: 0.5rem !important;
+    }
+
+    /* Input */
+    form input, form select {
+      font-size: 0.6875rem !important;
+      padding: 0.5rem !important;
+    }
+
+    /* Liters / HP label */
+    form .relative span.absolute {
+      display: none !important;
+    }
+
+    /* Image upload button */
+    form .border-2.border-dashed button {
+      font-size: 0.75rem !important;
+      padding: 0.5rem !important;
+    }
+
+    /* Image preview */
+    form .mt-6.rounded-xl.h-32 {
+      height: 8rem !important;
+    }
+
+    /* Vessel imagery title */
+    form h3.text-\\[12px\\].font-bold.text-slate-600 {
+      margin-left: 0 !important;
+      text-align: left !important;
+    }
+
+    /* Compliance box */
+    form .bg-\\[\\#0f2a4a\\].rounded-xl.p-6 {
+      padding: 0.875rem !important;
+    }
+
+    /* Footer */
+    form footer {
+      flex-direction: column !important;
+      gap: 0.75rem !important;
+      align-items: stretch !important;
+      padding: 0.875rem !important;
+      border-radius: 0.875rem !important;
+    }
+
+    form footer button:first-child {
+      margin-left: 0 !important;
+      justify-content: center !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
+
+    form footer > div {
+      width: 100% !important;
+    }
+
+    form footer > div button {
+      width: 100% !important;
+      margin-right: 0 !important;
+      justify-content: center !important;
+      padding: 0.625rem !important;
+      font-size: 0.8125rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    form.flex-1 {
+      padding: 0.875rem !important;
+    }
+
+    form h1 {
+      font-size: 1.25rem !important;
+    }
+
+    /* Header icon + badge */
+    form .flex.items-center.gap-2.text-blue-600 {
+      margin-bottom: 0.375rem !important;
+    }
+
+    /* Card padding */
+    form .bg-white.rounded-xl.p-8 {
+      padding: 0.75rem !important;
+      border-radius: 0.75rem !important;
+    }
+
+    form .bg-white.rounded-xl.p-6 {
+      padding: 0.75rem !important;
+      border-radius: 0.75rem !important;
+    }
+
+    /* Section icon */
+    form .w-10.h-10.rounded-lg {
+      width: 1.75rem !important;
+      height: 1.75rem !important;
+    }
+
+    /* Section heading */
+    form h3.font-bold.text-\\[18px\\] {
+      font-size: 0.8125rem !important;
+    }
+
+    /* Input gap */
+    form .flex.flex-col.gap-2 {
+      gap: 0.25rem !important;
+    }
+
+    /* Input */
+    form input, form select {
+      padding: 0.4375rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    /* Image preview */
+    form .mt-6.rounded-xl.h-32 {
+      height: 7rem !important;
+      margin-top: 0.625rem !important;
+    }
+
+    /* Space-y-4 in left column */
+    form .flex-1.space-y-4 > * + * {
+      margin-top: 0.75rem !important;
+    }
+
+    /* Footer */
+    form footer {
+      margin-top: 0.875rem !important;
+      padding: 0.75rem !important;
+      gap: 0.5rem !important;
+    }
+
+    form footer > div button {
+      font-size: 0.75rem !important;
+      padding: 0.5rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    form.flex-1 {
+      padding: 0.625rem !important;
+    }
+
+    form h1 {
+      font-size: 1.125rem !important;
+    }
+
+    form p.text-slate-600 {
+      font-size: 0.625rem !important;
+    }
+
+    /* Card */
+    form .bg-white.rounded-xl.p-8 {
+      padding: 0.625rem !important;
+    }
+
+    form .bg-white.rounded-xl.p-6 {
+      padding: 0.625rem !important;
+    }
+
+    /* Section icon */
+    form .w-10.h-10.rounded-lg {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+    }
+
+    /* Input */
+    form input, form select {
+      font-size: 0.625rem !important;
+      padding: 0.375rem !important;
+    }
+
+    /* Image preview */
+    form .mt-6.rounded-xl.h-32 {
+      height: 6rem !important;
+    }
+
+    /* Upload button */
+    form .border-2.border-dashed button {
+      font-size: 0.625rem !important;
+      padding: 0.375rem !important;
+    }
+
+    /* Compliance box */
+    form .bg-\\[\\#0f2a4a\\].rounded-xl.p-6 {
+      padding: 0.625rem !important;
+    }
+
+    form footer {
+      padding: 0.625rem !important;
+      gap: 0.375rem !important;
+    }
+
+    form footer > div button {
+      font-size: 0.6875rem !important;
+    }
+  }
+
+
+  /* ==============================
+     ANIMATIONS
+     ============================== */
+  @keyframes addBoatFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  form {
+    animation: addBoatFadeIn 0.3s ease forwards;
+  }
+
+  form .bg-white.rounded-xl:nth-child(1) {
+    animation: cardReveal 0.3s ease 0.05s both;
+  }
+
+  form .bg-white.rounded-xl:nth-child(2) {
+    animation: cardReveal 0.3s ease 0.10s both;
+  }
+
+  form .bg-\\[\\#0f2a4a\\] {
+    animation: cardReveal 0.3s ease 0.15s both;
+  }
+`;
+
 export default AddNewBoat;

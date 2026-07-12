@@ -19,6 +19,8 @@ const BoatDriverDashboard = () => {
   return (
     <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
       
+      <style>{driverDashboardStyles}</style> 
+
       {/* Sidebar */}
       <DriverSidebar />
 
@@ -250,5 +252,460 @@ const BoatDriverDashboard = () => {
     </div>
   );
 };
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Clean
+// ============================================================
+
+const driverDashboardStyles = `
+
+  /* ==============================
+     BASE - Dashboard foundation
+     ============================== */
+  .driver-page {
+    min-height: 100vh;
+  }
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+)
+     - Everything stays original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    /* Main padding */
+    main {
+      padding: 1.75rem !important;
+    }
+
+    /* Header */
+    main h1 {
+      font-size: 1.75rem !important;
+    }
+
+    /* Map height */
+    main .relative.h-\\[540px\\] {
+      height: 420px !important;
+    }
+
+    /* HUD overlay */
+    main .absolute.top-6.left-6 {
+      padding: 1rem !important;
+      min-width: 170px !important;
+    }
+
+    main .absolute.top-6.left-6 span.text-4xl {
+      font-size: 2.25rem !important;
+    }
+
+    /* Wind & Temp cards */
+    main .text-5xl {
+      font-size: 2.75rem !important;
+    }
+
+    /* Right column boat image */
+    main .h-40 {
+      height: 8rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    main {
+      padding: 1.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.625rem !important;
+    }
+
+    main p.text-slate-600 {
+      font-size: 0.8125rem !important;
+    }
+
+    /* Map height */
+    main .relative.h-\\[540px\\] {
+      height: 380px !important;
+    }
+
+    /* HUD overlay */
+    main .absolute.top-6.left-6 {
+      padding: 0.875rem !important;
+      min-width: 160px !important;
+      border-radius: 1.25rem !important;
+    }
+
+    main .absolute.top-6.left-6 span.text-4xl {
+      font-size: 2rem !important;
+    }
+
+    main .absolute.top-6.left-6 .text-sm {
+      font-size: 0.75rem !important;
+    }
+
+    /* Grid - stack xl:col-span-2 earlier */
+    main .grid.grid-cols-1.xl\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Wind & Temp number */
+    main .text-5xl {
+      font-size: 2.5rem !important;
+    }
+
+    /* Boat details card */
+    main .rounded-3xl.p-6 {
+      padding: 1.25rem !important;
+    }
+
+    main .h-40 {
+      height: 7rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     - Stack layout vertically
+     - Compact map & cards
+     ============================== */
+  @media (max-width: 768px) {
+
+    main {
+      padding: 1.25rem !important;
+    }
+
+    /* Dashboard header */
+    main > div:first-child {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 1rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.5rem !important;
+      margin-bottom: 0.25rem !important;
+    }
+
+    main p.text-slate-600 {
+      font-size: 0.75rem !important;
+    }
+
+    /* Status badge */
+    main > div:first-child > div:last-child {
+      width: 100% !important;
+      justify-content: flex-start !important;
+    }
+
+    /* Main grid - single column */
+    main .grid.grid-cols-1.xl\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+      gap: 1.25rem !important;
+    }
+
+    /* Map height */
+    main .relative.h-\\[540px\\] {
+      height: 320px !important;
+      border-radius: 1rem !important;
+    }
+
+    /* HUD overlay */
+    main .absolute.top-6.left-6 {
+      top: 0.75rem !important;
+      left: 0.75rem !important;
+      padding: 0.75rem !important;
+      min-width: 150px !important;
+      border-radius: 1rem !important;
+    }
+
+    main .absolute.top-6.left-6 span.text-4xl {
+      font-size: 1.75rem !important;
+    }
+
+    main .absolute.top-6.left-6 .text-xs {
+      font-size: 0.6rem !important;
+    }
+
+    /* Map controls */
+    main .absolute.bottom-6.right-6 {
+      bottom: 0.75rem !important;
+      right: 0.75rem !important;
+    }
+
+    /* Wind & Temp grid */
+    main .grid.grid-cols-1.md\\:grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem !important;
+    }
+
+    /* Wind & Temp numbers */
+    main .text-5xl {
+      font-size: 2.25rem !important;
+    }
+
+    main .text-lg.font-bold.text-slate-700 {
+      font-size: 0.875rem !important;
+    }
+
+    main .text-2xl.font-bold.text-slate-900 {
+      font-size: 1.25rem !important;
+    }
+
+    /* Right column cards */
+    main .rounded-3xl {
+      border-radius: 1.25rem !important;
+    }
+
+    main .rounded-3xl.p-6 {
+      padding: 1.25rem !important;
+    }
+
+    main .h-40 {
+      height: 9rem !important;
+    }
+
+    /* Quick actions */
+    main .bg-\\[\\#e2e8f0\\].rounded-3xl.p-6 {
+      padding: 1.25rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    main {
+      padding: 1rem !important;
+    }
+
+    main h1 {
+      font-size: 1.375rem !important;
+    }
+
+    /* Map height */
+    main .relative.h-\\[540px\\] {
+      height: 280px !important;
+      border-radius: 0.875rem !important;
+    }
+
+    /* HUD overlay */
+    main .absolute.top-6.left-6 {
+      top: 0.625rem !important;
+      left: 0.625rem !important;
+      padding: 0.625rem !important;
+      min-width: 130px !important;
+    }
+
+    main .absolute.top-6.left-6 span.text-4xl {
+      font-size: 1.5rem !important;
+    }
+
+    /* Wind & Temp grid - stack */
+    main .grid.grid-cols-1.md\\:grid-cols-2 {
+      grid-template-columns: 1fr !important;
+      gap: 0.875rem !important;
+    }
+
+    /* Wind & Temp card */
+    main .rounded-2xl.p-6 {
+      padding: 1rem !important;
+      border-radius: 1rem !important;
+    }
+
+    main .text-5xl {
+      font-size: 2rem !important;
+    }
+
+    /* Boat details */
+    main .rounded-3xl.p-6 {
+      padding: 1rem !important;
+    }
+
+    main .h-40 {
+      height: 8rem !important;
+    }
+
+    main .text-lg.font-bold.text-\\[\\#005a8d\\] {
+      font-size: 1rem !important;
+    }
+
+    /* Fuel bar */
+    main .bg-\\[\\#f0f4f8\\].rounded-xl.p-4 {
+      padding: 0.75rem !important;
+    }
+
+    /* Quick actions buttons */
+    main .space-y-3 button {
+      padding-top: 0.625rem !important;
+      padding-bottom: 0.625rem !important;
+      font-size: 0.875rem !important;
+    }
+
+    /* Gap adjustments */
+    main .space-y-6 > * + * {
+      margin-top: 1rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    main {
+      padding: 0.875rem !important;
+    }
+
+    main h1 {
+      font-size: 1.25rem !important;
+    }
+
+    main p.text-slate-600 {
+      font-size: 0.7rem !important;
+    }
+
+    /* Map height */
+    main .relative.h-\\[540px\\] {
+      height: 240px !important;
+      border-radius: 0.75rem !important;
+    }
+
+    /* HUD overlay */
+    main .absolute.top-6.left-6 {
+      top: 0.5rem !important;
+      left: 0.5rem !important;
+      padding: 0.5rem !important;
+      min-width: 115px !important;
+      border-radius: 0.875rem !important;
+    }
+
+    main .absolute.top-6.left-6 span.text-4xl {
+      font-size: 1.375rem !important;
+    }
+
+    main .absolute.top-6.left-6 .mb-3 p {
+      font-size: 0.55rem !important;
+    }
+
+    main .absolute.top-6.left-6 .flex.gap-6 {
+      gap: 0.75rem !important;
+    }
+
+    /* Wind & Temp cards */
+    main .text-5xl {
+      font-size: 1.75rem !important;
+    }
+
+    main .text-sm.text-slate-500 {
+      font-size: 0.7rem !important;
+    }
+
+    /* Boat details card */
+    main .rounded-3xl.p-6 {
+      padding: 0.875rem !important;
+      border-radius: 1rem !important;
+    }
+
+    main .h-40 {
+      height: 7rem !important;
+    }
+
+    main .text-lg.font-bold.text-slate-900 {
+      font-size: 0.9375rem !important;
+    }
+
+    /* Space-y-4 in boat details */
+    main .space-y-4 > * + * {
+      margin-top: 0.75rem !important;
+    }
+
+    /* Quick actions */
+    main .space-y-3 button {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.8125rem !important;
+      border-radius: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    main {
+      padding: 0.625rem !important;
+    }
+
+    main h1 {
+      font-size: 1.125rem !important;
+    }
+
+    /* Map */
+    main .relative.h-\\[540px\\] {
+      height: 200px !important;
+    }
+
+    /* HUD overlay */
+    main .absolute.top-6.left-6 {
+      min-width: 100px !important;
+      padding: 0.375rem !important;
+    }
+
+    main .absolute.top-6.left-6 span.text-4xl {
+      font-size: 1.25rem !important;
+    }
+
+    /* Cards */
+    main .text-5xl {
+      font-size: 1.5rem !important;
+    }
+
+    main .rounded-2xl.p-6 {
+      padding: 0.875rem !important;
+    }
+
+    /* Boat details */
+    main .h-40 {
+      height: 6rem !important;
+    }
+
+    main .rounded-3xl.p-6 {
+      padding: 0.75rem !important;
+    }
+
+    /* Quick actions */
+    main .space-y-3 button {
+      padding: 0.5rem 0.75rem !important;
+      font-size: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     ANIMATIONS
+     ============================== */
+  @keyframes dashFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+
+  main {
+    animation: dashFadeIn 0.3s ease forwards;
+  }
+`;
 
 export default BoatDriverDashboard;

@@ -304,6 +304,8 @@ const WeatherDashboard = () => {
 
   return (
     <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
+
+      <style>{weatherDashboardStyles}</style> 
       {userRole === "owner" ? <OwnerSidebar /> : <DriverSidebar />}
 
       <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
@@ -970,5 +972,628 @@ const WeatherDashboard = () => {
     </div>
   );
 };
+
+
+const weatherDashboardStyles = `
+
+  /* ==============================
+     BASE - Page foundation
+     ============================== */
+
+  /* Fix full page layout */
+  .flex.h-screen.bg-\\[\\#f8fafc\\] {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  /* Main scrollable area */
+  main {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+  }
+
+  /* Leaflet z-index fixes */
+  .leaflet-container {
+    z-index: 0 !important;
+  }
+  .leaflet-control-container {
+    z-index: 10 !important;
+  }
+  .leaflet-pane {
+    z-index: 1 !important;
+  }
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+)
+     - Everything stays original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    main {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+      padding-top: 1.75rem !important;
+      padding-bottom: 1.75rem !important;
+    }
+
+    main h1 {
+      font-size: 1.875rem !important;
+    }
+
+    main .mb-8 {
+      margin-bottom: 1.75rem !important;
+    }
+
+    /* Map height reduce */
+    main .h-\\[75vh\\] {
+      height: 62vh !important;
+    }
+
+    /* Map overlay panel */
+    main .absolute.top-4.left-4.z-\\[1000\\] {
+      width: 250px !important;
+    }
+
+    /* Weather cards gap */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 {
+      gap: 1rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    main {
+      padding-left: 1.25rem !important;
+      padding-right: 1.25rem !important;
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.75rem !important;
+    }
+
+    main .mb-8 {
+      margin-bottom: 1.5rem !important;
+    }
+
+    /* Search section */
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6.mb-4 {
+      padding: 1.125rem !important;
+    }
+
+    main label.text-\\[18px\\] {
+      font-size: 0.9375rem !important;
+    }
+
+    /* Boat + Location - stack */
+    main .grid.grid-cols-1.lg\\:grid-cols-2.gap-6.mb-6 {
+      grid-template-columns: 1fr !important;
+      gap: 0.875rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    /* Weather cards - 2x2 */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.875rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    main .text-3xl.font-extrabold {
+      font-size: 1.625rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[75vh\\] {
+      height: 58vh !important;
+    }
+
+    /* Map overlay panel */
+    main .absolute.top-4.left-4.z-\\[1000\\] {
+      width: 220px !important;
+      padding: 0.875rem !important;
+    }
+
+    /* See weather button */
+    main button.mt-5.px-10 {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+      font-size: 0.875rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     ============================== */
+  @media (max-width: 768px) {
+
+    main {
+      padding: 1.25rem 1rem !important;
+    }
+
+    /* Header */
+    main .mb-8 {
+      margin-bottom: 1.25rem !important;
+    }
+
+    main h1 {
+      font-size: 1.5rem !important;
+      line-height: 1.3 !important;
+    }
+
+    main .mt-3.text-slate-600 {
+      font-size: 0.8125rem !important;
+      margin-top: 0.375rem !important;
+    }
+
+    /* Search card */
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6.mb-4 {
+      padding: 1rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    /* Search label + badge - stack */
+    main .flex.items-center.justify-between.mb-4 {
+      flex-wrap: wrap !important;
+      gap: 0.5rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    main label.text-\\[18px\\] {
+      font-size: 0.875rem !important;
+    }
+
+    /* Max width for search input */
+    main .relative.max-w-lg {
+      max-width: 100% !important;
+    }
+
+    /* See weather button - full width */
+    main button.mt-5.px-10 {
+      width: 100% !important;
+      justify-content: center !important;
+      margin-top: 0.875rem !important;
+      padding: 0.625rem 1rem !important;
+      font-size: 0.8125rem !important;
+    }
+
+    /* Boat + Location - single col */
+    main .grid.grid-cols-1.lg\\:grid-cols-2.gap-6.mb-6 {
+      grid-template-columns: 1fr !important;
+      gap: 0.875rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6 {
+      padding: 1rem !important;
+    }
+
+    main h2.text-2xl.font-bold {
+      font-size: 1.25rem !important;
+    }
+
+    /* Weather cards - 2 cols */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.75rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    main .text-3xl.font-extrabold {
+      font-size: 1.375rem !important;
+    }
+
+    /* Weather card padding */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div {
+      padding: 0.875rem !important;
+    }
+
+    /* Current condition + alerts cards */
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6.mb-6 {
+      padding: 1rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    main h3.text-xl.font-bold {
+      font-size: 1rem !important;
+    }
+
+    /* Map section */
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6.mb-6:last-child {
+      padding: 0.875rem !important;
+    }
+
+    /* Map layer selector - stack */
+    main .flex.flex-col.md\\:flex-row.md\\:items-center.md\\:justify-between {
+      flex-direction: column !important;
+      gap: 0.625rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[75vh\\] {
+      height: 52vh !important;
+      border-radius: 0.75rem !important;
+    }
+
+    /* Map overlay panel - compact */
+    main .absolute.top-4.left-4.z-\\[1000\\] {
+      width: 195px !important;
+      padding: 0.75rem !important;
+      top: 0.5rem !important;
+      left: 0.5rem !important;
+    }
+
+    main .absolute.top-4.left-4.z-\\[1000\\] .text-3xl {
+      font-size: 1.5rem !important;
+    }
+
+    main .absolute.top-4.left-4.z-\\[1000\\] p.font-bold.text-sm {
+      font-size: 0.625rem !important;
+      max-width: 140px !important;
+    }
+
+    main .absolute.top-4.left-4.z-\\[1000\\] p.font-black.text-lg {
+      font-size: 1rem !important;
+    }
+
+    /* Coordinates panel */
+    main .absolute.bottom-4.right-4.z-\\[1000\\] {
+      bottom: 0.5rem !important;
+      right: 0.5rem !important;
+      padding: 0.5rem 0.75rem !important;
+    }
+
+    main .absolute.bottom-4.right-4.z-\\[1000\\] p.font-mono {
+      font-size: 0.5625rem !important;
+    }
+
+    /* Center button */
+    main .absolute.top-4.right-4.z-\\[1000\\] {
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+      padding: 0.5rem !important;
+    }
+
+    main .absolute.top-4.right-4.z-\\[1000\\] svg {
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    /* Place name badge in map header */
+    main .text-xs.bg-blue-100.text-blue-700 {
+      font-size: 0.5625rem !important;
+      padding: 0.25rem 0.5rem !important;
+      max-width: 140px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+
+    /* Alert items */
+    main .rounded-xl.border.border-yellow-200.bg-yellow-50.p-4 {
+      padding: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    main {
+      padding: 1rem 0.875rem !important;
+    }
+
+    main h1 {
+      font-size: 1.375rem !important;
+    }
+
+    /* Weather cards */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.625rem !important;
+    }
+
+    main .text-3xl.font-extrabold {
+      font-size: 1.25rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[75vh\\] {
+      height: 48vh !important;
+    }
+
+    /* Map overlay - shrink more */
+    main .absolute.top-4.left-4.z-\\[1000\\] {
+      width: 175px !important;
+      padding: 0.625rem !important;
+      top: 0.375rem !important;
+      left: 0.375rem !important;
+    }
+
+    main .absolute.top-4.left-4.z-\\[1000\\] .grid.grid-cols-2 > div {
+      padding: 0.375rem !important;
+    }
+
+    main .absolute.top-4.left-4.z-\\[1000\\] p.font-black.text-lg {
+      font-size: 0.9375rem !important;
+    }
+
+    /* Center button */
+    main .absolute.top-4.right-4.z-\\[1000\\] {
+      top: 0.375rem !important;
+      right: 0.375rem !important;
+      padding: 0.4375rem !important;
+    }
+
+    /* Bottom coordinates */
+    main .absolute.bottom-4.right-4.z-\\[1000\\] {
+      bottom: 0.375rem !important;
+      right: 0.375rem !important;
+    }
+
+    /* Layer select */
+    main select {
+      font-size: 0.6875rem !important;
+      padding: 0.3125rem 0.5rem !important;
+    }
+
+    /* map section card */
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6.mb-6 {
+      padding: 0.875rem !important;
+    }
+
+    /* Selected boat info grid - single col on mobile */
+    main .grid.grid-cols-2.gap-x-4.gap-y-1.mt-2 {
+      grid-template-columns: 1fr 1fr !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    main {
+      padding: 0.875rem 0.75rem !important;
+    }
+
+    main h1 {
+      font-size: 1.25rem !important;
+    }
+
+    main .mb-8 {
+      margin-bottom: 1rem !important;
+    }
+
+    /* Search card */
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6.mb-4 {
+      padding: 0.875rem !important;
+    }
+
+    /* Search input text */
+    main input[type="text"] {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Weather cards */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div {
+      padding: 0.75rem !important;
+    }
+
+    main .text-3xl.font-extrabold {
+      font-size: 1.125rem !important;
+    }
+
+    main .flex.items-center.gap-2.text-blue-600 svg {
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    main .flex.items-center.gap-2.text-blue-600 span {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[75vh\\] {
+      height: 44vh !important;
+    }
+
+    /* Map overlay panel */
+    main .absolute.top-4.left-4.z-\\[1000\\] {
+      width: 158px !important;
+    }
+
+    /* map section heading */
+    main .flex.items-center.gap-2.text-slate-800.font-bold span.text-lg {
+      font-size: 0.875rem !important;
+    }
+
+    main h2.text-2xl.font-bold {
+      font-size: 1.125rem !important;
+    }
+
+    main h3.text-xl.font-bold {
+      font-size: 0.9375rem !important;
+    }
+
+    /* Alert cards */
+    main .rounded-xl.border.border-yellow-200.bg-yellow-50.p-4 {
+      padding: 0.625rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    main {
+      padding: 0.625rem 0.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.125rem !important;
+    }
+
+    /* Search card */
+    main .bg-white.rounded-2xl.border.border-slate-200.shadow-sm.p-6.mb-4 {
+      padding: 0.75rem !important;
+    }
+
+    /* Search input */
+    main input[type="text"] {
+      font-size: 0.625rem !important;
+    }
+
+    /* Weather cards - still 2 col */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.375rem !important;
+    }
+
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div {
+      padding: 0.625rem !important;
+    }
+
+    main .text-3xl.font-extrabold {
+      font-size: 1rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[75vh\\] {
+      height: 40vh !important;
+    }
+
+    /* Hide map overlay panel - too small */
+    main .absolute.top-4.left-4.z-\\[1000\\] {
+      display: none !important;
+    }
+
+    /* Coordinates panel - compact */
+    main .absolute.bottom-4.right-4.z-\\[1000\\] {
+      bottom: 0.25rem !important;
+      right: 0.25rem !important;
+      padding: 0.375rem 0.5rem !important;
+    }
+
+    main .absolute.bottom-4.right-4.z-\\[1000\\] p.font-mono {
+      font-size: 0.4375rem !important;
+    }
+
+    /* Center button */
+    main .absolute.top-4.right-4.z-\\[1000\\] {
+      top: 0.25rem !important;
+      right: 0.25rem !important;
+      padding: 0.375rem !important;
+    }
+
+    /* Layer selects */
+    main select {
+      font-size: 0.5625rem !important;
+      padding: 0.25rem 0.375rem !important;
+    }
+
+    main .bg-slate-50.rounded-xl.p-3 {
+      padding: 0.5rem !important;
+      gap: 0.375rem !important;
+    }
+
+    /* See weather button */
+    main button.mt-5.px-10 {
+      font-size: 0.6875rem !important;
+      padding: 0.5rem 0.75rem !important;
+    }
+
+    main h2.text-2xl.font-bold {
+      font-size: 1rem !important;
+    }
+
+    main h3.text-xl.font-bold {
+      font-size: 0.875rem !important;
+    }
+
+    main .space-y-2.text-slate-700 p {
+      font-size: 0.625rem !important;
+    }
+
+    main .mb-8 {
+      margin-bottom: 0.875rem !important;
+    }
+
+    /* Place name badge */
+    main .text-xs.bg-blue-100.text-blue-700 {
+      max-width: 100px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      font-size: 0.5rem !important;
+    }
+  }
+
+
+  /* ==============================
+     ANIMATIONS
+     ============================== */
+  @keyframes weatherFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  main {
+    animation: weatherFadeIn 0.3s ease forwards;
+  }
+
+  /* Weather metric cards stagger */
+  main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div:nth-child(1) {
+    animation: cardReveal 0.3s ease 0.05s both;
+  }
+  main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div:nth-child(2) {
+    animation: cardReveal 0.3s ease 0.10s both;
+  }
+  main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div:nth-child(3) {
+    animation: cardReveal 0.3s ease 0.15s both;
+  }
+  main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div:nth-child(4) {
+    animation: cardReveal 0.3s ease 0.20s both;
+  }
+
+  /* Dropdown */
+  main .absolute.z-50.mt-1 {
+    animation: cardReveal 0.18s ease forwards;
+  }
+
+  /* Card hover */
+  main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4 > div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+  }
+`;
+
 
 export default WeatherDashboard;

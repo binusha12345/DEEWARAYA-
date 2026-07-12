@@ -61,6 +61,8 @@ const openGoogleMaps = (provider) => {
 
   return (
     <div className="flex h-screen bg-[#f5f7fb] text-slate-800 ">
+
+       <style>{sparePartsStyles}</style> 
       {/* Sidebar */}
       <OwnerSidebar />
 
@@ -154,5 +156,591 @@ const openGoogleMaps = (provider) => {
     </div>
   );
 };
+
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Clean
+// ============================================================
+
+const sparePartsStyles = `
+
+  /* ==============================
+     BASE - Page foundation
+     ============================== */
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+)
+     - Everything stays original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    /* Main padding */
+    main {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+      padding-top: 1.75rem !important;
+      padding-bottom: 1.75rem !important;
+    }
+
+    /* Page heading */
+    main h1 {
+      font-size: 1.875rem !important;
+    }
+
+    main p.text-slate-700 {
+      font-size: 0.9375rem !important;
+    }
+
+    /* Header margin */
+    main .mb-10 {
+      margin-bottom: 2rem !important;
+    }
+
+    /* Section title */
+    main h2.text-3xl.font-bold {
+      font-size: 1.75rem !important;
+    }
+
+    /* Section title margin */
+    main .mb-6 {
+      margin-bottom: 1.25rem !important;
+    }
+
+    /* Cards grid gap */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-3 {
+      gap: 1.5rem !important;
+    }
+
+    /* Card provider name */
+    main h3.text-\\[18px\\] {
+      font-size: 1rem !important;
+    }
+
+    /* Card details text */
+    main .text-\\[14px\\] {
+      font-size: 0.8125rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1.25rem !important;
+    }
+
+    /* View location button */
+    main .bg-blue-800.text-white.font-semibold {
+      padding: 0.5rem !important;
+      font-size: 0.875rem !important;
+    }
+
+    /* Blue accent bar */
+    main .w-2.h-10 {
+      height: 2.25rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    main {
+      padding-left: 1.25rem !important;
+      padding-right: 1.25rem !important;
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+
+    /* Header */
+    main .mb-10 {
+      margin-bottom: 1.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.75rem !important;
+    }
+
+    main p.text-slate-700 {
+      font-size: 0.875rem !important;
+      margin-top: 0.5rem !important;
+    }
+
+    main .text-xs.tracking-\\[0\\.28em\\] {
+      font-size: 0.5625rem !important;
+    }
+
+    /* Section title */
+    main h2.text-3xl.font-bold {
+      font-size: 1.5rem !important;
+    }
+
+    /* Blue accent bar */
+    main .w-2.h-10 {
+      height: 2rem !important;
+      width: 0.375rem !important;
+    }
+
+    /* Cards grid - 2 cols */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1.25rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-50 {
+      height: 10rem !important;
+    }
+
+    /* Card badge */
+    main .absolute.top-4.right-4 {
+      font-size: 0.5625rem !important;
+      padding: 0.25rem 0.625rem !important;
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1.125rem !important;
+    }
+
+    /* Card provider name */
+    main h3.text-\\[18px\\] {
+      font-size: 0.9375rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+
+    /* Card detail icons */
+    main .space-y-4 svg {
+      width: 1.125rem !important;
+      height: 1.125rem !important;
+    }
+
+    /* Card detail space */
+    main .space-y-4 {
+      gap: 0.75rem !important;
+    }
+
+    /* Card details text */
+    main .text-\\[14px\\] {
+      font-size: 0.75rem !important;
+    }
+
+    /* Card footer */
+    main .mt-8.pt-6 {
+      margin-top: 1rem !important;
+      padding-top: 0.875rem !important;
+    }
+
+    /* View location button */
+    main .bg-blue-800.text-white.font-semibold {
+      padding: 0.4375rem !important;
+      font-size: 0.8125rem !important;
+      border-radius: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     - 2 column cards
+     - Compact details
+     ============================== */
+  @media (max-width: 768px) {
+
+    main {
+      padding: 1.25rem 1rem !important;
+    }
+
+    /* Header */
+    main .mb-10 {
+      margin-bottom: 1.25rem !important;
+    }
+
+    main h1 {
+      font-size: 1.5rem !important;
+      line-height: 1.3 !important;
+    }
+
+    main p.text-slate-700 {
+      font-size: 0.75rem !important;
+      margin-top: 0.375rem !important;
+    }
+
+    main .text-xs.tracking-\\[0\\.28em\\] {
+      font-size: 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    /* Section title row */
+    main .flex.items-center.gap-3.mb-6 {
+      margin-bottom: 1rem !important;
+      gap: 0.5rem !important;
+    }
+
+    main h2.text-3xl.font-bold {
+      font-size: 1.375rem !important;
+    }
+
+    /* Blue accent bar */
+    main .w-2.h-10 {
+      width: 0.3rem !important;
+      height: 1.75rem !important;
+      border-radius: 9999px !important;
+    }
+
+    /* Cards grid - 2 cols */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem !important;
+    }
+
+    /* Card rounded */
+    main .rounded-2xl {
+      border-radius: 1rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-50 {
+      height: 9rem !important;
+    }
+
+    /* Card badge */
+    main .absolute.top-4.right-4 {
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+      font-size: 0.5rem !important;
+      padding: 0.2rem 0.5rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1rem !important;
+    }
+
+    /* Provider name */
+    main h3.text-\\[18px\\] {
+      font-size: 0.875rem !important;
+      margin-bottom: 0.625rem !important;
+    }
+
+    /* Details */
+    main .space-y-4 {
+      gap: 0.625rem !important;
+    }
+
+    main .space-y-4 svg {
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    main .text-\\[14px\\] {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Card footer */
+    main .mt-8.pt-6 {
+      margin-top: 0.875rem !important;
+      padding-top: 0.75rem !important;
+    }
+
+    /* View location button */
+    main .bg-blue-800.text-white.font-semibold {
+      padding: 0.4375rem !important;
+      font-size: 0.75rem !important;
+      border-radius: 0.75rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    main {
+      padding: 1rem 0.875rem !important;
+    }
+
+    main h1 {
+      font-size: 1.375rem !important;
+    }
+
+    main p.text-slate-700 {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Cards grid - 1 col */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+      gap: 0.875rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-50 {
+      height: 11rem !important;
+    }
+
+    /* Card badge */
+    main .absolute.top-4.right-4 {
+      font-size: 0.5625rem !important;
+      padding: 0.25rem 0.625rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1.125rem !important;
+    }
+
+    /* Provider name */
+    main h3.text-\\[18px\\] {
+      font-size: 1rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    /* Details */
+    main .space-y-4 svg {
+      width: 1.125rem !important;
+      height: 1.125rem !important;
+    }
+
+    main .text-\\[14px\\] {
+      font-size: 0.75rem !important;
+    }
+
+    /* Card footer */
+    main .mt-8.pt-6 {
+      margin-top: 1rem !important;
+      padding-top: 0.875rem !important;
+    }
+
+    /* View button */
+    main .bg-blue-800.text-white.font-semibold {
+      padding: 0.5rem !important;
+      font-size: 0.8125rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    main {
+      padding: 0.875rem 0.75rem !important;
+    }
+
+    main h1 {
+      font-size: 1.25rem !important;
+    }
+
+    main p.text-slate-700 {
+      font-size: 0.625rem !important;
+    }
+
+    /* Section title */
+    main h2.text-3xl.font-bold {
+      font-size: 1.25rem !important;
+    }
+
+    /* Blue accent bar */
+    main .w-2.h-10 {
+      width: 0.25rem !important;
+      height: 1.5rem !important;
+    }
+
+    /* Cards gap */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-3 {
+      gap: 0.75rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-50 {
+      height: 10rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 1rem !important;
+    }
+
+    /* Provider name */
+    main h3.text-\\[18px\\] {
+      font-size: 0.9375rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+
+    /* Details */
+    main .text-\\[14px\\] {
+      font-size: 0.6875rem !important;
+    }
+
+    main .space-y-4 {
+      gap: 0.5rem !important;
+    }
+
+    /* Card footer */
+    main .mt-8.pt-6 {
+      margin-top: 0.875rem !important;
+      padding-top: 0.75rem !important;
+    }
+
+    /* View button */
+    main .bg-blue-800.text-white.font-semibold {
+      font-size: 0.75rem !important;
+      padding: 0.4375rem !important;
+      border-radius: 0.625rem !important;
+    }
+
+    /* Header mb */
+    main .mb-10 {
+      margin-bottom: 1rem !important;
+    }
+
+    /* Section mb */
+    main .flex.items-center.gap-3.mb-6 {
+      margin-bottom: 0.875rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    main {
+      padding: 0.625rem 0.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.125rem !important;
+    }
+
+    main p.text-slate-700 {
+      font-size: 0.5625rem !important;
+    }
+
+    /* Section title */
+    main h2.text-3xl.font-bold {
+      font-size: 1.125rem !important;
+    }
+
+    /* Blue accent bar */
+    main .w-2.h-10 {
+      width: 0.25rem !important;
+      height: 1.25rem !important;
+    }
+
+    /* Card image */
+    main .relative.h-50 {
+      height: 9rem !important;
+    }
+
+    /* Card badge */
+    main .absolute.top-4.right-4 {
+      font-size: 0.4375rem !important;
+      padding: 0.15rem 0.4rem !important;
+      top: 0.375rem !important;
+      right: 0.375rem !important;
+    }
+
+    /* Card padding */
+    main .p-6 {
+      padding: 0.875rem !important;
+    }
+
+    /* Provider name */
+    main h3.text-\\[18px\\] {
+      font-size: 0.875rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    /* Details */
+    main .text-\\[14px\\] {
+      font-size: 0.625rem !important;
+    }
+
+    main .space-y-4 svg {
+      width: 0.875rem !important;
+      height: 0.875rem !important;
+    }
+
+    /* Card footer */
+    main .mt-8.pt-6 {
+      margin-top: 0.75rem !important;
+      padding-top: 0.625rem !important;
+    }
+
+    /* View button */
+    main .bg-blue-800.text-white.font-semibold {
+      font-size: 0.6875rem !important;
+      padding: 0.375rem !important;
+    }
+
+    /* Header mb */
+    main .mb-10 {
+      margin-bottom: 0.875rem !important;
+    }
+
+    /* Section mb */
+    main .flex.items-center.gap-3.mb-6 {
+      margin-bottom: 0.75rem !important;
+    }
+
+    /* Cards gap */
+    main .grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-3 {
+      gap: 0.625rem !important;
+    }
+  }
+
+
+  /* ==============================
+     ANIMATIONS
+     ============================== */
+  @keyframes sparePartsFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+
+  @keyframes cardSlideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  main {
+    animation: sparePartsFadeIn 0.3s ease forwards;
+  }
+
+  /* Staggered card animations */
+  main .grid > div:nth-child(1) {
+    animation: cardSlideUp 0.35s ease 0.05s both;
+  }
+
+  main .grid > div:nth-child(2) {
+    animation: cardSlideUp 0.35s ease 0.12s both;
+  }
+
+  main .grid > div:nth-child(3) {
+    animation: cardSlideUp 0.35s ease 0.18s both;
+  }
+
+  /* Card hover lift */
+  main .rounded-2xl {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  main .rounded-2xl:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.10) !important;
+  }
+`;
 
 export default MaintenanceSpareParts;

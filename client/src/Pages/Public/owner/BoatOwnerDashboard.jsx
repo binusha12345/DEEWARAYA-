@@ -20,6 +20,7 @@ const BoatOwnerDashboard = () => {
   return (
     <div className="flex h-screen bg-slate-100 font-sans text-slate-800 overflow-hidden">
       
+      <style>{ownerDashboardStyles}</style> 
       {/* Sidebar */}
       <OwnerSidebar />
 
@@ -264,5 +265,499 @@ const DayForecast = ({ day, temp }) => (
     <span className="text-[10px] font-bold">{temp}</span>
   </div>
 );
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Clean
+// ============================================================
+
+const ownerDashboardStyles = `
+
+  /* ==============================
+     BASE - Dashboard foundation
+     ============================== */
+  .owner-page {
+    min-height: 100vh;
+  }
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+)
+     - Everything stays original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    /* Main padding */
+    main {
+      padding: 1.75rem !important;
+    }
+
+    /* Welcome heading */
+    main h1 {
+      font-size: 1.875rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[500px\\] {
+      height: 400px !important;
+    }
+
+    /* Stat cards value */
+    main .text-2xl.font-black {
+      font-size: 1.5rem !important;
+    }
+
+    /* Weather temp */
+    main .text-5xl.font-black {
+      font-size: 2.75rem !important;
+    }
+
+    /* Weather card */
+    main .text-lg.font-bold {
+      font-size: 1rem !important;
+    }
+
+    /* Right widgets */
+    main .rounded-3xl.p-6 {
+      padding: 1.25rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    main {
+      padding: 1.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.75rem !important;
+    }
+
+    main p.text-sm.text-slate-500 {
+      font-size: 0.75rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[500px\\] {
+      height: 360px !important;
+    }
+
+    /* Map floating info */
+    main .absolute.top-6.left-6 {
+      top: 0.75rem !important;
+      left: 0.75rem !important;
+    }
+
+    /* Map controls */
+    main .absolute.bottom-6.right-6 {
+      bottom: 0.75rem !important;
+      right: 0.75rem !important;
+    }
+
+    /* Stack xl:grid-cols-3 earlier */
+    main .grid.grid-cols-1.xl\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Stat cards grid */
+    main .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-5 {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    /* Stat card value */
+    main .text-2xl.font-black {
+      font-size: 1.375rem !important;
+    }
+
+    /* Weather temp */
+    main .text-5xl.font-black {
+      font-size: 2.5rem !important;
+    }
+
+    /* Maintenance card */
+    main .rounded-3xl.p-6 {
+      padding: 1.25rem !important;
+    }
+
+    /* Download report button */
+    main button.bg-blue-600 {
+      font-size: 0.875rem !important;
+      padding: 0.5rem 1rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     - Stack layout vertically
+     - Compact all sections
+     ============================== */
+  @media (max-width: 768px) {
+
+    main {
+      padding: 1.25rem !important;
+    }
+
+    /* Section header */
+    main > div:first-child {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 0.875rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    main h1 {
+      font-size: 1.5rem !important;
+    }
+
+    main p.text-sm.text-slate-500 {
+      font-size: 0.7rem !important;
+    }
+
+    /* Download button */
+    main button.bg-blue-600 {
+      font-size: 0.8125rem !important;
+      padding: 0.5rem 0.875rem !important;
+    }
+
+    /* Stat cards - 2 columns */
+    main .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-5 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.75rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    /* Stat card padding */
+    main .bg-white.p-5.rounded-xl {
+      padding: 1rem !important;
+    }
+
+    /* Stat card value */
+    main .text-2xl.font-black {
+      font-size: 1.375rem !important;
+    }
+
+    /* Net profit card */
+    main .bg-gradient-to-br.from-blue-900.to-cyan-600.p-5 {
+      padding: 1rem !important;
+    }
+
+    /* Main grid - single column */
+    main .grid.grid-cols-1.xl\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+      gap: 1.25rem !important;
+    }
+
+    /* Map height */
+    main .h-\\[500px\\] {
+      height: 300px !important;
+      border-radius: 1rem !important;
+    }
+
+    /* Map floating info */
+    main .absolute.top-6.left-6 {
+      top: 0.625rem !important;
+      left: 0.625rem !important;
+    }
+
+    main .absolute.top-6.left-6 p.text-\\[10px\\] {
+      font-size: 0.55rem !important;
+    }
+
+    main .absolute.top-6.left-6 p.text-xs {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Map controls */
+    main .absolute.bottom-6.right-6 {
+      bottom: 0.625rem !important;
+      right: 0.625rem !important;
+    }
+
+    /* Maintenance card */
+    main .rounded-3xl.p-6 {
+      padding: 1.25rem !important;
+      border-radius: 1.25rem !important;
+    }
+
+    /* Weather temp */
+    main .text-5xl.font-black {
+      font-size: 2.25rem !important;
+    }
+
+    /* Weather card */
+    main .text-lg.font-bold {
+      font-size: 0.9375rem !important;
+    }
+
+    /* Day forecast text */
+    main .text-\\[8px\\] {
+      font-size: 0.5625rem !important;
+    }
+
+    main .text-\\[10px\\].font-bold {
+      font-size: 0.625rem !important;
+    }
+
+    /* Space-y-6 */
+    main .space-y-6 > * + * {
+      margin-top: 1rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    main {
+      padding: 1rem !important;
+    }
+
+    main h1 {
+      font-size: 1.375rem !important;
+    }
+
+    /* Stat cards - 2 cols */
+    main .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-5 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.625rem !important;
+    }
+
+    /* Stat card */
+    main .bg-white.p-5.rounded-xl {
+      padding: 0.875rem !important;
+    }
+
+    main .text-2xl.font-black {
+      font-size: 1.25rem !important;
+    }
+
+    /* Map */
+    main .h-\\[500px\\] {
+      height: 260px !important;
+      border-radius: 0.875rem !important;
+    }
+
+    /* Map floating info padding */
+    main .absolute.top-6.left-6 .p-3 {
+      padding: 0.5rem !important;
+    }
+
+    /* Maintenance item */
+    main .bg-white.p-3.rounded-xl {
+      padding: 0.625rem !important;
+    }
+
+    /* Maintenance icon */
+    main .w-10.h-10.rounded-lg {
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+
+    /* Weather card padding */
+    main .rounded-3xl.p-6 {
+      padding: 1rem !important;
+    }
+
+    /* Weather temp */
+    main .text-5xl.font-black {
+      font-size: 2rem !important;
+    }
+
+    /* Quick actions sections below */
+    main .mt-8 {
+      margin-top: 1.25rem !important;
+    }
+
+    /* Quick action buttons grid */
+    main .mt-8.grid.grid-cols-2.sm\\:grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.75rem !important;
+    }
+
+    /* Fleet table font */
+    main table th {
+      font-size: 0.55rem !important;
+      padding: 0.5rem !important;
+    }
+
+    main table td {
+      font-size: 0.6875rem !important;
+      padding: 0.625rem 0.5rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    main {
+      padding: 0.875rem !important;
+    }
+
+    main h1 {
+      font-size: 1.25rem !important;
+    }
+
+    /* Stat cards - stack to 1 col */
+    main .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-5 {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.5rem !important;
+    }
+
+    /* Stat card */
+    main .bg-white.p-5.rounded-xl {
+      padding: 0.75rem !important;
+      border-radius: 0.75rem !important;
+    }
+
+    main .text-2xl.font-black {
+      font-size: 1.125rem !important;
+    }
+
+    /* Map */
+    main .h-\\[500px\\] {
+      height: 220px !important;
+    }
+
+    /* Map floating info */
+    main .absolute.top-6.left-6 {
+      top: 0.375rem !important;
+      left: 0.375rem !important;
+    }
+
+    main .absolute.top-6.left-6 .p-3 {
+      padding: 0.375rem !important;
+    }
+
+    /* Weather temp */
+    main .text-5xl.font-black {
+      font-size: 1.75rem !important;
+    }
+
+    /* Weather card padding */
+    main .rounded-3xl.p-6 {
+      padding: 0.875rem !important;
+      border-radius: 1rem !important;
+    }
+
+    /* Maintenance card */
+    main .text-sm.font-bold.text-slate-900 {
+      font-size: 0.75rem !important;
+    }
+
+    /* Fleet table - hide some columns */
+    main table th:nth-child(3),
+    main table td:nth-child(3) {
+      display: none !important;
+    }
+
+    /* Activity feed */
+    main .divide-y > div {
+      padding: 0.75rem 1rem !important;
+    }
+
+    /* Top performing bars */
+    main .w-20 {
+      width: 3rem !important;
+    }
+
+    /* Space-y-6 */
+    main .space-y-6 > * + * {
+      margin-top: 0.875rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    main {
+      padding: 0.625rem !important;
+    }
+
+    main h1 {
+      font-size: 1.125rem !important;
+    }
+
+    /* Stat cards */
+    main .bg-white.p-5.rounded-xl {
+      padding: 0.625rem !important;
+    }
+
+    main .text-2xl.font-black {
+      font-size: 1rem !important;
+    }
+
+    /* Map */
+    main .h-\\[500px\\] {
+      height: 190px !important;
+    }
+
+    /* Weather temp */
+    main .text-5xl.font-black {
+      font-size: 1.5rem !important;
+    }
+
+    /* Weather card */
+    main .rounded-3xl.p-6 {
+      padding: 0.75rem !important;
+    }
+
+    /* Fleet table - hide more columns */
+    main table th:nth-child(4),
+    main table td:nth-child(4) {
+      display: none !important;
+    }
+
+    /* Quick action buttons */
+    main .mt-8.grid.grid-cols-2.sm\\:grid-cols-4 {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.5rem !important;
+    }
+
+    /* Activity feed items */
+    main .divide-y > div {
+      padding: 0.625rem 0.75rem !important;
+      gap: 0.625rem !important;
+    }
+
+    /* Space adjustments */
+    main .space-y-6 > * + * {
+      margin-top: 0.75rem !important;
+    }
+
+    main .mt-8 {
+      margin-top: 1rem !important;
+    }
+  }
+
+
+  /* ==============================
+     ANIMATIONS
+     ============================== */
+  @keyframes ownerDashFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+
+  main {
+    animation: ownerDashFadeIn 0.3s ease forwards;
+  }
+`;
 
 export default BoatOwnerDashboard;

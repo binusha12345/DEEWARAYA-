@@ -25,6 +25,7 @@ const SidebarLink = ({ to, icon: Icon, text, iconColor }) => {
           : "text-blue-100 hover:bg-blue-800 hover:text-white"
       }`}
     >
+      <style>{sidebarResponsiveStyles}</style> 
       {/* Active Indicator */}
       {isActive && (
         <span className="absolute left-0 top-0 h-full w-1 bg-cyan-400 rounded-r-md"></span>
@@ -140,5 +141,331 @@ const OwnerSidebar = () => {
     </aside>
   );
 };
+
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Clean
+// ============================================================
+
+const sidebarResponsiveStyles = `
+
+  /* ==============================
+     BASE - Sidebar foundation
+     ============================== */
+  aside {
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+
+  /* ==============================
+     LARGE DESKTOP (1280px+)
+     - Everything stays original
+     ============================== */
+
+
+  /* ==============================
+     LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    aside {
+      width: 16rem !important;
+    }
+
+    aside h1 {
+      font-size: 1.375rem !important;
+    }
+
+    aside .px-8 {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+    }
+
+    aside a span {
+      font-size: 0.875rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    aside {
+      width: 14rem !important;
+    }
+
+    aside h1 {
+      font-size: 1.25rem !important;
+    }
+
+    aside p.text-blue-300 {
+      font-size: 0.65rem !important;
+    }
+
+    aside .px-8 {
+      padding-left: 1.25rem !important;
+      padding-right: 1.25rem !important;
+      padding-top: 1.25rem !important;
+      padding-bottom: 1.25rem !important;
+    }
+
+    aside .px-4 {
+      padding-left: 0.75rem !important;
+      padding-right: 0.75rem !important;
+    }
+
+    /* Nav links */
+    aside a {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+      padding-top: 0.625rem !important;
+      padding-bottom: 0.625rem !important;
+      gap: 0.75rem !important;
+    }
+
+    aside a span {
+      font-size: 0.8125rem !important;
+    }
+
+    aside svg {
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    aside .px-6.py-4 {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     - Collapse to icon-only sidebar
+     ============================== */
+  @media (max-width: 768px) {
+
+    aside {
+      width: 4.5rem !important;
+      min-width: 4.5rem !important;
+    }
+
+    /* Hide logo text */
+    aside h1 {
+      display: none !important;
+    }
+
+    aside p.text-blue-300 {
+      display: none !important;
+    }
+
+    /* Logo section compact */
+    aside .px-8 {
+      padding: 1rem 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    /* Show only first letter as icon */
+    aside .px-8 a::before {
+      content: "D" !important;
+      font-size: 1.25rem !important;
+      font-weight: 900 !important;
+      color: white !important;
+      display: block !important;
+    }
+
+    /* Nav container */
+    aside .px-4 {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+
+    /* Nav links - icon only */
+    aside nav a {
+      padding: 0.75rem !important;
+      justify-content: center !important;
+      gap: 0 !important;
+      border-radius: 0.75rem !important;
+    }
+
+    /* Hide link text */
+    aside nav a span.text-\\[15px\\] {
+      display: none !important;
+    }
+
+    /* Center icons */
+    aside svg {
+      width: 1.25rem !important;
+      height: 1.25rem !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Active indicator */
+    aside a span.absolute {
+      display: none !important;
+    }
+
+    /* Footer */
+    aside .px-6.py-4 {
+      padding: 0.75rem 0.25rem !important;
+      text-align: center !important;
+    }
+
+    aside .px-6.py-4 p {
+      display: none !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    aside {
+      width: 4rem !important;
+      min-width: 4rem !important;
+    }
+
+    aside .px-8 {
+      padding: 0.875rem 0 !important;
+    }
+
+    aside nav a {
+      padding: 0.625rem !important;
+      border-radius: 0.625rem !important;
+    }
+
+    aside svg {
+      width: 1.125rem !important;
+      height: 1.125rem !important;
+    }
+
+    aside .space-y-2 > * + * {
+      margin-top: 0.25rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    aside {
+      width: 3.5rem !important;
+      min-width: 3.5rem !important;
+    }
+
+    aside .px-8 {
+      padding: 0.75rem 0 !important;
+    }
+
+    aside nav a {
+      padding: 0.5rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    aside svg {
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    aside .px-4 {
+      padding-left: 0.375rem !important;
+      padding-right: 0.375rem !important;
+    }
+
+    aside .space-y-2 > * + * {
+      margin-top: 0.125rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    aside {
+      width: 3rem !important;
+      min-width: 3rem !important;
+    }
+
+    aside nav a {
+      padding: 0.375rem !important;
+      border-radius: 0.375rem !important;
+    }
+
+    aside svg {
+      width: 0.875rem !important;
+      height: 0.875rem !important;
+    }
+
+    aside .px-4 {
+      padding-left: 0.25rem !important;
+      padding-right: 0.25rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TOOLTIP on hover (tablet/mobile)
+     - Show link name on icon hover
+     ============================== */
+  @media (max-width: 768px) {
+
+    aside nav a {
+      position: relative !important;
+    }
+
+    aside nav a:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: calc(100% + 0.75rem);
+      top: 50%;
+      transform: translateY(-50%);
+      background: #0f172a;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.5rem;
+      white-space: nowrap;
+      z-index: 999;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    aside nav a:hover::before {
+      content: '';
+      position: absolute;
+      left: calc(100% + 0.375rem);
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-right-color: #0f172a;
+      z-index: 999;
+    }
+  }
+
+
+  /* ==============================
+     ANIMATIONS
+     ============================== */
+  @keyframes sidebarFadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0);     }
+  }
+
+  aside {
+    animation: sidebarFadeIn 0.3s ease forwards;
+  }
+`;
 
 export default OwnerSidebar;
