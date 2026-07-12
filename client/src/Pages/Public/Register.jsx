@@ -70,14 +70,17 @@ const Register = () => {
 
   return (
     <div
-      className="h-screen flex flex-col overflow-hidden"
+      className="register-page h-screen flex flex-col overflow-hidden"
       style={{
         backgroundImage: `url(src/assets/registerfit.jpeg)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Dark Overlay - Quick fade */}
+      {/* ✅ RESPONSIVE STYLES */}
+      <style>{responsiveStyles}</style>
+
+      {/* Dark Overlay */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -87,19 +90,20 @@ const Register = () => {
 
       <HomeNavBar />
 
-      <div className="relative z-10 flex-1 flex items-stretch w-full p-7.5 gap-16">
+      {/* ✅ Main Content Row */}
+      <div className="register-content relative z-10 flex-1 flex items-stretch w-full p-7.5 gap-16">
 
-        {/*  LEFT: HERO  */}
+        {/* ✅ LEFT HERO */}
         <motion.div
-          className="flex-1 flex flex-col justify-center px-16 xl:px-24 py-16 text-white"
+          className="register-left flex-1 flex flex-col justify-center px-16 xl:px-24 py-16 text-white"
           initial="initial"
           animate="animate"
           variants={{
             initial: {},
             animate: {
               transition: {
-                staggerChildren: 0.15,   // Quick stagger
-                delayChildren: 0.2,      // Short initial wait
+                staggerChildren: 0.15,
+                delayChildren: 0.2,
               },
             },
           }}
@@ -108,12 +112,12 @@ const Register = () => {
           <motion.h1
             variants={fadeInLeft}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-[33px] font-extrabold leading-tight mb-2"
+            className="register-heading text-[33px] font-extrabold leading-tight mb-2"
             style={{ fontFamily: "Manrope, sans-serif" }}
           >
             WelCome To <br />
             <motion.span
-              className="text-blue-300 text-[54px] inline-block"
+              className="register-brand text-blue-300 text-[54px] inline-block"
               animate={{
                 opacity: [1, 0.75, 1],
                 scale: [1, 1.03, 1],
@@ -132,7 +136,7 @@ const Register = () => {
           <motion.p
             variants={fadeInLeft}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-gray-300 text-[16px] mb-10 leading-relaxed max-w-200"
+            className="register-desc text-gray-300 text-[16px] mb-10 leading-relaxed max-w-200"
           >
             Real Fishing Boat Management and Tracking System for Sri Lanka's Coastal Communities.
             Empowering boat owners and drivers with real-time insights, fleet management, and
@@ -141,13 +145,11 @@ const Register = () => {
 
           {/* Feature cards */}
           <motion.div
-            className="space-y-4"
+            className="register-features space-y-4"
             variants={{
               initial: {},
               animate: {
-                transition: {
-                  staggerChildren: 0.15,
-                },
+                transition: { staggerChildren: 0.15 },
               },
             }}
           >
@@ -156,7 +158,7 @@ const Register = () => {
               variants={fadeInLeft}
               transition={{ duration: 0.6, ease: "easeOut" }}
               whileHover={{ x: 10, scale: 1.02 }}
-              className="flex items-start gap-3 cursor-pointer"
+              className="register-feature-item flex items-start gap-3 cursor-pointer"
             >
               <motion.div
                 whileHover={{ rotate: 360, scale: 1.2 }}
@@ -167,7 +169,7 @@ const Register = () => {
               </motion.div>
               <div>
                 <p className="font-bold text-[16px]">Fleet Command</p>
-                <p className="text-gray-300 text-[12px]">
+                <p className="register-feature-desc text-gray-300 text-[12px]">
                   Real-time tracking and logistics management.
                 </p>
               </div>
@@ -178,7 +180,7 @@ const Register = () => {
               variants={fadeInLeft}
               transition={{ duration: 0.6, ease: "easeOut" }}
               whileHover={{ x: 10, scale: 1.02 }}
-              className="flex items-start gap-3 cursor-pointer"
+              className="register-feature-item flex items-start gap-3 cursor-pointer"
             >
               <motion.div
                 whileHover={{ rotate: 360, scale: 1.2 }}
@@ -189,7 +191,7 @@ const Register = () => {
               </motion.div>
               <div>
                 <p className="font-semibold text-[16px]">Advanced Analytics</p>
-                <p className="text-gray-300 text-[12px]">
+                <p className="register-feature-desc text-gray-300 text-[12px]">
                   Actionable insights from your vessel's telemetry.
                 </p>
               </div>
@@ -197,14 +199,13 @@ const Register = () => {
           </motion.div>
         </motion.div>
 
-        {/*  RIGHT: REGISTER FORM  */}
+        {/* ✅ RIGHT REGISTER FORM */}
         <motion.div
-          className="w-[46%] rounded-2xl p-8 shadow-2xl bg-white/50 backdrop-blur-xl"
+          className="register-card w-[46%] rounded-2xl p-8 shadow-2xl bg-white/50 backdrop-blur-xl"
           initial={{ opacity: 0, x: 60, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
         >
-          {/* Card content stagger */}
           <motion.div
             initial="initial"
             animate="animate"
@@ -212,25 +213,27 @@ const Register = () => {
               initial: {},
               animate: {
                 transition: {
-                  staggerChildren: 0.08,   // Quick between fields
-                  delayChildren: 0.5,      // Small wait after card slides in
+                  staggerChildren: 0.08,
+                  delayChildren: 0.5,
                 },
               },
             }}
           >
+            {/* ✅ Card Title */}
             <motion.h2
               variants={fadeInUp}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-[28px] font-extrabold text-[#001e40] ml-50 mt-[-10px]"
+              className="register-card-title text-[28px] font-extrabold text-[#001e40] ml-50 mt-[-10px]"
               style={{ fontFamily: "Manrope, sans-serif" }}
             >
               Register Now..!
             </motion.h2>
 
+            {/* ✅ Card Subtitle */}
             <motion.p
               variants={fadeInUp}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-black-500 text-[14px] mb-3 ml-48"
+              className="register-card-sub text-black-500 text-[14px] mb-3 ml-48"
             >
               Begin your maritime journey today.
             </motion.p>
@@ -242,7 +245,7 @@ const Register = () => {
                 variants={fadeInUp}
                 transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                <label className="text-[14px] font-semibold tracking-widest uppercase text-black-500 block mb-1">
+                <label className="register-label text-[14px] font-semibold tracking-widest uppercase text-black-500 block mb-1">
                   Select User Role
                 </label>
                 <div className="flex gap-6">
@@ -280,11 +283,8 @@ const Register = () => {
               </motion.div>
 
               {/* Name */}
-              <motion.div
-                variants={fadeInUp}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              >
-                <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
+              <motion.div variants={fadeInUp} transition={{ duration: 0.5, ease: "easeOut" }}>
+                <label className="register-label text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
                   Name
                 </label>
                 <motion.input
@@ -296,16 +296,13 @@ const Register = () => {
                   required
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
+                  className="register-input w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
                 />
               </motion.div>
 
               {/* Email */}
-              <motion.div
-                variants={fadeInUp}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              >
-                <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
+              <motion.div variants={fadeInUp} transition={{ duration: 0.5, ease: "easeOut" }}>
+                <label className="register-label text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
                   Email
                 </label>
                 <motion.input
@@ -317,7 +314,7 @@ const Register = () => {
                   required
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
+                  className="register-input w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
                 />
               </motion.div>
 
@@ -325,10 +322,10 @@ const Register = () => {
               <motion.div
                 variants={fadeInUp}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="flex gap-3"
+                className="register-field-row flex gap-3"
               >
                 <div className="flex-1">
-                  <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
+                  <label className="register-label text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
                     Phone
                   </label>
                   <motion.input
@@ -340,11 +337,11 @@ const Register = () => {
                     required
                     whileFocus={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300 }}
-                    className="w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
+                    className="register-input w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
+                  <label className="register-label text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
                     NIC
                   </label>
                   <motion.input
@@ -356,17 +353,14 @@ const Register = () => {
                     required
                     whileFocus={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300 }}
-                    className="w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
+                    className="register-input w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
                   />
                 </div>
               </motion.div>
 
               {/* Address */}
-              <motion.div
-                variants={fadeInUp}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              >
-                <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
+              <motion.div variants={fadeInUp} transition={{ duration: 0.5, ease: "easeOut" }}>
+                <label className="register-label text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
                   Address
                 </label>
                 <motion.input
@@ -378,7 +372,7 @@ const Register = () => {
                   required
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
+                  className="register-input w-full bg-white rounded-xl px-4 py-2 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
                 />
               </motion.div>
 
@@ -386,11 +380,11 @@ const Register = () => {
               <motion.div
                 variants={fadeInUp}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="flex gap-3"
+                className="register-field-row flex gap-3"
               >
                 {/* PASSWORD */}
                 <div className="flex-1">
-                  <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
+                  <label className="register-label text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
                     Password
                   </label>
                   <div className="relative">
@@ -403,7 +397,7 @@ const Register = () => {
                       required
                       whileFocus={{ scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 300 }}
-                      className="w-full bg-white rounded-xl px-4 py-2 pr-10 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
+                      className="register-input w-full bg-white rounded-xl px-4 py-2 pr-10 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
                     />
                     <motion.button
                       type="button"
@@ -419,7 +413,7 @@ const Register = () => {
 
                 {/* CONFIRM PASSWORD */}
                 <div className="flex-1">
-                  <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
+                  <label className="register-label text-[12px] font-semibold tracking-widest uppercase text-black-500 block">
                     Confirm Password
                   </label>
                   <div className="relative">
@@ -432,7 +426,7 @@ const Register = () => {
                       required
                       whileFocus={{ scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 300 }}
-                      className="w-full bg-white rounded-xl px-4 py-2 pr-12 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
+                      className="register-input w-full bg-white rounded-xl px-4 py-2 pr-12 text-[12px] text-black-800 outline-none border-b-2 border-transparent focus:border-[#001e40] transition-all duration-200 placeholder-gray-400"
                     />
                     <motion.button
                       type="button"
@@ -441,11 +435,7 @@ const Register = () => {
                       whileTap={{ scale: 0.9 }}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#001e40] transition-colors duration-200"
                     >
-                      {showConfirmPassword ? (
-                        <FaEyeSlash size={18} />
-                      ) : (
-                        <FaEye size={18} />
-                      )}
+                      {showConfirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                     </motion.button>
                   </div>
                 </div>
@@ -462,7 +452,7 @@ const Register = () => {
                   boxShadow: "0 10px 30px -5px rgba(30, 58, 138, 0.5)",
                 }}
                 whileTap={{ scale: loading ? 1 : 0.95 }}
-                className="w-full bg-blue-800 text-white py-2 rounded-lg text-[16px] font-semibold hover:bg-blue-600 transition cursor-pointer flex items-center justify-center gap-2"
+                className="register-submit w-full bg-blue-800 text-white py-2 rounded-lg text-[16px] font-semibold hover:bg-blue-600 transition cursor-pointer flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
@@ -490,7 +480,7 @@ const Register = () => {
               <motion.p
                 variants={fadeInUp}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="text-center text-[14px] text-black-500 mt-[-10px]"
+                className="register-signin text-center text-[14px] text-black-500 mt-[-10px]"
               >
                 Already have an account?{" "}
                 <motion.span whileHover={{ scale: 1.1 }} className="inline-block">
@@ -504,17 +494,362 @@ const Register = () => {
         </motion.div>
       </div>
 
-      {/* ── FOOTER ── */}
+      {/* Footer */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1 }}
-        className="relative z-10 text-white/30 text-xs px-8 pb-5"
+        className="register-footer relative z-10 text-white/30 text-xs px-8 pb-5"
       >
         — HORIZON PERSPECTIVE © 2024
       </motion.div>
     </div>
   );
 };
+
+
+// ============================================================
+// ✅ RESPONSIVE STYLES - Proper & Attractive
+// ============================================================
+
+const responsiveStyles = `
+
+  /* ==============================
+     BASE
+     ============================== */
+
+  .register-page {
+    min-height: 100vh;
+  }
+
+
+  /* ==============================
+     LARGE LAPTOP (max-width: 1280px)
+     ============================== */
+  @media (max-width: 1280px) {
+
+    .register-card {
+      width: 50% !important;
+      padding: 1.75rem !important;
+    }
+
+    .register-left {
+      padding-left: 3rem !important;
+      padding-right: 2rem !important;
+    }
+
+    .register-heading {
+      font-size: 1.75rem !important;
+    }
+
+    .register-brand {
+      font-size: 2.75rem !important;
+    }
+
+    .register-card-title {
+      margin-left: 0 !important;
+      text-align: center !important;
+      font-size: 1.5rem !important;
+    }
+
+    .register-card-sub {
+      margin-left: 0 !important;
+      text-align: center !important;
+    }
+  }
+
+
+  /* ==============================
+     LAPTOP (max-width: 1024px)
+     ============================== */
+  @media (max-width: 1024px) {
+
+    .register-page {
+      height: auto !important;
+      overflow-y: auto !important;
+    }
+
+    .register-content {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      padding: 1.5rem !important;
+      padding-top: 5.5rem !important;
+      gap: 2rem !important;
+      height: auto !important;
+    }
+
+    /* Left - shrink and go on top */
+    .register-left {
+      flex: none !important;
+      width: 100% !important;
+      padding: 1.5rem 1.5rem 0 !important;
+      text-align: center !important;
+      align-items: center !important;
+      order: 1 !important;
+    }
+
+    .register-heading {
+      font-size: 1.5rem !important;
+      text-align: center !important;
+    }
+
+    .register-brand {
+      font-size: 2.5rem !important;
+    }
+
+    .register-desc {
+      font-size: 0.875rem !important;
+      margin-bottom: 1.5rem !important;
+      text-align: center !important;
+    }
+
+    .register-features {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 1rem !important;
+    }
+
+    .register-feature-item {
+      flex: 1 !important;
+      background: rgba(255,255,255,0.08) !important;
+      padding: 0.875rem !important;
+      border-radius: 0.875rem !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+    .register-feature-desc {
+      font-size: 0.6875rem !important;
+    }
+
+    /* Card - full width below */
+    .register-card {
+      width: 100% !important;
+      max-width: 560px !important;
+      padding: 1.75rem !important;
+      order: 2 !important;
+    }
+
+    .register-card-title {
+      margin-left: 0 !important;
+      text-align: center !important;
+      font-size: 1.375rem !important;
+      margin-top: 0 !important;
+    }
+
+    .register-card-sub {
+      margin-left: 0 !important;
+      text-align: center !important;
+      font-size: 0.8125rem !important;
+    }
+  }
+
+
+  /* ==============================
+     TABLET (max-width: 768px)
+     ============================== */
+  @media (max-width: 768px) {
+
+    .register-content {
+      padding: 1.25rem !important;
+      padding-top: 5rem !important;
+      gap: 1.5rem !important;
+    }
+
+    .register-left {
+      padding: 1rem !important;
+    }
+
+    .register-heading {
+      font-size: 1.375rem !important;
+    }
+
+    .register-brand {
+      font-size: 2.25rem !important;
+    }
+
+    .register-desc {
+      font-size: 0.8125rem !important;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .register-features {
+      flex-direction: column !important;
+      gap: 0.75rem !important;
+    }
+
+    .register-feature-item {
+      flex-direction: row !important;
+    }
+
+    .register-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 1.5rem !important;
+      border-radius: 1rem !important;
+    }
+
+    .register-card-title {
+      font-size: 1.25rem !important;
+    }
+
+    /* Stack phone + NIC fields vertically */
+    .register-field-row {
+      flex-direction: column !important;
+      gap: 0.75rem !important;
+    }
+
+    .register-input {
+      font-size: 0.875rem !important;
+      padding: 0.625rem 1rem !important;
+    }
+
+    .register-label {
+      font-size: 0.625rem !important;
+    }
+
+    .register-submit {
+      font-size: 0.9375rem !important;
+      padding-top: 0.625rem !important;
+      padding-bottom: 0.625rem !important;
+    }
+
+    .register-signin {
+      font-size: 0.8125rem !important;
+    }
+  }
+
+
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+
+    .register-content {
+      padding: 1rem !important;
+      padding-top: 4.5rem !important;
+      gap: 1.25rem !important;
+    }
+
+    .register-heading {
+      font-size: 1.25rem !important;
+    }
+
+    .register-brand {
+      font-size: 2rem !important;
+    }
+
+    .register-desc {
+      font-size: 0.75rem !important;
+    }
+
+    .register-card {
+      padding: 1.25rem 1rem !important;
+    }
+
+    .register-card-title {
+      font-size: 1.125rem !important;
+    }
+
+    .register-card-sub {
+      font-size: 0.75rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+
+    .register-input {
+      font-size: 0.8125rem !important;
+      padding: 0.5rem 0.875rem !important;
+      border-radius: 0.625rem !important;
+    }
+
+    .register-label {
+      font-size: 0.5625rem !important;
+    }
+
+    .register-submit {
+      font-size: 0.875rem !important;
+    }
+  }
+
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+
+    .register-content {
+      padding: 0.75rem !important;
+      padding-top: 4.25rem !important;
+    }
+
+    /* Hide left section completely on very small */
+    .register-left {
+      display: none !important;
+    }
+
+    .register-card {
+      width: 100% !important;
+      padding: 1.25rem 1rem !important;
+      border-radius: 0.875rem !important;
+    }
+
+    .register-card-title {
+      font-size: 1.0625rem !important;
+    }
+
+    .register-input {
+      padding: 0.5rem 0.75rem !important;
+      font-size: 0.75rem !important;
+    }
+
+    .register-submit {
+      font-size: 0.8125rem !important;
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+    }
+
+    .register-signin {
+      font-size: 0.75rem !important;
+    }
+
+    .register-footer {
+      font-size: 0.625rem !important;
+      padding-left: 1rem !important;
+    }
+  }
+
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+
+    .register-content {
+      padding: 0.5rem !important;
+      padding-top: 4rem !important;
+    }
+
+    .register-card {
+      padding: 1rem 0.75rem !important;
+    }
+
+    .register-card-title {
+      font-size: 1rem !important;
+    }
+
+    .register-input {
+      padding: 0.4rem 0.625rem !important;
+      font-size: 0.6875rem !important;
+    }
+
+    .register-label {
+      font-size: 0.5rem !important;
+    }
+
+    .register-submit {
+      font-size: 0.75rem !important;
+    }
+  }
+`;
 
 export default Register;
