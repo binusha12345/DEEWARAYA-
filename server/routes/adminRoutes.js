@@ -20,6 +20,11 @@ const {
   suspendBoat,
   deleteBoat,
 } = require('../controllers/adminBoatController');
+// Import weather controllers
+const {
+  getOnlineBoatsWithWeather,
+  getWeatherStats
+} = require('../controllers/adminWeatherController');
 
 // Public route
 router.post('/login', adminLogin);
@@ -43,6 +48,10 @@ router.get('/boats/:id', adminAuth, getBoatById);
 router.put('/boats/:id/approve', adminAuth, approveBoat);
 router.put('/boats/:id/suspend', adminAuth, suspendBoat);
 router.delete('/boats/:id', adminAuth, deleteBoat);
+
+// Weather management routes
+router.get('/weather/boats', adminAuth, getOnlineBoatsWithWeather);
+router.get('/weather/stats', adminAuth, getWeatherStats);
 
 
 module.exports = router;
