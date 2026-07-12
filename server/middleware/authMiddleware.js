@@ -2,9 +2,8 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// ═══════════════════════════════════════════════
-// 1️⃣ PROTECT MIDDLEWARE - Verify JWT Token
-// ═══════════════════════════════════════════════
+
+// PROTECT MIDDLEWARE - Verify JWT Token
 const protect = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
@@ -56,9 +55,8 @@ const protect = async (req, res, next) => {
   }
 };
 
-// ═══════════════════════════════════════════════
-// 2️⃣ DRIVER OR ADMIN MIDDLEWARE - Role Check
-// ═══════════════════════════════════════════════
+
+// DRIVER OR ADMIN MIDDLEWARE - Role Check
 const driverOrAdmin = (req, res, next) => {
   if (req.user && (req.user.role === "driver" || req.user.role === "admin")) {
     next();
@@ -70,7 +68,5 @@ const driverOrAdmin = (req, res, next) => {
   }
 };
 
-// ═══════════════════════════════════════════════
-// 3️⃣ EXPORT BOTH MIDDLEWARES
-// ═══════════════════════════════════════════════
+// EXPORT BOTH MIDDLEWARES
 module.exports = { protect, driverOrAdmin };

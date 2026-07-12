@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const adminAuth = require('../middleware/adminAuth');
+
+// CONTROLLERS
 const { adminLogin, verifyAdmin } = require('../controllers/adminController');
+
 const {
   getAllUsers,
   getUserById,
@@ -11,8 +15,7 @@ const {
   sendMessageToUser,
   getUserStats
 } = require('../controllers/adminUserController');
-const adminAuth = require('../middleware/adminAuth');
-//  Boat controllers
+
 const {
   getAllBoats,
   getBoatById,
@@ -20,19 +23,22 @@ const {
   suspendBoat,
   deleteBoat,
 } = require('../controllers/adminBoatController');
-// Import weather controllers
+
+// ONE import only - combined all weather functions
 const {
   getOnlineBoatsWithWeather,
-  getWeatherStats
-} = require('../controllers/adminWeatherController');
+  getWeatherStats,
+  getAllWeatherLogs,
+  getBoatWeatherHistory
+} = require('../controllers/AdminWeatherController');
 
-// Public route
+// PUBLIC ROUTES
 router.post('/login', adminLogin);
 
-// Protected route
+// PROTECTED ROUTES - Admin verification
 router.get('/verify', adminAuth, verifyAdmin);
 
-// User management routes
+// USER MANAGEMENT ROUTES
 router.get('/users', adminAuth, getAllUsers);
 router.get('/users/stats', adminAuth, getUserStats);
 router.get('/users/:id', adminAuth, getUserById);
@@ -42,16 +48,18 @@ router.put('/users/:id/unban', adminAuth, unbanUser);
 router.delete('/users/:id', adminAuth, deleteUser);
 router.post('/users/:id/message', adminAuth, sendMessageToUser);
 
-//Boat management routes
+// BOAT MANAGEMENT ROUTES
 router.get('/boats', adminAuth, getAllBoats);
 router.get('/boats/:id', adminAuth, getBoatById);
 router.put('/boats/:id/approve', adminAuth, approveBoat);
 router.put('/boats/:id/suspend', adminAuth, suspendBoat);
 router.delete('/boats/:id', adminAuth, deleteBoat);
 
-// Weather management routes
-router.get('/weather/boats', adminAuth, getOnlineBoatsWithWeather);
-router.get('/weather/stats', adminAuth, getWeatherStats);
 
+// WEATHER MANAGEMENT ROUTES (Admin only)
+router.get('/weather/online-boats', adminAuth, getOnlineBoatsWithWeather);
+router.get('/weather/stats', adminAuth, getWeatherStats);
+router.get('/weather/logs', adminAuth, getAllWeatherLogs);
+router.get('/weather/logs/boat/:boatId', adminAuth, getBoatWeatherHistory);
 
 module.exports = router;

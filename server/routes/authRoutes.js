@@ -10,8 +10,8 @@ const {
   uploadCoverPhoto, 
 } = require("../controllers/authController");
 
-const { protect } = require("../middleware/authMiddleware");   // ✅ NEW
-const upload = require("../middleware/upload");                 // ✅ NEW
+const { protect } = require("../middleware/authMiddleware");   
+const upload = require("../middleware/upload");                 
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);

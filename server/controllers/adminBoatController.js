@@ -1,6 +1,6 @@
 const Boat = require('../models/Boat');
 
-// Get all boats
+//Get all boats
 const getAllBoats = async (req, res) => {
   try {
     const boats = await Boat.find()
