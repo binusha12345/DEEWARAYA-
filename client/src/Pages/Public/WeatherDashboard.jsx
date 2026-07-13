@@ -12,6 +12,8 @@ import {
   Search,
   CheckCircle2,
   X,
+  RefreshCw,
+  Waves,
 } from "lucide-react";
 import OwnerSidebar from "../../components/OwnerSidebar";
 import DashboardNav from "../../components/DashboardNav";
@@ -79,6 +81,11 @@ const WeatherDashboard = () => {
   const [filteredBoats, setFilteredBoats] = useState([]);
   const searchRef = useRef(null);
   const [mapStyle, setMapStyle] = useState("street");
+
+  // Refresh controls
+  const [autoRefreshOn, setAutoRefreshOn] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [secondsAgo, setSecondsAgo] = useState(0);
 
 
   //  Fetch ALL boats (works for both owner & driver) 
@@ -240,59 +247,135 @@ const WeatherDashboard = () => {
         // Final fallback: show coordinates
         return `Location (${Number(lat).toFixed(3)}, ${Number(lon).toFixed(3)})`;
       };
+  // OWNER: pull whatever the driver last shared — no GPS permission needed at all
+  const fetchOwnerLatestWeather = async () => {
+    if (!selectedBoatId) return;
+    setLoadingWeather(true);
+    setError("");
+    try {
+      const res = await api.get(`/weather/latest/${selectedBoatId}`);
+      if (res.data.status === "none") {
+        setData(null);
+        setError(
+          "The driver hasn't shared this boat's location yet. Ask the driver to open Weather Dashboard, select this boat, and click 'See Weather' — this page updates automatically once they do."
+        );
+      } else {
+        setData(res.data);
+        setPlaceName(res.data.location?.placeName || "Shared by driver");
+        setLastUpdated(new Date());
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to load boat weather");
+    } finally {
+      setLoadingWeather(false);
+    }
+  };
+
+  // OWNER: keep the map/weather fresh with the driver's latest share (auto, toggleable)
+  useEffect(() => {
+    if (userRole !== "owner" || !selectedBoatId) return;
+
+    fetchOwnerLatestWeather(); // load immediately on selecting the boat
+
+    if (!autoRefreshOn) return;
+    const interval = setInterval(fetchOwnerLatestWeather, 10000); // every 10s
+    return () => clearInterval(interval);
+  }, [selectedBoatId, userRole, autoRefreshOn]);
+
+  // DRIVER: periodically re-capture GPS + weather so the boat keeps sharing
+  // a fresh position automatically (in addition to the manual button/tick)
+  useEffect(() => {
+    if (userRole !== "driver" || !selectedBoatId || !autoRefreshOn) return;
+
+    const interval = setInterval(() => {
+      if (!loadingWeather) handleSeeWeather();
+    }, 30000); // every 30s — GPS calls are heavier, so a longer interval
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedBoatId, userRole, autoRefreshOn]);
+
+  // "Updated Xs ago" ticker
+  useEffect(() => {
+    if (!lastUpdated) return;
+    const tick = setInterval(() => {
+      setSecondsAgo(Math.floor((Date.now() - lastUpdated.getTime()) / 1000));
+    }, 1000);
+    return () => clearInterval(tick);
+  }, [lastUpdated]);
+
   //  See Weather 
   const handleSeeWeather = () => {
-  if (!selectedBoatId) {
-    setError("Please search and select a boat first.");
-    return;
-  }
-  if (!navigator.geolocation) {
-    setError("Geolocation is not supported by this browser.");
-    return;
-  }
+    if (!selectedBoatId) {
+      setError("Please search and select a boat first.");
+      return;
+    }
 
-  setLoadingWeather(true);
-  setError("");
+    // OWNER: no geolocation at all — just read the driver's shared data
+    if (userRole === "owner") {
+      fetchOwnerLatestWeather();
+      return;
+    }
 
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      try {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        const resolvedPlace = await fetchPlaceName(lat, lon);
-        setPlaceName(resolvedPlace);
+    // DRIVER: uses their own GPS — this call IS the "share" action
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by this browser.");
+      return;
+    }
 
-        // ✅ Pass placeName so admin can see the location name in logs
-        const res = await api.get("/weather/current", {
-          params: { 
-            boatId: selectedBoatId, 
-            lat, 
-            lon,
-            placeName: resolvedPlace, // ✅ ADDED THIS LINE
-          },
-        });
-        setData(res.data);
-      } catch (err) {
-        setError(err.response?.data?.message || "Weather data fetch failed");
-      } finally {
+    setLoadingWeather(true);
+    setError("");
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const resolvedPlace = await fetchPlaceName(lat, lon);
+          setPlaceName(resolvedPlace);
+
+          // ✅ Pass placeName so admin can see the location name in logs
+          const res = await api.get("/weather/current", {
+            params: {
+              boatId: selectedBoatId,
+              lat,
+              lon,
+              placeName: resolvedPlace,
+            },
+          });
+          setData(res.data);
+          setLastUpdated(new Date());
+        } catch (err) {
+          setError(err.response?.data?.message || "Weather data fetch failed");
+        } finally {
+          setLoadingWeather(false);
+        }
+      },
+      (gpsError) => {
         setLoadingWeather(false);
-      }
-    },
-    (gpsError) => {
-      setLoadingWeather(false);
-      if (gpsError.code === 1) {
-        setError("Location permission denied. Please allow location access.");
-      } else if (gpsError.code === 2) {
-        setError("Location unavailable.");
-      } else if (gpsError.code === 3) {
-        setError("Location request timed out.");
-      } else {
-        setError("Could not get current location.");
-      }
-    },
-    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-  );
-};
+        if (gpsError.code === 1) {
+          setError("Location permission denied. Please allow location access.");
+        } else if (gpsError.code === 2) {
+          setError("Location unavailable.");
+        } else if (gpsError.code === 3) {
+          setError("Location request timed out.");
+        } else {
+          setError("Could not get current location.");
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  };
+
+  // MANUAL REFRESH — works for both owner (re-pull latest driver share)
+  // and driver (re-capture GPS + weather, which re-shares it)
+  const handleRefresh = () => {
+    if (!selectedBoatId) return;
+    if (userRole === "owner") {
+      fetchOwnerLatestWeather();
+    } else {
+      handleSeeWeather();
+    }
+  };
 
   const mapCenter = data
     ? [Number(data.location.latitude), Number(data.location.longitude)]
@@ -541,21 +624,69 @@ const WeatherDashboard = () => {
                 </div>
               )}
 
-              <button
-                type="button"
-                onClick={handleSeeWeather}
-                disabled={loadingWeather || !selectedBoat}
-                className="mt-5 px-10 py-2.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                {loadingWeather ? (
-                  <>
-                    <Loader2 className="animate-spin" size={16} />
-                    Getting GPS & Weather...
-                  </>
-                ) : (
-                  "See Weather"
+              <div className="mt-5 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleSeeWeather}
+                  disabled={loadingWeather || !selectedBoat}
+                  className="px-10 py-2.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {loadingWeather ? (
+                    <>
+                      <Loader2 className="animate-spin" size={16} />
+                      {userRole === "owner" ? "Loading..." : "Getting GPS & Weather..."}
+                    </>
+                  ) : (
+                    "See Weather"
+                  )}
+                </button>
+
+                {/* Manual refresh tick — re-pulls driver's location (owner)
+                    or re-captures & re-shares GPS (driver) */}
+                <button
+                  type="button"
+                  onClick={handleRefresh}
+                  disabled={loadingWeather || !selectedBoat}
+                  title="Refresh location & weather"
+                  className="p-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 hover:text-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw
+                    size={18}
+                    className={loadingWeather ? "animate-spin" : ""}
+                  />
+                </button>
+
+                {/* Auto-refresh toggle */}
+                <button
+                  type="button"
+                  onClick={() => setAutoRefreshOn((v) => !v)}
+                  title={
+                    autoRefreshOn ? "Turn auto-refresh off" : "Turn auto-refresh on"
+                  }
+                  className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-bold transition ${
+                    autoRefreshOn
+                      ? "bg-green-50 border-green-300 text-green-700"
+                      : "bg-slate-100 border-slate-300 text-slate-500"
+                  }`}
+                >
+                  <span
+                    className={`w-2.5 h-2.5 rounded-full ${
+                      autoRefreshOn ? "bg-green-500 animate-pulse" : "bg-slate-400"
+                    }`}
+                  />
+                  Auto-Refresh {autoRefreshOn ? "ON" : "OFF"}
+                  <span className="text-[10px] font-normal text-slate-400">
+                    ({userRole === "owner" ? "10s" : "30s"})
+                  </span>
+                </button>
+
+                {/* Last updated indicator */}
+                {lastUpdated && (
+                  <span className="text-xs text-slate-400 font-medium">
+                    Updated {secondsAgo < 5 ? "just now" : `${secondsAgo}s ago`}
+                  </span>
                 )}
-              </button>
+              </div>
             </div>
             {/* ═══════════════════════════════════════════════════ */}
 
@@ -570,6 +701,17 @@ const WeatherDashboard = () => {
             {/* Result */}
             {data && (
               <>
+                {/* Distance from Beach / Harbour — safe zone check */}
+                {/* Simple informational note — no calculation, just a fixed message */}
+                <div className="mb-6 rounded-2xl border border-blue-200 bg-blue-50 p-4 flex items-center gap-3 text-blue-700">
+                  <Waves size={22} className="shrink-0" />
+                  <p className="text-sm font-semibold">
+                    ℹ️ Boats can check weather while operating within{" "}
+                    <span className="font-bold">20 km – 30 km</span> from the
+                    beach into sea location.
+                  </p>
+                </div>
+
                 {/* Boat + Location */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                   <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
@@ -704,9 +846,23 @@ const WeatherDashboard = () => {
                       <MapPin size={20} className="text-blue-600" />
                       <span className="text-lg">Live Location & Weather Map</span>
                     </div>
-                    <span className="text-xs bg-blue-100 text-blue-700 font-bold px-3 py-1.5 rounded-full">
-                      📍 {placeName}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs bg-blue-100 text-blue-700 font-bold px-3 py-1.5 rounded-full">
+                        📍 {placeName}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleRefresh}
+                        disabled={loadingWeather}
+                        title="Refresh"
+                        className="p-1.5 rounded-full border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-blue-600 transition disabled:opacity-50"
+                      >
+                        <RefreshCw
+                          size={14}
+                          className={loadingWeather ? "animate-spin" : ""}
+                        />
+                      </button>
+                    </div>
                   </div>
 
                   <p className="text-sm text-slate-500 mb-4">
