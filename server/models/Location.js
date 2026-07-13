@@ -7,25 +7,25 @@ const locationSchema = new mongoose.Schema(
       ref: "Boat",
       required: true,
     },
-    latitude: {
-      type: Number,
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
-    longitude: {
-      type: Number,
-      required: true,
+    driver: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
     },
-    speed: {
-      type: Number,
-      default: 0,
-    },
-    zone: {
+    status: {
       type: String,
-      default: "Unknown",
+      enum: ["pending", "shared", "declined"],
+      default: "pending",
     },
-    recordedAt: {
-      type: Date,
-      default: Date.now,
+    sharedLocation: {
+      latitude: { type: Number, default: null },
+      longitude: { type: Number, default: null },
+      sharedAt: { type: Date, default: null },
     },
   },
   { timestamps: true }

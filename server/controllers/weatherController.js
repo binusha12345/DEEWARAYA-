@@ -302,6 +302,61 @@ const getMyWeatherHistory = async (req, res) => {
 };
 
 
+// GET Latest Shared Weather+Location for a Boat
+//   Used by Owner's WeatherDashboard — reads whatever the DRIVER last shared
+//   (via getCurrentWeather) so it does NOT use the owner's own GPS at all.
+const getLatestBoatWeather = async (req, res) => {
+  try {
+    const { boatId } = req.params;
+
+    const boat = await Boat.findById(boatId);
+    if (!boat) {
+      return res.status(404).json({ message: "Boat not found" });
+    }
+
+    // Prefer the latest log submitted by a driver; fall back to any latest log
+    let log = await WeatherLog.findOne({
+      boat: boatId,
+      checkedByRole: "driver",
+    }).sort({ createdAt: -1 });
+
+    if (!log) {
+      log = await WeatherLog.findOne({ boat: boatId }).sort({ createdAt: -1 });
+    }
+
+    if (!log) {
+      return res.status(200).json({
+        status: "none",
+        boat: {
+          id: boat._id,
+          boatName: boat.boatName,
+          registrationNumber: boat.registrationNumber,
+          boatStatus: boat.boatStatus,
+        },
+      });
+    }
+
+    return res.status(200).json({
+      status: "available",
+      boat: {
+        id: boat._id,
+        boatName: boat.boatName,
+        registrationNumber: boat.registrationNumber,
+        boatStatus: boat.boatStatus,
+      },
+      location: log.location,
+      weather: log.weather,
+      alerts: log.alerts || [],
+      checkedByName: log.checkedByName,
+      checkedByRole: log.checkedByRole,
+      checkedAt: log.createdAt,
+    });
+  } catch (error) {
+    console.error("Get Latest Boat Weather Error:", error.message);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 // EXPORTS
 module.exports = {
   getWeatherFromGps,      // Simple weather (no DB save)
@@ -309,4 +364,5 @@ module.exports = {
   getDashboardWeather,    // Owner/Driver dashboard widget
   getAllWeatherLogs,      // Admin: all logs
   getMyWeatherHistory,    // Owner/Driver: own history
+  getLatestBoatWeather,   // Owner: latest driver-shared weather+location
 };

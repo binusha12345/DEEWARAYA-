@@ -30,7 +30,7 @@ app.use("/api/boats", require("./routes/boatRoutes"));
 app.use("/api/weather", require("./routes/weatherRoutes"));
 // Routes
 app.use('/api/admin', adminRoutes);
-// ✅ Serve uploaded files
+// Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/tracking", require("./routes/trackingRoutes"));
 

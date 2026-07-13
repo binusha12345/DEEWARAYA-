@@ -30,7 +30,7 @@ const {
   getWeatherStats,
   getAllWeatherLogs,
   getBoatWeatherHistory
-} = require('../controllers/AdminWeatherController');
+} = require('../controllers/adminWeatherController');
 
 // PUBLIC ROUTES
 router.post('/login', adminLogin);
