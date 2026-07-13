@@ -23,7 +23,7 @@ import BoatDriverDashboard from "./Pages/Public/driver/BoatDriverDashboard";
 
 // Shared
 import WeatherDashboard from "./Pages/Public/WeatherDashboard";
-import Weather from "./pages/public/Weather";
+import Weather from "./Pages/Public/Weather";
 import SaveLocation from "./Pages/Public/SaveLocation";
 import Profile from "./Pages/Public/Profile";
 
