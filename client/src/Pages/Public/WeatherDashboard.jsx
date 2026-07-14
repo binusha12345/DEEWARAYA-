@@ -14,6 +14,13 @@ import {
   X,
   RefreshCw,
   Waves,
+  Sunrise,
+  Sunset,
+  CloudRain,
+  Cloud,
+  Sun,
+  CloudFog,
+  Navigation,
 } from "lucide-react";
 import OwnerSidebar from "../../components/OwnerSidebar";
 import DashboardNav from "../../components/DashboardNav";
@@ -385,6 +392,54 @@ const WeatherDashboard = () => {
     ? `${data.location.latitude}-${data.location.longitude}-${selectedBoatId}-${mapStyle}`
     : "default-map";
 
+  // --- New weather-detail derivations (all optional-chained for backward
+  //     compatibility with older WeatherLog entries that lack these fields) ---
+  const conditionIcon = (condition) => {
+    switch (condition) {
+      case "Sunny":
+        return <Sun size={36} className="text-yellow-500" />;
+      case "Rainy":
+        return <CloudRain size={36} className="text-blue-500" />;
+      case "Cloudy":
+        return <Cloud size={36} className="text-slate-500" />;
+      case "Foggy":
+        return <CloudFog size={36} className="text-slate-400" />;
+      default:
+        return <Cloud size={36} className="text-slate-400" />;
+    }
+  };
+
+  const hourlyForecast = data?.weather?.hourlyForecast || [];
+  const dailyForecast = data?.weather?.dailyForecast || [];
+
+  // Temperature Graph geometry (plain SVG — no extra chart library needed)
+  const graphWidth = 640;
+  const graphHeight = 160;
+  const graphPad = 28;
+  const tempValues = hourlyForecast.map((h) => h.temp);
+  const graphMax = tempValues.length ? Math.max(...tempValues) : 0;
+  const graphMin = tempValues.length ? Math.min(...tempValues) : 0;
+  const graphRange = graphMax - graphMin || 1;
+
+  const graphPoints = hourlyForecast.map((h, i) => {
+    const x =
+      hourlyForecast.length > 1
+        ? graphPad + (i * (graphWidth - graphPad * 2)) / (hourlyForecast.length - 1)
+        : graphWidth / 2;
+    const y =
+      graphPad +
+      (1 - (h.temp - graphMin) / graphRange) * (graphHeight - graphPad * 2);
+    return { x, y, temp: h.temp, time: h.time };
+  });
+
+  const polylinePoints = graphPoints.map((p) => `${p.x},${p.y}`).join(" ");
+  const areaPoints =
+    graphPoints.length > 0
+      ? `${graphPad},${graphHeight - graphPad} ${polylinePoints} ${
+          graphPoints[graphPoints.length - 1].x
+        },${graphHeight - graphPad}`
+      : "";
+
   return (
     <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
 
@@ -708,7 +763,7 @@ const WeatherDashboard = () => {
                   <p className="text-sm font-semibold">
                     ℹ️ Boats can check weather while operating within{" "}
                     <span className="font-bold">20 km – 30 km</span> from the
-                    beach into sea location.
+                    beach/harbour location.
                   </p>
                 </div>
 
@@ -786,7 +841,8 @@ const WeatherDashboard = () => {
                       <span className="font-semibold">Wind</span>
                     </div>
                     <p className="text-3xl font-extrabold">
-                      {data.weather.windSpeedKts} kts
+                      {data.weather.windSpeedKmh ?? data.weather.windSpeedKts}{" "}
+                      km/h
                     </p>
                   </div>
 
@@ -811,6 +867,211 @@ const WeatherDashboard = () => {
                     Estimated Wave Height: {data.weather.estimatedWaveHeight} m
                   </p>
                 </div>
+
+                {/* Weather Condition + Sunrise + Sunset */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border border-blue-100 shadow-sm p-6 flex items-center gap-4">
+                    {conditionIcon(data.weather.weatherCondition)}
+                    <div>
+                      <p className="text-xs font-bold text-blue-600 uppercase tracking-wide">
+                        Weather Condition
+                      </p>
+                      <p className="text-2xl font-extrabold text-slate-800">
+                        {data.weather.weatherCondition || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-orange-50 to-white rounded-2xl border border-orange-100 shadow-sm p-6 flex items-center gap-4">
+                    <Sunrise size={36} className="text-orange-500" />
+                    <div>
+                      <p className="text-xs font-bold text-orange-600 uppercase tracking-wide">
+                        Sunrise
+                      </p>
+                      <p className="text-2xl font-extrabold text-slate-800">
+                        {data.weather.sunrise || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-purple-50 to-white rounded-2xl border border-purple-100 shadow-sm p-6 flex items-center gap-4">
+                    <Sunset size={36} className="text-purple-500" />
+                    <div>
+                      <p className="text-xs font-bold text-purple-600 uppercase tracking-wide">
+                        Sunset
+                      </p>
+                      <p className="text-2xl font-extrabold text-slate-800">
+                        {data.weather.sunset || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Wind Compass + Rain/Precipitation */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  {/* Wind Compass */}
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div className="flex items-center gap-2 text-blue-600 mb-4 font-bold">
+                      <Wind size={18} />
+                      Wind Speed & Direction
+                    </div>
+                    <div className="flex items-center gap-6">
+                      <div className="relative w-28 h-28 shrink-0 rounded-full border-4 border-slate-100 bg-slate-50 flex items-center justify-center">
+                        <span className="absolute top-1 text-[10px] font-bold text-slate-400">N</span>
+                        <span className="absolute bottom-1 text-[10px] font-bold text-slate-400">S</span>
+                        <span className="absolute left-1 text-[10px] font-bold text-slate-400">W</span>
+                        <span className="absolute right-1 text-[10px] font-bold text-slate-400">E</span>
+                        <Navigation
+                          size={40}
+                          className="text-blue-600 transition-transform duration-500"
+                          style={{
+                            transform: `rotate(${data.weather.windDeg ?? 0}deg)`,
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <p className="text-3xl font-extrabold text-slate-800">
+                          {data.weather.windSpeedKmh ?? "N/A"}{" "}
+                          <span className="text-lg font-semibold text-slate-500">
+                            km/h
+                          </span>
+                        </p>
+                        <p className="text-sm font-bold text-blue-600 mt-1">
+                          Direction: {data.weather.windDirection || "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Rain / Precipitation */}
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div className="flex items-center gap-2 text-blue-600 mb-4 font-bold">
+                      <CloudRain size={18} />
+                      Rain & Precipitation
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs text-slate-500 font-semibold">
+                          Precipitation Probability
+                        </p>
+                        <p className="text-2xl font-extrabold text-slate-800">
+                          {data.weather.precipitationProbability ?? 0}%
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-500 font-semibold">
+                          Rain (last 1h)
+                        </p>
+                        <p className="text-2xl font-extrabold text-slate-800">
+                          {data.weather.rainLastHourMm ?? 0} mm
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-500 font-semibold">
+                          Rain (last 3h)
+                        </p>
+                        <p className="text-2xl font-extrabold text-slate-800">
+                          {data.weather.rainLast3HoursMm ?? 0} mm
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-500 font-semibold">
+                          Wave Height
+                        </p>
+                        <p className="text-2xl font-extrabold text-slate-800">
+                          {data.weather.estimatedWaveHeight} m
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Temperature Graph (next ~24h, 3h steps) */}
+                {graphPoints.length > 0 && (
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-6">
+                    <div className="flex items-center gap-2 text-blue-600 mb-4 font-bold">
+                      <Thermometer size={18} />
+                      Temperature Graph (Next 24h)
+                    </div>
+                    <svg
+                      viewBox={`0 0 ${graphWidth} ${graphHeight}`}
+                      className="w-full h-40"
+                      preserveAspectRatio="none"
+                    >
+                      <defs>
+                        <linearGradient id="tempFill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.35" />
+                          <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <polygon points={areaPoints} fill="url(#tempFill)" />
+                      <polyline
+                        points={polylinePoints}
+                        fill="none"
+                        stroke="#2563eb"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      {graphPoints.map((p, i) => (
+                        <g key={i}>
+                          <circle cx={p.x} cy={p.y} r="4" fill="#2563eb" />
+                          <text
+                            x={p.x}
+                            y={p.y - 10}
+                            textAnchor="middle"
+                            fontSize="11"
+                            fontWeight="bold"
+                            fill="#1e293b"
+                          >
+                            {p.temp}°
+                          </text>
+                          <text
+                            x={p.x}
+                            y={graphHeight - 6}
+                            textAnchor="middle"
+                            fontSize="10"
+                            fill="#64748b"
+                          >
+                            {p.time}
+                          </text>
+                        </g>
+                      ))}
+                    </svg>
+                  </div>
+                )}
+
+                {/* Rain Probability Per Day */}
+                {dailyForecast.length > 0 && (
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-6">
+                    <div className="flex items-center gap-2 text-blue-600 mb-4 font-bold">
+                      <Droplets size={18} />
+                      Rain Probability — Next {dailyForecast.length} Days
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                      {dailyForecast.map((d, i) => (
+                        <div
+                          key={i}
+                          className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center"
+                        >
+                          <p className="text-xs font-bold text-slate-500 mb-1">
+                            {new Date(d.date).toLocaleDateString(undefined, {
+                              weekday: "short",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </p>
+                          <p className="text-lg font-extrabold text-blue-600">
+                            {d.rainProbability}%
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            {d.maxTemp}° / {d.minTemp}°
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Safety Alerts */}
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-6">
