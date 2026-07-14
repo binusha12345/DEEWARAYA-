@@ -25,12 +25,44 @@ const weatherLogSchema = new mongoose.Schema(
     },
 
     weather: {
+      // --- Existing fields (unchanged) ---
       temperature: Number,
       humidity: Number,
       windSpeedKts: Number,
       visibilityKm: Number,
       description: String,
       estimatedWaveHeight: Number,
+
+      // --- New fields ---
+      windSpeedKmh: Number,
+      windDeg: Number,
+      windDirection: String, // e.g. "NE"
+      weatherMain: String, // e.g. "Rain"
+      weatherCondition: String, // simplified: Sunny/Rainy/Cloudy/Foggy
+      icon: String,
+      sunrise: String, // formatted local time e.g. "06:12 AM"
+      sunset: String,
+      rainLastHourMm: Number,
+      rainLast3HoursMm: Number,
+      precipitationProbability: Number, // %
+
+      hourlyForecast: [
+        {
+          time: String,
+          temp: Number,
+          pop: Number, // % chance of rain
+          rainMm: Number,
+        },
+      ],
+
+      dailyForecast: [
+        {
+          date: String,
+          maxTemp: Number,
+          minTemp: Number,
+          rainProbability: Number, // %
+        },
+      ],
     },
 
     alerts: [
