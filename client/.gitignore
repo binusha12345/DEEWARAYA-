@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -23,12 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-=======
-client/node_modules/
-server/node_modules/
-server/.env
-.vscode/
-server/uploads/
-.DS_Store
-Thumbs.db
->>>>>>> 07464042e8fc1e376f6bfc2dfb91b23caac7bdbd
