@@ -17,6 +17,9 @@ import Maintenance from "./Pages/Public/owner/Maintenance";
 import MaintenanceEngine from "./Pages/Public/owner/MaintenanceEngine";
 import MaintenanceSpareParts from "./Pages/Public/owner/MaintenanceSpareParts";
 import MaintenanceBodyParts from "./Pages/Public/owner/MaintenanceBodyParts";
+import Finance from "./Pages/Public/owner/Finance";
+import DailyCalculation from "./Pages/Public/owner/DailyCalculation";
+import MonthlyReports from "./Pages/Public/owner/MonthlyReports";
 
 // Driver Pages
 import BoatDriverDashboard from "./Pages/Public/driver/BoatDriverDashboard";
@@ -110,6 +113,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/owner/finance" element={<Finance />} />
+        <Route path="/owner/finance/daily" element={<DailyCalculation />} />
+        <Route path="/owner/finance/monthly" element={<MonthlyReports />} />
 
         {/* ============ DRIVER PROTECTED ROUTES ============ */}
         <Route
