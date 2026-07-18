@@ -102,7 +102,7 @@ const OwnerSidebar = () => {
         />
 
         <SidebarLink 
-          to="/finance" 
+          to="/owner/finance" 
           icon={Wallet} 
           text="Finance"
           iconColor="text-green-300"
