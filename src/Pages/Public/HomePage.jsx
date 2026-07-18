@@ -28,6 +28,7 @@ import {
 } from "../../animations";
 
 
+
 const HomePage = () => {
   return (
     <div className="min-h-screen font-sans text-slate-800 bg-white">

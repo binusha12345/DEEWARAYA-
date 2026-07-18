@@ -10,12 +10,14 @@ import {
   Crosshair, 
   Cloud
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import OwnerSidebar from '../../../components/OwnerSidebar';
 import DashboardNav from '../../../components/DashboardNav';
 import { useAuth } from '../../../context/AuthContext'; // ✅ ADD THIS
 
 const BoatOwnerDashboard = () => {
   const { user } = useAuth(); // ✅ ADD THIS
+  const { t } = useTranslation();
 
   return (
     <div className="flex h-screen bg-slate-100 font-sans text-slate-800 overflow-hidden">
@@ -37,19 +39,19 @@ const BoatOwnerDashboard = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
             <div>
               <p className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">
-                Overview
+                {t("dashboard.overview")}
               </p>
               {/* ✅ Dynamic welcome message */}
               <h1 className="text-3xl font-black text-slate-900">
-                Welcome, {user?.name || 'Owner'}! 🚤
+                {t("dashboard.welcome", { name: user?.name || "Owner" })} 🚤
               </h1>
               <p className="text-sm text-slate-500 mt-1">
-                Manage your fleet and monitor operations
+                {t("dashboard.manageFleet")}
               </p>
             </div>
             <div className="flex gap-3">
               <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-[16px] font-bold shadow-md hover:shadow-lg hover:scale-[1.02] transition cursor-pointer">
-                <Download size={16} /> Download Report
+                <Download size={16} /> {t("dashboard.downloadReport")}
               </button>
             </div>
           </div>
@@ -57,30 +59,30 @@ const BoatOwnerDashboard = () => {
           {/* Key Metrics Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
             <StatCard 
-              title="Total Boats" 
+              title={t("dashboard.totalBoats")} 
               value="24" 
-              sub="Vessels" 
+              sub={t("dashboard.vessels")} 
             />
             <StatCard 
-              title="Active Boats" 
+              title={t("dashboard.activeBoats")} 
               value="5" 
-              sub="Live" 
+              sub={t("dashboard.live")} 
               indicator="bg-green-500" 
             />
             <StatCard 
-              title="Monthly Income" 
+              title={t("dashboard.monthlyIncome")} 
               value="$12.4k" 
               sub={<TrendingUp size={14} className="text-green-500 inline ml-1" />} 
             />
             <StatCard 
-              title="Monthly Expenses" 
+              title={t("dashboard.monthlyExpenses")} 
               value="$4.2k" 
               sub={<TrendingDown size={14} className="text-red-500 inline ml-1" />} 
             />
             
             {/* Net Profit Card */}
             <div className="bg-gradient-to-br from-blue-900 to-cyan-600 p-5 rounded-xl text-white shadow-lg flex flex-col justify-between">
-              <p className="text-[10px] font-bold uppercase text-white/60">Net Profit</p>
+              <p className="text-[10px] font-bold uppercase text-white/60">{t("dashboard.netProfit")}</p>
               <div className="flex items-baseline gap-1 mt-2">
                 <span className="text-sm font-medium text-white/60">$</span>
                 <span className="text-2xl font-black">8,200</span>
@@ -151,9 +153,9 @@ const BoatOwnerDashboard = () => {
               {/* Maintenance Required Card */}
               <div className="bg-[#f8fafc] rounded-3xl p-6 border border-slate-200 shadow-sm">
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-sm font-bold text-slate-900">Maintenance Required</h3>
+                  <h3 className="text-sm font-bold text-slate-900">{t("dashboard.maintenanceRequired")}</h3>
                   <button className="text-[10px] font-bold text-blue-600 uppercase hover:underline">
-                    See all
+                    {t("dashboard.seeAll")}
                   </button>
                 </div>
 
@@ -181,7 +183,7 @@ const BoatOwnerDashboard = () => {
               {/* Weather Forecast Card */}
               <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-900 rounded-3xl p-6 text-white shadow-4xl">
                 <p className="text-[10px] font-bold uppercase text-white/60 tracking-widest mb-1">
-                  Weather Forecast
+                  {t("dashboard.weatherForecast")}
                 </p>
 
                 <div className="flex justify-between items-start mb-4">

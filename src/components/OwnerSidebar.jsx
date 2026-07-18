@@ -1,5 +1,8 @@
+// client/src/components/OwnerSidebar.jsx
+
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   LayoutDashboard,
   Ship,
@@ -12,6 +15,9 @@ import {
   Settings,
 } from "lucide-react";
 
+// ============================================================
+// SIDEBAR LINK COMPONENT
+// ============================================================
 const SidebarLink = ({ to, icon: Icon, text, iconColor }) => {
   const location = useLocation();
   const isActive = location.pathname === to;
@@ -19,13 +25,13 @@ const SidebarLink = ({ to, icon: Icon, text, iconColor }) => {
   return (
     <Link
       to={to}
+      data-tooltip={text}
       className={`relative flex items-center gap-4 px-6 py-3 rounded-lg transition-all duration-300 ${
         isActive
           ? "bg-white text-blue-900 shadow-md"
           : "text-blue-100 hover:bg-blue-800 hover:text-white"
       }`}
     >
-      <style>{sidebarResponsiveStyles}</style> 
       {/* Active Indicator */}
       {isActive && (
         <span className="absolute left-0 top-0 h-full w-1 bg-cyan-400 rounded-r-md"></span>
@@ -38,137 +44,130 @@ const SidebarLink = ({ to, icon: Icon, text, iconColor }) => {
         }`}
       />
 
-      <span className="text-[15px] font-medium tracking-wide">
+      <span className="text-[15px] font-medium tracking-wide sidebar-link-text">
         {text}
       </span>
     </Link>
   );
 };
 
+// ============================================================
+// MAIN SIDEBAR COMPONENT
+// ============================================================
 const OwnerSidebar = () => {
+  const { t } = useTranslation();
+
   return (
-    <aside className="w-72 h-full flex flex-col 
-      bg-gradient-to-b from-blue-800 to-cyan-700
-      text-white shadow-xl">
+    <>
+      {/* ✅ Inject styles ONCE at component level */}
+      <style>{sidebarResponsiveStyles}</style>
 
-      {/* Logo Section */}
-      <div className="px-8 py-8 border-b border-blue-700">
-        <Link to="/" >
-        <h1 className="text-2xl font-bold tracking-wide text-white">
-          DEEWARAYA
-        </h1>
-        <p className="text-blue-300 text-xs tracking-widest uppercase mt-1">
-          Fleet Management
-        </p>
-        </Link>
-      </div>
+      <aside
+        className="w-72 h-full flex flex-col 
+          bg-gradient-to-b from-blue-800 to-cyan-700
+          text-white shadow-xl "
+      >
+        {/* Logo Section */}
+        <div className="px-8 py-8 border-b border-blue-700">
+          <Link to="/">
+            <h1 className="text-2xl font-bold tracking-wide text-white">
+              DEEWARAYA
+            </h1>
+            <p className="text-blue-300 text-xs tracking-widest uppercase mt-1">
+              Fleet Management
+            </p>
+          </Link>
+        </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2">
+        {/* Navigation */}
+        <nav className="flex-1 px-4 py-6 space-y-2">
+          <SidebarLink
+            to="/boatownerdashboard"
+            icon={LayoutDashboard}
+            text="Dashboard"
+            iconColor="text-cyan-300"
+          />
 
-        <SidebarLink 
-          to="/boatownerdashboard" 
-          icon={LayoutDashboard} 
-          text="Dashboard"
-          iconColor="text-cyan-300"
-        />
+          <SidebarLink
+            to="/boatownerboats"
+            icon={Ship}
+            text="My Boats"
+            iconColor="text-emerald-300"
+          />
 
-        <SidebarLink 
-          to="/boatownerboats" 
-          icon={Ship} 
-          text="Boats"
-          iconColor="text-emerald-300"
-        />
+          <SidebarLink
+            to="/gps-tracking"
+            icon={MapPin}
+            text="GPS Tracking"
+            iconColor="text-yellow-300"
+          />
 
-        <SidebarLink 
-          to="/gps-tracking" 
-          icon={MapPin} 
-          text="GPS Tracking"
-          iconColor="text-yellow-300"
-        />
+          <SidebarLink
+            to="/maintenance"
+            icon={Wrench}
+            text="Maintenance"
+            iconColor="text-orange-300"
+          />
 
-        <SidebarLink 
-          to="/maintenance" 
-          icon={Wrench} 
-          text="Maintenance"
-          iconColor="text-orange-300"
-        />
+          <SidebarLink
+            to="/weather"
+            icon={CloudRain}
+            text="Weather"
+            iconColor="text-sky-300"
+          />
 
-        <SidebarLink 
-          to="/weather" 
-          icon={CloudRain} 
-          text="Weather"
-          iconColor="text-sky-300"
-        />
+          <SidebarLink
+            to="/owner/finance"
+            icon={Wallet}
+            text="Finance"
+            iconColor="text-green-300"
+          />
 
-        <SidebarLink 
-          to="/owner/finance" 
-          icon={Wallet} 
-          text="Finance"
-          iconColor="text-green-300"
-        />
+          <SidebarLink
+            to="/notification"
+            icon={Bell}
+            text="Notifications"
+            iconColor="text-pink-300"
+          />
 
-        <SidebarLink 
-          to="/notification" 
-          icon={Bell} 
-          text="Notifications"
-          iconColor="text-pink-300"
-        />
+          <SidebarLink
+            to="/qr-code"
+            icon={QrCode}
+            text="QR Code"
+            iconColor="text-purple-300"
+          />
 
-        <SidebarLink 
-          to="/qr-code" 
-          icon={QrCode} 
-          text="QR Code"
-          iconColor="text-purple-300"
-        />
+          <SidebarLink
+            to="/settings"
+            icon={Settings}
+            text="Settings"
+            iconColor="text-gray-300"
+          />
+        </nav>
 
-        <SidebarLink 
-          to="/settings" 
-          icon={Settings} 
-          text="Settings"
-          iconColor="text-gray-300"
-        />
-
-      </nav>
-
-      {/* Footer */}
-      <div className="px-6 py-4 border-t border-blue-700 text-center">
-        <p className="text-blue-300 text-xs">
-          © 2026 Deewaraya
-        </p>
-      </div>
-
-    </aside>
+        {/* Footer */}
+        <div className="px-6 py-4 border-t border-blue-700 text-center">
+          <p className="text-blue-300 text-xs">© 2026 Deewaraya</p>
+        </div>
+      </aside>
+    </>
   );
 };
 
-
 // ============================================================
-// ✅ RESPONSIVE STYLES - Proper & Clean
+// ✅ RESPONSIVE STYLES
 // ============================================================
-
 const sidebarResponsiveStyles = `
 
-  /* ==============================
-     BASE - Sidebar foundation
-     ============================== */
   aside {
     transition: all 0.3s ease;
     flex-shrink: 0;
   }
 
-
-  /* ==============================
-     LARGE DESKTOP (1280px+)
-     - Everything stays original
-     ============================== */
-
-
   /* ==============================
      LAPTOP (max-width: 1280px)
      ============================== */
   @media (max-width: 1280px) {
-
     aside {
       width: 16rem !important;
     }
@@ -182,17 +181,15 @@ const sidebarResponsiveStyles = `
       padding-right: 1.5rem !important;
     }
 
-    aside a span {
+    aside a span.sidebar-link-text {
       font-size: 0.875rem !important;
     }
   }
-
 
   /* ==============================
      SMALL LAPTOP (max-width: 1024px)
      ============================== */
   @media (max-width: 1024px) {
-
     aside {
       width: 14rem !important;
     }
@@ -217,7 +214,6 @@ const sidebarResponsiveStyles = `
       padding-right: 0.75rem !important;
     }
 
-    /* Nav links */
     aside a {
       padding-left: 1rem !important;
       padding-right: 1rem !important;
@@ -226,7 +222,7 @@ const sidebarResponsiveStyles = `
       gap: 0.75rem !important;
     }
 
-    aside a span {
+    aside a span.sidebar-link-text {
       font-size: 0.8125rem !important;
     }
 
@@ -241,19 +237,15 @@ const sidebarResponsiveStyles = `
     }
   }
 
-
   /* ==============================
      TABLET (max-width: 768px)
-     - Collapse to icon-only sidebar
      ============================== */
   @media (max-width: 768px) {
-
     aside {
       width: 4.5rem !important;
       min-width: 4.5rem !important;
     }
 
-    /* Hide logo text */
     aside h1 {
       display: none !important;
     }
@@ -262,7 +254,6 @@ const sidebarResponsiveStyles = `
       display: none !important;
     }
 
-    /* Logo section compact */
     aside .px-8 {
       padding: 1rem 0 !important;
       display: flex !important;
@@ -270,7 +261,6 @@ const sidebarResponsiveStyles = `
       align-items: center !important;
     }
 
-    /* Show only first letter as icon */
     aside .px-8 a::before {
       content: "D" !important;
       font-size: 1.25rem !important;
@@ -279,13 +269,11 @@ const sidebarResponsiveStyles = `
       display: block !important;
     }
 
-    /* Nav container */
     aside .px-4 {
       padding-left: 0.5rem !important;
       padding-right: 0.5rem !important;
     }
 
-    /* Nav links - icon only */
     aside nav a {
       padding: 0.75rem !important;
       justify-content: center !important;
@@ -293,24 +281,20 @@ const sidebarResponsiveStyles = `
       border-radius: 0.75rem !important;
     }
 
-    /* Hide link text */
-    aside nav a span.text-\\[15px\\] {
+    aside nav a span.sidebar-link-text {
       display: none !important;
     }
 
-    /* Center icons */
     aside svg {
       width: 1.25rem !important;
       height: 1.25rem !important;
       flex-shrink: 0 !important;
     }
 
-    /* Active indicator */
     aside a span.absolute {
       display: none !important;
     }
 
-    /* Footer */
     aside .px-6.py-4 {
       padding: 0.75rem 0.25rem !important;
       text-align: center !important;
@@ -319,107 +303,8 @@ const sidebarResponsiveStyles = `
     aside .px-6.py-4 p {
       display: none !important;
     }
-  }
 
-
-  /* ==============================
-     MOBILE (max-width: 640px)
-     ============================== */
-  @media (max-width: 640px) {
-
-    aside {
-      width: 4rem !important;
-      min-width: 4rem !important;
-    }
-
-    aside .px-8 {
-      padding: 0.875rem 0 !important;
-    }
-
-    aside nav a {
-      padding: 0.625rem !important;
-      border-radius: 0.625rem !important;
-    }
-
-    aside svg {
-      width: 1.125rem !important;
-      height: 1.125rem !important;
-    }
-
-    aside .space-y-2 > * + * {
-      margin-top: 0.25rem !important;
-    }
-  }
-
-
-  /* ==============================
-     SMALL MOBILE (max-width: 480px)
-     ============================== */
-  @media (max-width: 480px) {
-
-    aside {
-      width: 3.5rem !important;
-      min-width: 3.5rem !important;
-    }
-
-    aside .px-8 {
-      padding: 0.75rem 0 !important;
-    }
-
-    aside nav a {
-      padding: 0.5rem !important;
-      border-radius: 0.5rem !important;
-    }
-
-    aside svg {
-      width: 1rem !important;
-      height: 1rem !important;
-    }
-
-    aside .px-4 {
-      padding-left: 0.375rem !important;
-      padding-right: 0.375rem !important;
-    }
-
-    aside .space-y-2 > * + * {
-      margin-top: 0.125rem !important;
-    }
-  }
-
-
-  /* ==============================
-     VERY SMALL (max-width: 360px)
-     ============================== */
-  @media (max-width: 360px) {
-
-    aside {
-      width: 3rem !important;
-      min-width: 3rem !important;
-    }
-
-    aside nav a {
-      padding: 0.375rem !important;
-      border-radius: 0.375rem !important;
-    }
-
-    aside svg {
-      width: 0.875rem !important;
-      height: 0.875rem !important;
-    }
-
-    aside .px-4 {
-      padding-left: 0.25rem !important;
-      padding-right: 0.25rem !important;
-    }
-  }
-
-
-  /* ==============================
-     TOOLTIP on hover (tablet/mobile)
-     - Show link name on icon hover
-     ============================== */
-  @media (max-width: 768px) {
-
+    /* Tooltip on hover */
     aside nav a {
       position: relative !important;
     }
@@ -454,6 +339,91 @@ const sidebarResponsiveStyles = `
     }
   }
 
+  /* ==============================
+     MOBILE (max-width: 640px)
+     ============================== */
+  @media (max-width: 640px) {
+    aside {
+      width: 4rem !important;
+      min-width: 4rem !important;
+    }
+
+    aside .px-8 {
+      padding: 0.875rem 0 !important;
+    }
+
+    aside nav a {
+      padding: 0.625rem !important;
+      border-radius: 0.625rem !important;
+    }
+
+    aside svg {
+      width: 1.125rem !important;
+      height: 1.125rem !important;
+    }
+
+    aside .space-y-2 > * + * {
+      margin-top: 0.25rem !important;
+    }
+  }
+
+  /* ==============================
+     SMALL MOBILE (max-width: 480px)
+     ============================== */
+  @media (max-width: 480px) {
+    aside {
+      width: 3.5rem !important;
+      min-width: 3.5rem !important;
+    }
+
+    aside .px-8 {
+      padding: 0.75rem 0 !important;
+    }
+
+    aside nav a {
+      padding: 0.5rem !important;
+      border-radius: 0.5rem !important;
+    }
+
+    aside svg {
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    aside .px-4 {
+      padding-left: 0.375rem !important;
+      padding-right: 0.375rem !important;
+    }
+
+    aside .space-y-2 > * + * {
+      margin-top: 0.125rem !important;
+    }
+  }
+
+  /* ==============================
+     VERY SMALL (max-width: 360px)
+     ============================== */
+  @media (max-width: 360px) {
+    aside {
+      width: 3rem !important;
+      min-width: 3rem !important;
+    }
+
+    aside nav a {
+      padding: 0.375rem !important;
+      border-radius: 0.375rem !important;
+    }
+
+    aside svg {
+      width: 0.875rem !important;
+      height: 0.875rem !important;
+    }
+
+    aside .px-4 {
+      padding-left: 0.25rem !important;
+      padding-right: 0.25rem !important;
+    }
+  }
 
   /* ==============================
      ANIMATIONS

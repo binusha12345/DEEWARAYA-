@@ -1,7 +1,116 @@
-@import "tailwindcss";
+/* ===== FONTS (AT VERY TOP) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap');
 
+/* ===== TAILWIND ===== */
+@tailwind utilities;
 
-@variant dark (&:where(.dark, .dark *));
+/* ============================================
+   ENGLISH - Normal fonts
+   ============================================ */
+html[lang="en"],
+html[lang="en"] body {
+  font-family: 'Manrope', 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+}
+
+/* ============================================
+   ✅ SINHALA - NUCLEAR OVERRIDE
+   Forces Sinhala font on EVERY element
+   ============================================ */
+html[lang="si"],
+html[lang="si"] *,
+html[lang="si"] *::before,
+html[lang="si"] *::after {
+  font-family: 'Noto Sans Sinhala', 'Manrope', system-ui, -apple-system, sans-serif !important;
+}
+
+/* Sinhala body settings */
+html[lang="si"],
+html[lang="si"] body {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Sinhala headings */
+html[lang="si"] h1 {
+  font-size: 1.95rem !important;
+  font-weight: 800 !important;
+  line-height: 1.7 !important;
+}
+
+html[lang="si"] h2 {
+  font-size: 2.6rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+html[lang="si"] h3 {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+/* Sinhala buttons */
+html[lang="si"] button {
+  font-weight: 500 !important;
+}
+
+/* Sinhala sidebar */
+html[lang="si"] aside span.sidebar-link-text {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+
+/* ============================================
+   EXCEPTIONS - Keep these in English/Icons
+   ============================================ */
+
+/* Brand name and marked elements stay English */
+html[lang="si"] .notranslate,
+html[lang="si"] .notranslate *,
+html[lang="si"] .keep-english,
+html[lang="si"] .keep-english * {
+  font-family: 'Manrope', 'Inter', system-ui, sans-serif !important;
+}
+
+/* Icons should use their own font (Font Awesome, etc.) */
+html[lang="si"] svg,
+html[lang="si"] i.fa,
+html[lang="si"] i.fas,
+html[lang="si"] i.far,
+html[lang="si"] i.fab,
+html[lang="si"] [class^="fa-"],
+html[lang="si"] [class*=" fa-"] {
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
+}
+
+/* Numbers should look nice */
+html[lang="si"] .text-2xl,
+html[lang="si"] .text-3xl,
+html[lang="si"] .text-4xl,
+html[lang="si"] .text-5xl {
+  font-weight: 700 !important;
+}
+
+/* ✅ Sinhala sub text (descriptions) smaller */
+html[lang="si"] p {
+  font-size: 0.9rem !important;   /* ~14.4px */
+  font-weight: 400 !important;
+  line-height: 1.8 !important;
+}
+
+/* If your sub text uses Tailwind gray classes */
+html[lang="si"] .text-gray-600,
+html[lang="si"] .text-slate-600,
+html[lang="si"] .text-gray-500,
+html[lang="si"] .text-slate-500 {
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  line-height: 1.8 !important;
+}
+
 
 /* ============================================
    LESSON 1: BASE THEME SETUP

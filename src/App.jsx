@@ -43,9 +43,13 @@ import AdminWeather from './Pages/AdminWeather';
 
 import './App.css'
 
+import AutoTranslate from "./components/AutoTranslate"; // ✅ ADD THIS
+
 function App() {
   return (
     <>
+        {/* ✅ WRAP EVERYTHING WITH AutoTranslate */}
+      <AutoTranslate>
       <Routes>
         
         {/* ============ PUBLIC ROUTES ============ */}
@@ -210,6 +214,7 @@ function App() {
 
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
+      </AutoTranslate>
     </>
   );
 }

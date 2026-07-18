@@ -12,6 +12,7 @@ import {
   staggerContainer,
 } from "../../animations";
 
+
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

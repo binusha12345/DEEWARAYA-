@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const DashboardNav = () => {
   return (
@@ -13,6 +14,12 @@ const DashboardNav = () => {
       <h2 className="text-white text-2xl font-bold tracking-wide">
         Maritime <span className="text-cyan-300">Precision</span>
       </h2>
+
+      
+      <div className="flex items-center gap-4">
+        <LanguageSwitcher />
+        {/* other items */}
+      </div>
 
       <div className="flex items-center gap-10">
 

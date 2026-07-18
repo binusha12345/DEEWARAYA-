@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Ship, Moon, Sun, User, LayoutDashboard, LogOut, ChevronDown, Menu, X } from "lucide-react";
 import { useThemeContext } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext"; 
+import LanguageSwitcher from "../components/LanguageSwitcher"; // ✅ ADD THIS
 
 
 const API_URL = "http://localhost:5000"; 
@@ -130,6 +131,8 @@ const HomeNavBar = () => {
                 )}
               </button>
             </div>
+
+                      <LanguageSwitcher />
 
             {!isLoggedIn() ? (
               <>
