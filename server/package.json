@@ -22,8 +22,10 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.3",
     "multer": "^2.2.0",
+    "node-cron": "^4.6.0",
     "nodemailer": "^9.0.3",
     "parser": "^0.1.4",
+    "pdfkit": "^0.19.1",
     "qrcode": "^1.5.4"
   },
   "devDependencies": {

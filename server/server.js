@@ -1,45 +1,68 @@
+// server.js
 
 require("dotenv").config();
+
+console.log("✅ Environment Check:");
+console.log("PORT:", process.env.PORT);
+console.log("MongoDB:", process.env.MONGO_URI ? "✓ Set" : "✗ Missing");
+console.log("Email Host:", process.env.EMAIL_HOST);
+console.log("Email User:", process.env.EMAIL_USER);
+console.log("Email From:", process.env.EMAIL_FROM);
+
 const express = require("express");
 const cors = require("cors");
-const connectDB = require("./config/db");
 const path = require("path");
-const weatherRoutes = require("./routes/weatherRoutes");
+const connectDB = require("./config/db");
+
 const app = express();
-// Routes
-const adminRoutes = require('./routes/adminRoutes');
 
-
-// connect database
+// ==================== CONNECT DATABASE ====================
 connectDB();
 
-// middlewares
+// ==================== MIDDLEWARE ====================
 app.use(
   cors({
     origin: true,
     credentials: true,
   })
 );
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// routes
+// Serve uploaded files (only once!)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// 🔍 Debug logger - see every request
+app.use((req, res, next) => {
+  console.log(`📨 ${req.method} ${req.url}`);
+  next();
+});
+
+// ==================== ROUTES ====================
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/boats", require("./routes/boatRoutes"));
 app.use("/api/weather", require("./routes/weatherRoutes"));
-// Routes
-app.use('/api/admin', adminRoutes);
-// Serve uploaded files
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/tracking", require("./routes/trackingRoutes"));
+app.use("/api/finance", require("./routes/financeRoutes"));  // ✅ Only here, ONCE
 
+// Root route
 app.get("/", (req, res) => {
   res.send("Deewaraya API Running...");
 });
 
-// server start
+// ==================== SCHEDULED JOBS ====================
+const { scheduleMonthlyFinanceEmails } = require("./jobs/monthlyFinanceJob");
+scheduleMonthlyFinanceEmails();
+
+// ==================== ERROR HANDLER ====================
+app.use((err, req, res, next) => {
+  console.error("❌ Global error:", err.message);
+  res.status(500).json({ message: err.message || "Server error" });
+});
+
+// ==================== START SERVER ====================
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
