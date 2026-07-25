@@ -8,6 +8,7 @@ import Login from "./Pages/Public/Login";
 import Register from "./Pages/Public/Register";
 import ForgotPassword from "./Pages/Public/ForgotPassword";
 import ResetPassword from "./Pages/Public/ResetPassword";
+import Features from './Pages/Public/Features';
 
 // Owner Pages
 import BoatOwnerDashboard from "./Pages/Public/owner/BoatOwnerDashboard";
@@ -43,7 +44,10 @@ import AdminWeather from './Pages/AdminWeather';
 
 import './App.css'
 
-import AutoTranslate from "./components/AutoTranslate"; // ✅ ADD THIS
+import AutoTranslate from "./components/AutoTranslate"; // 
+
+import TourOverlay from './components/TourOverlay';
+
 
 function App() {
   return (
@@ -59,6 +63,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/features" element={<Features />} />
 
         {/* ============ OWNER PROTECTED ROUTES ============ */}
         <Route
@@ -213,6 +218,7 @@ function App() {
         />
 
       </Routes>
+          <TourOverlay />
       <Toaster position="top-right" reverseOrder={false} />
       </AutoTranslate>
     </>

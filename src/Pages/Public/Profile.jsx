@@ -10,6 +10,7 @@ import {
   FaCalendarAlt, FaAnchor, FaShip, FaCompass
 } from "react-icons/fa";
 
+
 const API_URL = "http://localhost:5000";
 
 const ROLE = {
@@ -82,7 +83,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-sky-50 to-white">
+    <div data-tour="profile-page" className="min-h-screen bg-gradient-to-br from-sky-100 via-sky-50 to-white">
       <HomeNavBar />
 
       {/* Clean Toast */}

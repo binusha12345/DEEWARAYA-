@@ -6,6 +6,8 @@ import "./index.css";
 import "./i18n/i18n"; // Added this files into this place
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProviderWrapper } from "./context/ThemeContext";
+import { TourProvider } from "./context/TourContext";
+
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -13,7 +15,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <ThemeProviderWrapper>
         <AuthProvider>
-         <App />
+          <TourProvider>
+            <App />
+          </TourProvider>
         </AuthProvider>
       </ThemeProviderWrapper>
     </BrowserRouter>

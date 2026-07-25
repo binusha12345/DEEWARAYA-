@@ -441,7 +441,7 @@ const WeatherDashboard = () => {
       : "";
 
   return (
-    <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
+    <div data-tour="weather-page" className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
 
       <style>{weatherDashboardStyles}</style> 
       {userRole === "owner" ? <OwnerSidebar /> : <DriverSidebar />}

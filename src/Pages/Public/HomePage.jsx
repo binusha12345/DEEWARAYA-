@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Settings, Moon, Ship, MapPin, Wrench, 
   PieChart, CloudRain, QrCode, ShieldCheck, 
@@ -26,10 +26,10 @@ import {
   floatDown,
   viewportConfig,
 } from "../../animations";
-
-
+import { useTour } from '../../context/TourContext';
 
 const HomePage = () => {
+  const { startTour } = useTour();
   return (
     <div className="min-h-screen font-sans text-slate-800 bg-white">
       <style>{responsiveStyles}</style>
@@ -111,7 +111,9 @@ const HomePage = () => {
 
               <motion.button 
                 {...hoverScale}
+                data-tour="register-btn"  
                 className="bg-white/10 backdrop-blur-md border border-white/30 text-white px-6 py-1.5 rounded-lg font-semibold hover:bg-white/20 flex items-center gap-2"
+                onClick={startTour}
               >
                 <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[20px]">▶</span>
                 View Demo

@@ -131,7 +131,7 @@ const HomeNavBar = () => {
                 )}
               </button>
             </div>
-
+                      <button data-tour="profile-icon" onClick={() => setShowDropdown(!showDropdown)}></button>
                       <LanguageSwitcher />
 
             {!isLoggedIn() ? (
@@ -173,7 +173,7 @@ const HomeNavBar = () => {
                     shadow-md hover:shadow-lg
                   "
                 >
-                  <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center overflow-hidden border-2 border-white/40">
+                  <div data-tour="profile-icon" className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center overflow-hidden border-2 border-white/40">
                     {user?.profilePicture ? (
                       <img
                         src={`${API_URL}${user.profilePicture}`}

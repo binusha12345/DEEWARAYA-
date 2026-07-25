@@ -13,7 +13,7 @@ import {
 
 const Finance = () => {
   return (
-    <div className="flex h-screen bg-slate-100 font-sans text-slate-800 overflow-hidden">
+    <div data-tour="finance-page" className="flex h-screen bg-slate-100 font-sans text-slate-800 overflow-hidden">
       <OwnerSidebar />
       <div className="flex-1">
         <DashboardNav />

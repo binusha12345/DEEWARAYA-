@@ -163,7 +163,7 @@ const Login = () => {
               </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
+            <form data-tour="login-form" onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
               {/* EMAIL FIELD */}
               <motion.div variants={fadeInUp}>
                 <label className="text-[12px] font-semibold tracking-widest uppercase text-black-500 block mb-2">
@@ -263,7 +263,7 @@ const Login = () => {
                     fontWeight: "500",
                   }}
                 >
-                  Forgot Password?
+                  data-tour="forgot-password"
                 </Link>
               </motion.div>
             </motion.div>

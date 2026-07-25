@@ -57,7 +57,7 @@ const getBoatImageUrl = (boat) => {
   };
 
   return (
-    <div className="flex h-screen bg-[#f1f5f9] font-sans text-slate-800 overflow-hidden">
+    <div data-tour="boats-list" className="flex h-screen bg-[#f1f5f9] font-sans text-slate-800 overflow-hidden">
 
       <style>{boatListStyles}</style>
       {/* Sidebar */}

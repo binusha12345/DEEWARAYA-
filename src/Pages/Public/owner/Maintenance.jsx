@@ -46,7 +46,7 @@ const Maintenance = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
+    <div data-tour="maintenance-page" className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
 
       <style>{maintenanceStyles}</style>
       {/* Sidebar */}

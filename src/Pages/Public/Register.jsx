@@ -239,7 +239,7 @@ const Register = () => {
               Begin your maritime journey today.
             </motion.p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form data-tour="register-form" onSubmit={handleSubmit} className="space-y-4">
 
               {/* Role Selection */}
               <motion.div

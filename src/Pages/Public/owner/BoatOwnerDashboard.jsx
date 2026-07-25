@@ -20,7 +20,7 @@ const BoatOwnerDashboard = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex h-screen bg-slate-100 font-sans text-slate-800 overflow-hidden">
+    <div data-tour="dashboard-overview" className="flex h-screen bg-slate-100 font-sans text-slate-800 overflow-hidden">
       
       <style>{ownerDashboardStyles}</style> 
       {/* Sidebar */}

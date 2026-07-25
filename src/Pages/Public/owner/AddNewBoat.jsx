@@ -155,7 +155,7 @@ const AddNewBoat = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
+    <div data-tour="add-boat-btn" className="flex h-screen bg-[#f8fafc] font-sans text-slate-800 overflow-hidden">
 
       <style>{addBoatStyles}</style> 
       {/* Sidebar */}
