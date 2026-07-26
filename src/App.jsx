@@ -9,6 +9,9 @@ import Register from "./Pages/Public/Register";
 import ForgotPassword from "./Pages/Public/ForgotPassword";
 import ResetPassword from "./Pages/Public/ResetPassword";
 import Features from './Pages/Public/Features';
+import FleetSupport from "./Pages/Public/FleetSupport";
+import QRCode from './Pages/Public/QRCode'
+import VesselDetailsPublic from './pages/public/VesselDetailsPublic';
 
 // Owner Pages
 import BoatOwnerDashboard from "./Pages/Public/owner/BoatOwnerDashboard";
@@ -43,19 +46,14 @@ import AdminEmergencies from './Pages/AdminEmergencies';
 import AdminWeather from './Pages/AdminWeather';
 
 import './App.css'
-
-import AutoTranslate from "./components/AutoTranslate"; // 
-
 import TourOverlay from './components/TourOverlay';
+
 
 
 function App() {
   return (
     <>
-        {/* ✅ WRAP EVERYTHING WITH AutoTranslate */}
-      <AutoTranslate>
       <Routes>
-        
         {/* ============ PUBLIC ROUTES ============ */}
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
@@ -64,6 +62,9 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/features" element={<Features />} />
+        <Route path="/contact" element={<FleetSupport />} />
+        <Route path="/qr-code" element={<QRCode />} />
+        <Route path="/vessel/:id" element={<VesselDetailsPublic />} />
 
         {/* ============ OWNER PROTECTED ROUTES ============ */}
         <Route
@@ -220,7 +221,7 @@ function App() {
       </Routes>
           <TourOverlay />
       <Toaster position="top-right" reverseOrder={false} />
-      </AutoTranslate>
+
     </>
   );
 }

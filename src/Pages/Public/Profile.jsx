@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 import HomeNavBar from "../../components/HomeNavBar";
 import api from "../../services/api";
+import { useTranslation } from "react-i18next";
 import {
   FaUser, FaEnvelope, FaPhone, FaIdCard, FaMapMarkerAlt,
   FaCamera, FaKey, FaCheckCircle, FaTimesCircle,
@@ -19,12 +20,18 @@ const ROLE = {
 };
 
 const Profile = () => {
+  const { t, i18n } = useTranslation();
   const { user, login, token } = useAuth();
   const navigate = useNavigate();
   const profileRef = useRef(null);
   const coverRef = useRef(null);
   const [uploading, setUploading] = useState({ profile: false, cover: false });
   const [message, setMessage] = useState({ type: "", text: "" });
+
+  const handleLanguageToggle = () => {
+    const newLang = i18n.language === "en" ? "si" : "en";
+    i18n.changeLanguage(newLang);
+  };
 
   if (!user) return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-100 to-white">
@@ -40,8 +47,8 @@ const Profile = () => {
   };
 
   const handleUpload = async (file, type) => {
-    if (!file || file.size > 5 * 1024 * 1024) return showMsg("error", "Max 5MB allowed");
-    if (!file.type.startsWith("image/")) return showMsg("error", "Select an image");
+    if (!file || file.size > 5 * 1024 * 1024) return showMsg("error", t("profile.upload.maxSize"));
+    if (!file.type.startsWith("image/")) return showMsg("error", t("profile.upload.selectImage"));
     setUploading((p) => ({ ...p, [type]: true }));
     const formData = new FormData();
     formData.append(type === "profile" ? "profilePicture" : "coverPhoto", file);
@@ -53,10 +60,10 @@ const Profile = () => {
       );
       if (res.data.success) {
         login({ user: res.data.user, token });
-        showMsg("success", `${type === "profile" ? "Profile picture" : "Cover photo"} updated`);
+        showMsg("success", type === "profile" ? t("profile.upload.profileSuccess") : t("profile.upload.coverSuccess"));
       }
     } catch (err) {
-      showMsg("error", err.response?.data?.message || "Upload failed");
+      showMsg("error", err.response?.data?.message || t("profile.upload.failed"));
     } finally {
       setUploading((p) => ({ ...p, [type]: false }));
     }
@@ -67,12 +74,12 @@ const Profile = () => {
     : "N/A";
 
   const infoFields = [
-    { icon: <FaUser />, label: "Full Name", value: user.name },
-    { icon: <FaEnvelope />, label: "Email", value: user.email },
-    { icon: <FaPhone />, label: "Phone", value: user.phone },
-    { icon: <FaIdCard />, label: "NIC Number", value: user.nic },
-    { icon: role.icon, label: "Role", value: role.label },
-    { icon: <FaCalendarAlt />, label: "Member Since", value: memberSince },
+    { icon: <FaUser />, label: t("profile.info.fullName"), value: user.name },
+    { icon: <FaEnvelope />, label: t("profile.info.email"), value: user.email },
+    { icon: <FaPhone />, label: t("profile.info.phone"), value: user.phone },
+    { icon: <FaIdCard />, label: t("profile.info.nic"), value: user.nic },
+    { icon: role.icon, label: t("profile.info.role"), value: t(`profile.roles.${user.role}`) || role.label },
+    { icon: <FaCalendarAlt />, label: t("profile.info.memberSince"), value: memberSince },
   ];
 
   // Simple, clean animation
@@ -85,6 +92,7 @@ const Profile = () => {
   return (
     <div data-tour="profile-page" className="min-h-screen bg-gradient-to-br from-sky-100 via-sky-50 to-white">
       <HomeNavBar />
+
 
       {/* Clean Toast */}
       <AnimatePresence>
@@ -130,7 +138,7 @@ const Profile = () => {
                 disabled={uploading.cover}
                 className="bg-white/90 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-white transition-colors"
               >
-                {uploading.cover ? <Spinner /> : <FaCamera size={13} />} Change Cover
+                {uploading.cover ? <Spinner /> : <FaCamera size={13} />} {t("profile.cover.changeCover")}
               </button>
             </div>
             <input type="file" ref={coverRef} onChange={(e) => handleUpload(e.target.files[0], "cover")} accept="image/*" className="hidden" />
@@ -178,13 +186,13 @@ const Profile = () => {
                   onClick={() => navigate("/forgot-password")}
                   className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-sky-50 hover:border-sky-300 transition-all"
                 >
-                  <FaKey size={11} /> Change Password
+                  <FaKey size={11} /> {t("profile.buttons.changePassword")}
                 </button>
                 <button
                   onClick={() => navigate(user.role === "owner" ? "/BoatOwnerDashboard" : "/BoatDriverDashboard")}
                   className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 rounded-lg shadow-md shadow-sky-200 transition-all hover:shadow-lg"
                 >
-                  {role.icon} Dashboard
+                  {role.icon} {t("profile.buttons.dashboard")}
                 </button>
               </motion.div>
             </div>
@@ -211,12 +219,12 @@ const Profile = () => {
               </div>
               <div>
                 <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
-                  Account Type
+                  {t("profile.accountType")}
                 </p>
-                <p className="text-lg font-bold text-slate-800">{role.label}</p>
+                <p className="text-lg font-bold text-slate-800">{t(`profile.roles.${user.role}`) || role.label}</p>
               </div>
               <span className={`ml-auto px-3 py-1 rounded-full text-xs font-bold border ${role.badge}`}>
-                ● Active
+                ● {t("profile.active")}
               </span>
             </motion.div>
 
@@ -227,7 +235,7 @@ const Profile = () => {
               transition={{ duration: 0.4, delay: 0.6 }}
               className="text-base font-semibold text-slate-800 mb-4"
             >
-              Personal Information
+              {t("profile.personalInfo")}
             </motion.h2>
 
             {/* Info Cards */}
@@ -249,7 +257,7 @@ const Profile = () => {
                         {f.label}
                       </p>
                       <p className="text-sm text-slate-800 font-medium mt-0.5 break-words">
-                        {f.value || <span className="text-slate-400 italic">Not provided</span>}
+                        {f.value || <span className="text-slate-400 italic">{t("profile.notProvided")}</span>}
                       </p>
                     </div>
                   </div>
@@ -269,10 +277,10 @@ const Profile = () => {
                   </div>
                   <div className="min-w-0">
                     <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
-                      Address
+                      {t("profile.info.address")}
                     </p>
                     <p className="text-sm text-slate-800 font-medium mt-0.5 break-words">
-                      {user.address || <span className="text-slate-400 italic">Not provided</span>}
+                      {user.address || <span className="text-slate-400 italic">{t("profile.notProvided")}</span>}
                     </p>
                   </div>
                 </div>
@@ -288,7 +296,7 @@ const Profile = () => {
           transition={{ duration: 0.5, delay: 1.2 }}
           className="text-center text-slate-500 text-xs mt-6 flex items-center justify-center gap-2"
         >
-          <FaAnchor /> Deewaraya · Fishing Boat Management & Tracking <FaAnchor />
+          <FaAnchor /> {t("profile.footer")} <FaAnchor />
         </motion.p>
       </div>
     </div>

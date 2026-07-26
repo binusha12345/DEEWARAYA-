@@ -2,10 +2,10 @@
   "nav": {
     "home": "Home",
     "about": "About",
-    "contact": "Contact",
+    "features": "Features",
     "login": "Login",
     "register": "Register",
-    "getStarted": "Get Started"
+    "logout": "Logout"
   },
   "common": {
     "save": "Save",
@@ -13,158 +13,404 @@
     "delete": "Delete",
     "edit": "Edit",
     "add": "Add",
-    "refresh": "Refresh",
-    "loading": "Loading",
-    "search": "Search",
-    "back": "Back",
-    "submit": "Submit",
-    "close": "Close",
+    "loading": "Loading...",
     "yes": "Yes",
     "no": "No",
-    "welcome": "Welcome",
-    "logout": "Logout",
-    "seeAll": "See All"
+    "back": "Back",
+    "next": "Next"
   },
   "home": {
-    "heroTitle": "Smart Fleet Management",
-    "heroSubtitle": "Manage your boats, track locations, and monitor operations in real-time",
-    "heroDescription": "Deewaraya provides comprehensive fishing fleet management solutions for boat owners in Sri Lanka",
-    "getStarted": "Get Started",
-    "watchDemo": "Watch Demo",
-    "featuresTitle": "Powerful Features",
-    "featuresSubtitle": "Everything you need to manage your fleet",
-    "gpsTrackingTitle": "GPS Tracking",
-    "gpsTrackingDesc": "Track your boats in real-time with accurate GPS positioning",
-    "weatherTitle": "Weather Updates",
-    "weatherDesc": "Get live weather forecasts and safety alerts for your area",
-    "maintenanceTitle": "Maintenance Tracking",
-    "maintenanceDesc": "Schedule and track boat maintenance efficiently",
-    "financeTitle": "Finance Management",
-    "financeDesc": "Monitor income, expenses, and profits daily",
-    "notificationsTitle": "Smart Notifications",
-    "notificationsDesc": "Get instant alerts for important events",
-    "reportsTitle": "Detailed Reports",
-    "reportsDesc": "Generate monthly reports with insights and recommendations",
-    "statsTitle": "Trusted by Boat Owners",
-    "activeBoats": "Active Boats",
-    "happyOwners": "Happy Owners",
-    "citiesServed": "Cities Served",
-    "yearsExperience": "Years Experience",
-    "howItWorksTitle": "How It Works",
-    "step1Title": "Sign Up",
-    "step1Desc": "Create your account in minutes",
-    "step2Title": "Add Your Boats",
-    "step2Desc": "Register your fleet details",
-    "step3Title": "Start Managing",
-    "step3Desc": "Track and manage everything from one dashboard",
-    "ctaTitle": "Ready to Get Started?",
-    "ctaSubtitle": "Join hundreds of boat owners already using Deewaraya",
-    "ctaButton": "Start Free Trial",
-    "footerAbout": "About Us",
-    "footerServices": "Services",
-    "footerContact": "Contact",
-    "footerPrivacy": "Privacy Policy",
-    "footerTerms": "Terms of Service",
-    "footerCopyright": "All rights reserved"
+    "hero": {
+      "badge": "Sri Lanka's #1 Fleet System",
+      "title1": "Modernize Fishing",
+      "title2": "Operations with",
+      "title3": "Smart Boat",
+      "title4": "Management",
+      "desc1": "A centralized digital platform designed to manage fishing fleets,",
+      "descHighlight1": "track real-time locations",
+      "desc2": ", monitor maintenance, calculate income, and",
+      "descHighlight2": "ensure safety at sea",
+      "getStarted": "Get Started",
+      "viewDemo": "View Demo"
+    },
+    "features": {
+      "badge": "Powerful Features",
+      "titlePart1": "Command Your",
+      "titlePart2": "Fleet",
+      "subtitle1": "Powerful tools designed for the modern maritime operator, ensuring efficiency from",
+      "subtitleHighlight": "dock to deep sea",
+      "cards": {
+        "boat": {
+          "title": "Boat Management",
+          "desc": "Track and manage your entire fishing fleet with comprehensive digital profiles for every vessel."
+        },
+        "gps": {
+          "title": "GPS Tracking",
+          "desc": "Real-time location tracking with custom geofencing and restricted zone alerts for complete oversight."
+        },
+        "maintenance": {
+          "title": "Maintenance",
+          "desc": "Schedule and track boat maintenance, repairs, and engine hours to prevent downtime at sea."
+        },
+        "finance": {
+          "title": "Finance Management",
+          "desc": "Monitor daily catches, expenses, fuel costs, and overall profitability in one clean dashboard."
+        },
+        "weather": {
+          "title": "Weather Alerts",
+          "desc": "Get real-time marine weather forecasts and critical safety notifications directly to your device."
+        },
+        "qr": {
+          "title": "QR Code System",
+          "desc": "Instantly access boat history and documentation via a secure unique QR code for each vessel."
+        }
+      }
+    },
+    "steps": {
+      "badge": "How It Works",
+      "titlePart1": "Streamline Your Fleet in",
+      "titlePart2": "Three Simple Steps",
+      "subtitle": "Get your entire fleet operational and optimized in minutes, not months.",
+      "step1": {
+        "title": "Register Your Fleet",
+        "desc": "Onboard your vessels into the secure Deewaraya database with detailed specifications and crew info."
+      },
+      "step2": {
+        "title": "Track in Real-time",
+        "desc": "View live GPS positions of every boat. Monitor navigation paths and set boundary alerts instantly."
+      },
+      "step3": {
+        "title": "Manage Operations",
+        "desc": "Access analytics on catch volume, fuel efficiency, and maintenance logs to optimize your business."
+      },
+      "floating": {
+        "statusLabel": "Fleet Status",
+        "statusValue": "All Systems Online",
+        "efficiencyLabel": "Efficiency",
+        "efficiencyChange": "12% this month",
+        "live": "LIVE"
+      }
+    },
+    "cta": {
+      "badge": "Start Today",
+      "titlePart1": "Ready to Take",
+      "titlePart2": "Command?",
+      "desc": "Join hundreds of fleet owners who have modernized their maritime operations with Deewaraya's industry-leading technology.",
+      "getStartedBtn": "Get Started Now",
+      "contactBtn": "Contact Sales"
+    }
   },
+
+"about": {
+  "hero": {
+    "badge": "Precision Maritime Systems",
+    "title1": "ABOUT",
+    "title2": "US",
+    "description": "DEEWARAYA delivers an advanced Fishing Boat Management System designed to modernize maritime operations through intelligent automation, real-time monitoring, and comprehensive fleet oversight.",
+    "learnMoreBtn": "Learn More",
+    "liveTracking": "Live Tracking",
+    "knots": "KNOTS",
+    "trusted": "Trusted"
+  },
+  "excellence": {
+    "badge": "Our Capabilities",
+    "titlePart1": "Operational",
+    "titlePart2": "Excellence",
+    "monitor": {
+      "title": "Monitor Boats",
+      "desc": "Real-time health diagnostics for every vessel in your fleet. Monitor engine performance, fuel efficiency, and structural integrity from a single command center."
+    },
+    "track": {
+      "title": "Track Locations",
+      "desc": "Precise GPS positioning and historical route analysis to optimize fishing lanes and ensure territorial compliance."
+    },
+    "crew": {
+      "title": "Manage Crew",
+      "desc": "Streamlined shift scheduling, certification tracking, and communication tools to keep your teams synchronized at sea."
+    },
+    "safety": {
+      "title": "Safety & Compliance",
+      "desc": "Integrated emergency protocols and automatic compliance reporting to meet international maritime safety standards effortlessly.",
+      "safetyLabel": "Safety",
+      "ratingLabel": "Rating"
+    }
+  },
+  "highseas": {
+    "badge": "Innovation at Sea",
+    "titlePart1": "Modernizing the",
+    "titlePart2": "High Seas",
+    "description": "The traditional fishing industry is evolving. We bridge the gap between legacy operations and future-proof digital infrastructure. Our system doesn't just track data—it provides actionable intelligence that reduces costs and maximizes yield.",
+    "globalSupport": "Global Support",
+    "efficiencyGained": "Efficiency Gained",
+    "feature1": "Intelligent AI-driven predictive maintenance",
+    "feature2": "Unified dashboard for multi-fleet management",
+    "feature3": "Encrypted simulated-GPS-linked communication"
+  }
+},
+"login": {
+  "heading1": "Navigate The Digital",
+  "heading2": "Horizon",
+  "subtext": "Experience the precision of modern maritime ledgering and intelligence with Deewaraya.",
+  "title": "Login..!",
+  "subtitle": "Access your maritime dashboard",
+  "emailLabel": "EMAIL",
+  "emailPlaceholder": "Enter your email",
+  "passwordLabel": "PASSWORD",
+  "passwordPlaceholder": "Enter your password",
+  "loginBtn": "Login",
+  "loggingIn": "Logging in...",
+  "loginFailed": "Login failed",
+  "forgotPassword": "Forgot Password?",
+  "noAccount": "Don't have an account?",
+  "signUp": "Sign Up"
+}
+,
+
+"register": {
+  "welcomeTo": "WelCome To",
+  "description": "Real Fishing Boat Management and Tracking System for Sri Lanka's Coastal Communities. Empowering boat owners and drivers with real-time insights, fleet management, and advanced analytics to navigate the seas with confidence.",
+  "feature1Title": "Fleet Command",
+  "feature1Desc": "Real-time tracking and logistics management.",
+  "feature2Title": "Advanced Analytics",
+  "feature2Desc": "Actionable insights from your vessel's telemetry.",
+  "title": "Register Now..!",
+  "subtitle": "Begin your maritime journey today.",
+  "selectRole": "Select User Role",
+  "boatOwner": "Boat Owner",
+  "boatDriver": "Boat Driver",
+  "nameLabel": "Name",
+  "namePlaceholder": "Enter your name",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Enter your email",
+  "phoneLabel": "Phone",
+  "phonePlaceholder": "Enter phone number",
+  "nicLabel": "NIC",
+  "nicPlaceholder": "Enter NIC number",
+  "addressLabel": "Address",
+  "addressPlaceholder": "Enter your address",
+  "passwordLabel": "Password",
+  "confirmPasswordLabel": "Confirm Password",
+  "registerBtn": "Register",
+  "registering": "Registering...",
+  "haveAccount": "Already have an account?",
+  "signIn": "Sign In",
+  "passwordMismatch": "Passwords do not match",
+  "successMsg": "Registration successful!",
+  "failedMsg": "Registration failed",
+  "copyright": "— HORIZON PERSPECTIVE © 2024"
+}
+,
+"navbar": {
+  "home": "Home",
+  "about": "About",
+  "features": "Features",
+  "contact": "Contact",
+  "login": "Login",
+  "register": "Register",
+  "logout": "Logout",
+  "myProfile": "My Profile",
+  "dashboard": "Dashboard",
+  "boatOwner": "Boat Owner",
+  "boatDriver": "Boat Driver",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "toggleTheme": "Toggle Theme",
+  "toggleMobileMenu": "Toggle Mobile Menu"
+}
+,
+"footer": {
+  "newsletter": {
+    "title": "Stay Updated",
+    "subtitle": "Subscribe to get maritime updates and safety alerts",
+    "placeholder": "Enter your email",
+    "subscribeBtn": "Subscribe"
+  },
+  "brand": {
+    "description": "Leading the digital transformation of maritime and fishing fleet management worldwide. Sail smart, sail safe.",
+    "trusted": "Trusted by 10,000+ Sailors"
+  },
+  "productTitle": "Product",
+  "productLinks": {
+    "liveTracking": "Live Tracking",
+    "analytics": "Analytics",
+    "safetyNotices": "Safety Notices",
+    "weatherAlerts": "Weather Alerts"
+  },
+  "companyTitle": "Company",
+  "companyLinks": {
+    "aboutUs": "About Us",
+    "fleetLogin": "Fleet Login",
+    "privacyPolicy": "Privacy Policy",
+    "careers": "Careers"
+  },
+  "contactTitle": "Contact Us",
+  "contact": {
+    "address": "No. 123, Hiriketiya, Sri Lanka"
+  },
+  "rightsReserved": "All Rights Reserved.",
+  "legal": {
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "cookies": "Cookies"
+  },
+  "backToTop": "Back to Top"
+}
+,
+  "forgotPassword": {
+    "title": "🔑 Forgot Password?",
+    "subtitle": "No worries! Enter your email and we'll send you a reset link.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your registered email",
+    "emailRequired": "Please enter your email address",
+    "somethingWrong": "Something went wrong",
+    "sending": "⏳ Sending...",
+    "sendResetLink": "📧 Send Reset Link",
+    "rememberPassword": "Remember your password?",
+    "loginHere": "Login here",
+    "checkEmail": "Check Your Email!",
+    "linkExpires": "Link expires in {{minutes}} minutes",
+    "checkSpam": "Check your spam/junk folder if you don't see it",
+    "backToLogin": "← Back to Login"
+  }
+,
+"resetPassword": {
+    "title": "🔒 Reset Your Password",
+    "subtitle": "Enter a new password for your account below.",
+    "newPasswordLabel": "New Password",
+    "newPasswordPlaceholder": "Min 5 characters",
+    "confirmPasswordLabel": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Re-enter password",
+    "fillAllFields": "Please fill all fields",
+    "passwordMinLength": "Password must be at least 5 characters",
+    "passwordMismatch": "Passwords do not match",
+    "somethingWrong": "Something went wrong",
+    "resetting": "⏳ Resetting...",
+    "resetButton": "🔒 Reset Password",
+    "rememberPassword": "Remember your password?",
+    "loginHere": "Login here",
+    "successTitle": "Password Reset!",
+    "redirecting": "Redirecting to login page...",
+    "goToLogin": "🔐 Go to Login"
+  }
+,
+ "profile": {
+    "roles": {
+      "owner": "Boat Owner",
+      "driver": "Boat Driver"
+    },
+    "upload": {
+      "maxSize": "Max 5MB allowed",
+      "selectImage": "Select an image",
+      "profileSuccess": "Profile picture updated",
+      "coverSuccess": "Cover photo updated",
+      "failed": "Upload failed"
+    },
+    "cover": {
+      "changeCover": "Change Cover"
+    },
+    "buttons": {
+      "changePassword": "Change Password",
+      "dashboard": "Dashboard"
+    },
+    "accountType": "Account Type",
+    "active": "Active",
+    "personalInfo": "Personal Information",
+    "notProvided": "Not provided",
+    "info": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "nic": "NIC Number",
+      "role": "Role",
+      "memberSince": "Member Since",
+      "address": "Address"
+    },
+    "footer": "Deewaraya · Fishing Boat Management & Tracking"
+  }
+,
+ "ownerDashboard": {
+    "overview": "Overview",
+    "welcome": "Welcome back, {{name}}",
+    "manageFleet": "Manage and monitor your fleet operations.",
+    "downloadReport": "Download Report",
+    "stats": {
+      "totalBoats": "Total Boats",
+      "vessels": "Vessels",
+      "activeBoats": "Active Boats",
+      "live": "Live",
+      "monthlyIncome": "Monthly Income",
+      "monthlyExpenses": "Monthly Expenses",
+      "netProfit": "Net Profit"
+    },
+    "map": {
+      "currentLocation": "Current Location",
+      "windSpeed": "Wind Speed"
+    },
+    "maintenance": {
+      "title": "Maintenance Required",
+      "seeAll": "See All",
+      "engineOverdue": "Engine service overdue",
+      "hullCleaning": "Hull cleaning scheduled",
+      "urgent": "Urgent",
+      "twoDays": "2 days"
+    },
+    "weather": {
+      "title": "Weather Forecast",
+      "condition": "Partly Cloudy",
+      "humidity": "Humidity: {{value}}%",
+      "uvIndex": "UV Index: 4 Low",
+      "days": {
+        "mon": "MON",
+        "tue": "TUE",
+        "wed": "WED",
+        "thu": "THU"
+      }
+    }
+  }
+,
   "sidebar": {
+    "fleetManagement": "Fleet Management",
     "dashboard": "Dashboard",
-    "boats": "Boats",
+    "myBoats": "My Boats",
     "gpsTracking": "GPS Tracking",
     "maintenance": "Maintenance",
     "weather": "Weather",
     "finance": "Finance",
     "notifications": "Notifications",
     "qrCode": "QR Code",
-    "settings": "Settings"
-  },
-  "dashboard": {
-    "overview": "Overview",
-    "manageFleet": "Manage your fleet and monitor operations",
-    "downloadReport": "Download Report",
-    "totalBoats": "Total Boats",
-    "activeBoats": "Active Boats",
-    "monthlyIncome": "Monthly Income",
-    "monthlyExpenses": "Monthly Expenses",
-    "netProfit": "Net Profit",
-    "vessels": "Vessels",
-    "live": "Live",
-    "currentLocation": "Current Location",
-    "windSpeed": "Wind Speed",
-    "maintenanceRequired": "Maintenance Required",
-    "weatherForecast": "Weather Forecast"
-  },
-  "finance": {
-    "title": "Finance",
-    "dailyCalculation": "Daily Calculation",
-    "monthlyReports": "Monthly Reports",
-    "recordDaily": "Record your daily fish catch and expenses",
-    "recentEntries": "Recent Daily Entries",
-    "lastDays": "Last 7 Days",
-    "selectDate": "Select Date",
-    "fishIncome": "Fish Income",
-    "expenses": "Expenses",
-    "addFish": "Add Fish",
-    "addExpense": "Add Expense",
-    "fishName": "Fish Name",
-    "quantity": "Quantity",
-    "pricePerUnit": "Price per unit",
-    "description": "Description",
-    "amount": "Amount",
-    "totalFishQuantity": "Total Fish Quantity",
-    "totalIncome": "Total Income",
-    "totalExpenses": "Total Expenses",
-    "netProfit": "Net Profit",
-    "dailyNetProfit": "Daily Net Profit",
-    "saveDailyEntry": "Save Daily Entry",
-    "saving": "Saving...",
-    "saved": "Saved!",
-    "date": "Date",
-    "fish": "Fish",
-    "income": "Income",
-    "profit": "Profit",
-    "action": "Action",
-    "workingDays": "Working Days",
-    "avgDailyIncome": "Average Daily Income",
-    "avgDailyExpense": "Average Daily Expense",
-    "profitMargin": "Profit Margin",
-    "dailyTrend": "Daily Trend",
-    "fishBreakdown": "Fish Income Breakdown",
-    "expenseDistribution": "Expense Distribution",
-    "sendPdfReport": "Send PDF Report",
-    "noData": "No data for this month",
-    "startRecording": "Start recording daily entries to see monthly reports",
-    "overview": "Overview",
-    "dailyEntries": "Daily Entries",
-    "comparison": "Comparison",
-    "analysis": "Analysis",
-    "recommendations": "Recommendations and Insights"
-  },
-  "expenses": {
-    "fuel": "Fuel",
-    "driverSalary": "Driver Salary",
-    "ice": "Ice",
-    "repairMaintenance": "Repair and Maintenance",
-    "equipment": "Equipment",
-    "other": "Other"
-  },
-  "messages": {
-    "saveSuccess": "Saved successfully!",
-    "saveFailed": "Failed to save",
-    "deleteConfirm": "Are you sure you want to delete this entry?",
-    "deleteSuccess": "Entry deleted successfully",
-    "addFishFirst": "Please add at least one fish entry",
-    "reportSent": "Report sent to your email!",
-    "sendFailed": "Failed to send report"
-  },
-  "recommendations": {
-    "title": "Quick Recommendations",
-    "lossAlert": "Loss Alert",
-    "lossMessage": "Today expenses exceed income. Review your costs and consider adjusting fish prices.",
-    "highFuel": "High Fuel Cost",
-    "highFuelMessage": "Fuel is over 40 percent of expenses. Optimize routes and check engine efficiency.",
-    "profitableDay": "Profitable Day",
-    "trackConsistently": "Track Consistently",
-    "trackMessage": "Record daily to get accurate monthly reports and identify profitable patterns."
+    "settings": "Settings",
+    "footer": "© 2026 Deewaraya"
+  }
+,
+  "features": {
+    "hero": {
+      "subtitle": "Fleet Management",
+      "tagline": "Safety. Tracking. Profit. 🌊",
+      "stats": {
+        "features": { "count": "7",   "label": "Features" },
+        "safety":   { "count": "6",   "label": "Safety"   },
+        "coming":   { "count": "4",   "label": "Coming"   },
+        "live":     { "count": "24/7","label": "Live"     }
+      }
+    },
+    "core": {
+      "badge": "CORE",
+      "title": "Platform Features",
+      "hint":  "👆 Tap to expand"
+    },
+    "special": {
+      "badge": "SPECIAL",
+      "title": "Why We're Different 🛟"
+    },
+    "upcoming": {
+      "badge": "FUTURE",
+      "title": "Coming Soon 🔮"
+    },
+    "cta": {
+      "title":  "Protect Your Fleet Today",
+      "button": "Get Started Free →"
+    }
   }
 }
+
+

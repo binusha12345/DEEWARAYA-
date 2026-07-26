@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
+
+  const handleLanguageToggle = () => {
+    const newLang = i18n.language === "en" ? "si" : "en";
+    i18n.changeLanguage(newLang);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +22,7 @@ const ForgotPassword = () => {
     setMessage("");
 
     if (!email.trim()) {
-      setError("Please enter your email address");
+      setError(t("forgotPassword.emailRequired"));
       return;
     }
 
@@ -31,39 +38,58 @@ const ForgotPassword = () => {
         setIsEmailSent(true);
         setMessage(response.data.message);
       }
-
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      setError(
+        err.response?.data?.message || t("forgotPassword.somethingWrong")
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
-  //  Success Screen
+  // Success Screen
   if (isEmailSent) {
     return (
       <div style={styles.container}>
+        {/* Language Toggle Button */}
+        <div style={styles.langWrapper}>
+          <button onClick={handleLanguageToggle} style={styles.langButton}>
+            {i18n.language === "en" ? "🇱🇰 සිංහල" : "🇬🇧 English"}
+          </button>
+        </div>
+
         <div style={styles.card}>
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: "60px", margin: "10px 0" }}>📧</p>
             <h2 style={{ color: "#16a34a", marginBottom: "15px" }}>
-              Check Your Email!
+              {t("forgotPassword.checkEmail")}
             </h2>
-            <p style={{ color: "#374151", marginBottom: "10px" }}>
-              {message}
-            </p>
+            <p style={{ color: "#374151", marginBottom: "10px" }}>{message}</p>
 
             <div style={styles.infoBox}>
               <p style={{ margin: "5px 0", color: "#1e40af" }}>
                 📬 <strong>{email}</strong>
               </p>
-              <p style={{ margin: "5px 0", color: "#6b7280", fontSize: "13px" }}>
-                ⏰ Link expires in <strong>15 minutes</strong>
+              <p
+                style={{
+                  margin: "5px 0",
+                  color: "#6b7280",
+                  fontSize: "13px",
+                }}
+              >
+                ⏰{" "}
+                {t("forgotPassword.linkExpires", { minutes: 15 })}
               </p>
             </div>
 
-            <p style={{ color: "#6b7280", fontSize: "13px", marginTop: "15px" }}>
-              💡 Check your spam/junk folder if you don't see it
+            <p
+              style={{
+                color: "#6b7280",
+                fontSize: "13px",
+                marginTop: "15px",
+              }}
+            >
+              💡 {t("forgotPassword.checkSpam")}
             </p>
 
             <Link
@@ -76,7 +102,7 @@ const ForgotPassword = () => {
                 background: "#1e40af",
               }}
             >
-              ← Back to Login
+              {t("forgotPassword.backToLogin")}
             </Link>
           </div>
         </div>
@@ -86,15 +112,22 @@ const ForgotPassword = () => {
 
   return (
     <div style={styles.container}>
+      {/* Language Toggle Button */}
+      <div style={styles.langWrapper}>
+        <button onClick={handleLanguageToggle} style={styles.langButton}>
+          {i18n.language === "en" ? "🇱🇰 සිංහල" : "🇬🇧 English"}
+        </button>
+      </div>
+
       <div style={styles.card}>
-        <h2 style={styles.title}>🔑 Forgot Password?</h2>
-        <p style={styles.subtitle}>
-          No worries! Enter your email and we'll send you a reset link.
-        </p>
+        <h2 style={styles.title}>{t("forgotPassword.title")}</h2>
+        <p style={styles.subtitle}>{t("forgotPassword.subtitle")}</p>
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "20px" }}>
-            <label style={styles.label}>Email Address</label>
+            <label style={styles.label}>
+              {t("forgotPassword.emailLabel")}
+            </label>
             <input
               type="email"
               value={email}
@@ -102,15 +135,15 @@ const ForgotPassword = () => {
                 setEmail(e.target.value);
                 setError("");
               }}
-              placeholder="Enter your registered email"
+              placeholder={t("forgotPassword.emailPlaceholder")}
               style={{
                 ...styles.input,
-                border: error ? "2px solid #ef4444" : "1px solid #d1d5db",
+                border: error
+                  ? "2px solid #ef4444"
+                  : "1px solid #d1d5db",
               }}
             />
-            {error && (
-              <p style={styles.errorText}>⚠️ {error}</p>
-            )}
+            {error && <p style={styles.errorText}>⚠️ {error}</p>}
           </div>
 
           <button
@@ -122,14 +155,22 @@ const ForgotPassword = () => {
               cursor: isLoading ? "not-allowed" : "pointer",
             }}
           >
-            {isLoading ? "⏳ Sending..." : "📧 Send Reset Link"}
+            {isLoading
+              ? t("forgotPassword.sending")
+              : t("forgotPassword.sendResetLink")}
           </button>
         </form>
 
-        <p style={{ textAlign: "center", marginTop: "20px", color: "#6b7280" }}>
-          Remember your password?{" "}
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            color: "#6b7280",
+          }}
+        >
+          {t("forgotPassword.rememberPassword")}{" "}
           <Link to="/login" style={styles.link}>
-            Login here
+            {t("forgotPassword.loginHere")}
           </Link>
         </p>
       </div>
@@ -142,9 +183,28 @@ const styles = {
     minHeight: "100vh",
     background: "#f0f9ff",
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     padding: "20px",
+  },
+  langWrapper: {
+    position: "fixed",
+    top: "16px",
+    right: "16px",
+    zIndex: 1000,
+  },
+  langButton: {
+    padding: "8px 16px",
+    background: "#1e40af",
+    color: "white",
+    border: "none",
+    borderRadius: "20px",
+    cursor: "pointer",
+    fontSize: "14px",
+    fontWeight: "600",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+    transition: "background 0.3s ease",
   },
   card: {
     background: "white",

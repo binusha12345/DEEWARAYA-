@@ -1,34 +1,89 @@
-/* ===== FONTS (AT VERY TOP) ===== */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap');
-
-/* ===== TAILWIND ===== */
-@tailwind utilities;
+/* ============================================
+   1. TAILWIND IMPORT (Tailwind v4)
+   ============================================ */
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
 /* ============================================
-   ENGLISH - Normal fonts
+   2. GOOGLE FONTS
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@100..900&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ============================================
+   3. THEME CONFIGURATION
+   ============================================ */
+@theme {
+  /* Custom Colors */
+  --color-brand-primary: #667eea;
+  --color-brand-secondary: #764ba2;
+  --color-brand-accent: #f093fb;
+  
+  /* Custom Fonts */
+  --font-family-sinhala: 'Noto Sans Sinhala', sans-serif;
+  --font-family-inter: 'Inter', sans-serif;
+  --font-family-manrope: 'Manrope', sans-serif;
+  
+  /* Custom Spacing */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  
+  /* Custom Border Radius */
+  --radius-4xl: 2rem;
+  
+  /* Animations */
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-down: slideDown 0.3s ease-out;
+  --animate-slide-up: slideUp 0.3s ease-out;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-gradient: gradient 8s ease infinite;
+}
+
+/* ============================================
+   4. BASE THEME (Light/Dark)
+   ============================================ */
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+html {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+html.dark,
+html.dark body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* ============================================
+   5.ENGLISH FONTS (DEFAULT)
    ============================================ */
 html[lang="en"],
-html[lang="en"] body {
+html[lang="en"] body,
+html:not([lang="si"]),
+html:not([lang="si"]) body {
   font-family: 'Manrope', 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 16px;
 }
 
 /* ============================================
-   ✅ SINHALA - NUCLEAR OVERRIDE
-   Forces Sinhala font on EVERY element
+   6. SINHALA FONTS - NUCLEAR OVERRIDE
    ============================================ */
 html[lang="si"],
 html[lang="si"] *,
 html[lang="si"] *::before,
 html[lang="si"] *::after {
-  font-family: 'Noto Sans Sinhala', 'Manrope', system-ui, -apple-system, sans-serif !important;
+  font-family: 'Noto Sans Sinhala', sans-serif !important;
 }
 
 /* Sinhala body settings */
 html[lang="si"],
 html[lang="si"] body {
   font-size: 15px !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   line-height: 1.7 !important;
   letter-spacing: 0 !important;
 }
@@ -37,12 +92,12 @@ html[lang="si"] body {
 html[lang="si"] h1 {
   font-size: 1.95rem !important;
   font-weight: 800 !important;
-  line-height: 1.7 !important;
+  line-height: 1.5 !important;
 }
 
 html[lang="si"] h2 {
-  font-size: 2.6rem !important;
-  font-weight: 600 !important;
+  font-size: 2.4rem !important;
+  font-weight: 700 !important;
   line-height: 1.4 !important;
 }
 
@@ -50,6 +105,12 @@ html[lang="si"] h3 {
   font-size: 1.25rem !important;
   font-weight: 600 !important;
   line-height: 1.4 !important;
+}
+
+html[lang="si"] p {
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  line-height: 1.8 !important;
 }
 
 /* Sinhala buttons */
@@ -63,8 +124,26 @@ html[lang="si"] aside span.sidebar-link-text {
   font-weight: 500 !important;
 }
 
+/* Sinhala gray/slate text */
+html[lang="si"] .text-gray-600,
+html[lang="si"] .text-slate-600,
+html[lang="si"] .text-gray-500,
+html[lang="si"] .text-slate-500 {
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  line-height: 1.8 !important;
+}
+
+/* Sinhala large numbers - keep bold */
+html[lang="si"] .text-2xl,
+html[lang="si"] .text-3xl,
+html[lang="si"] .text-4xl,
+html[lang="si"] .text-5xl {
+  font-weight: 700 !important;
+}
+
 /* ============================================
-   EXCEPTIONS - Keep these in English/Icons
+   7. EXCEPTIONS - Keep in English/Icons
    ============================================ */
 
 /* Brand name and marked elements stay English */
@@ -75,7 +154,7 @@ html[lang="si"] .keep-english * {
   font-family: 'Manrope', 'Inter', system-ui, sans-serif !important;
 }
 
-/* Icons should use their own font (Font Awesome, etc.) */
+/* Icons use their own font */
 html[lang="si"] svg,
 html[lang="si"] i.fa,
 html[lang="si"] i.fas,
@@ -86,427 +165,18 @@ html[lang="si"] [class*=" fa-"] {
   font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
 }
 
-/* Numbers should look nice */
-html[lang="si"] .text-2xl,
-html[lang="si"] .text-3xl,
-html[lang="si"] .text-4xl,
-html[lang="si"] .text-5xl {
-  font-weight: 700 !important;
+/* ============================================
+   8. FONT SMOOTHING
+   ============================================ */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
-
-/* ✅ Sinhala sub text (descriptions) smaller */
-html[lang="si"] p {
-  font-size: 0.9rem !important;   /* ~14.4px */
-  font-weight: 400 !important;
-  line-height: 1.8 !important;
-}
-
-/* If your sub text uses Tailwind gray classes */
-html[lang="si"] .text-gray-600,
-html[lang="si"] .text-slate-600,
-html[lang="si"] .text-gray-500,
-html[lang="si"] .text-slate-500 {
-  font-size: 0.9rem !important;
-  font-weight: 400 !important;
-  line-height: 1.8 !important;
-}
-
 
 /* ============================================
-   LESSON 1: BASE THEME SETUP
-   Set default colors for html and body
+   9. DARK MODE - BACKGROUNDS
    ============================================ */
-html, body {
-  transition: background-color 0.3s ease, color 0.3s ease;
-  min-height: 100vh;
-}
-
-html {
-  background-color: #ffffff;
-  color: #0f172a;
-}
-
-html.dark,
-html.dark body {
-  background-color: #0f172a;
-  color: #f1f5f9;
-}
-
-/* 
-   SOLID BACKGROUNDS
-   
-  */
-html.dark .bg-white {
-  background-color: #0f172a !important;
-}
-
-html.dark .bg-gray-50,
-html.dark .bg-gray-100,
-html.dark .bg-slate-50,
-html.dark .bg-slate-100 {
-  background-color: #1e293b !important;
-}
-
-/* Feature cards - lighter than page bg */
-html.dark .bg-white.p-4,
-html.dark .bg-white.p-6,
-html.dark .bg-white.p-8 {
-  background-color: #1e293b !important;
-}
-
-/* 
-   TRANSPARENT WHITE BACKGROUNDS
-   
-    */
-
-/* bg-white/10, bg-white/20, bg-white/30 etc. */
-html.dark .bg-white\/10 {
-  background-color: rgba(30, 41, 59, 0.1) !important;
-}
-
-html.dark .bg-white\/20 {
-  background-color: rgba(30, 41, 59, 0.2) !important;
-}
-
-html.dark .bg-white\/30 {
-  background-color: rgba(30, 41, 59, 0.3) !important;
-}
-
-html.dark .bg-white\/40 {
-  background-color: rgba(30, 41, 59, 0.4) !important;
-}
-
-html.dark .bg-white\/50 {
-  background-color: rgba(30, 41, 59, 0.5) !important;
-}
-
-html.dark .bg-white\/60 {
-  background-color: rgba(30, 41, 59, 0.6) !important;
-}
-
-html.dark .bg-white\/80 {
-  background-color: rgba(30, 41, 59, 0.8) !important;
-}
-
-html.dark .bg-white\/90 {
-  background-color: rgba(30, 41, 59, 0.9) !important;
-}
-
-/* 
-    GRADIENTS
-   
-    */
-html.dark [class*="from-slate-100"] {
-  --tw-gradient-from: #0f172a !important;
-}
-
-html.dark [class*="via-slate-100"] {
-  --tw-gradient-via: #1e293b !important;
-}
-
-html.dark [class*="to-slate-100"] {
-  --tw-gradient-to: #0f172a !important;
-}
-
-html.dark [class*="from-slate-50"] {
-  --tw-gradient-from: #0f172a !important;
-}
-
-html.dark [class*="via-white"] {
-  --tw-gradient-via: #1e293b !important;
-}
-
-html.dark [class*="to-blue-50"] {
-  --tw-gradient-to: #0f172a !important;
-}
-
-html.dark [class*="from-white"] {
-  --tw-gradient-from: #1e293b !important;
-}
-
-html.dark [class*="to-white"] {
-  --tw-gradient-to: #1e293b !important;
-}
-
-/* 
-    HEADINGS - Always White
-    */
-html.dark h1,
-html.dark h2,
-html.dark h3,
-html.dark h4,
-html.dark h5,
-html.dark h6 {
-  color: #ffffff !important;
-}
-
-/* 
-    TEXT COLORS
-   
-    */
-
-/* VERY DARK text -> WHITE */
-html.dark .text-black,
-html.dark .text-slate-900,
-html.dark .text-slate-800,
-html.dark .text-slate-700,
-html.dark .text-gray-900,
-html.dark .text-gray-800,
-html.dark .text-gray-700 {
-  color: #f1f5f9 !important;
-}
-
-/* MEDIUM text -> LIGHT GRAY */
-html.dark .text-slate-600,
-html.dark .text-slate-500,
-html.dark .text-gray-600,
-html.dark .text-gray-500 {
-  color: #cbd5e1 !important;
-}
-
-/* LIGHT text -> MEDIUM GRAY */
-html.dark .text-slate-400,
-html.dark .text-slate-300,
-html.dark .text-gray-400,
-html.dark .text-gray-300 {
-  color: #94a3b8 !important;
-}
-
-/* Keep white text white */
-html.dark .text-white {
-  color: #ffffff !important;
-}
-
-/* Keep colored text visible */
-html.dark .text-blue-600,
-html.dark .text-blue-700,
-html.dark .text-blue-800,
-html.dark .text-blue-900 {
-  color: #60a5fa !important;
-}
-
-html.dark .text-cyan-300,
-html.dark .text-cyan-400,
-html.dark .text-cyan-500,
-html.dark .text-cyan-600,
-html.dark .text-cyan-700,
-html.dark .text-cyan-800 {
-  color: #67e8f9 !important;
-}
-
-html.dark .text-blue-100,
-html.dark .text-blue-200 {
-  color: #dbeafe !important;
-}
-
-/* 
-  SPECIAL CASE - HERO SECTION
-  
-    */
-
-/* Text on hero image should stay white */
-html.dark section .text-white,
-html.dark section [class*="text-white/"] {
-  color: #ffffff !important;
-}
-
-/* Badge on hero image - keep visible */
-html.dark .bg-white\/30 .text-slate-600 {
-  color: #f1f5f9 !important;
-}
-
-/* 
-  BORDERS
-    */
-html.dark .border-gray-100,
-html.dark .border-gray-200,
-html.dark .border-gray-300,
-html.dark .border-slate-100,
-html.dark .border-slate-200,
-html.dark .border-slate-300 {
-  border-color: #334155 !important;
-}
-
-/* Transparent white borders */
-html.dark .border-white\/20,
-html.dark .border-white\/30,
-html.dark .border-white\/40,
-html.dark .border-white\/50,
-html.dark .border-white\/60 {
-  border-color: rgba(148, 163, 184, 0.3) !important;
-}
-
-/* 
-    ICON BACKGROUNDS
-    */
-html.dark .bg-blue-50 {
-  background-color: rgba(30, 58, 138, 0.3) !important;
-}
-
-html.dark .bg-blue-100 {
-  background-color: rgba(30, 58, 138, 0.4) !important;
-}
-
-html.dark .bg-blue-100\/80 {
-  background-color: rgba(30, 58, 138, 0.4) !important;
-}
-
-/* Decorative blobs - reduce brightness */
-html.dark .bg-blue-200\/30,
-html.dark .bg-cyan-200\/30 {
-  background-color: rgba(30, 58, 138, 0.15) !important;
-}
-
-/* 
-    FORM ELEMENTS
-   */
-html.dark input,
-html.dark textarea,
-html.dark select {
-  background-color: #1e293b !important;
-  color: #f1f5f9 !important;
-  border-color: #475569 !important;
-}
-
-html.dark input::placeholder,
-html.dark textarea::placeholder {
-  color: #94a3b8 !important;
-}
-
-/* 
-   LESSON 11: HOVER STATES
-   */
-html.dark .hover\:bg-white\/20:hover {
-  background-color: rgba(30, 41, 59, 0.2) !important;
-}
-
-html.dark .hover\:bg-white\/60:hover {
-  background-color: rgba(30, 41, 59, 0.6) !important;
-}
-
-/* 
-   LESSON 12: SHADOWS - Stronger in dark
-    */
-html.dark .shadow,
-html.dark .shadow-sm,
-html.dark .shadow-md,
-html.dark .shadow-lg,
-html.dark .shadow-xl,
-html.dark .shadow-2xl {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 
-              0 2px 4px -1px rgba(0, 0, 0, 0.4) !important;
-}
-
-/* Very light backgrounds (#f8fafc, #f5f5f5, etc.) */
-html.dark .bg-\[\#f8fafc\],
-html.dark .bg-\[\#f9fafb\],
-html.dark .bg-\[\#f4f7fb\],
-html.dark .bg-\[\#f5f5f5\],
-html.dark .bg-\[\#fafafa\],
-html.dark .bg-\[\#f0f0f0\],
-html.dark .bg-\[\#ffffff\],
-html.dark .bg-\[\#fff\] {
-  background-color: #1e293b !important;
-  color: #f1f5f9 !important;
-}
-
-/* Catch ALL light hex backgrounds automatically */
-html.dark [class*="bg-[#f"],
-html.dark [class*="bg-[#F"],
-html.dark [class*="bg-[#e"],
-html.dark [class*="bg-[#E"] {
-  background-color: #1e293b !important;
-}
-
-/* 
-    HARDCODED HEX TEXT COLORS
-    */
-
-/* Dark hex text -> Light */
-html.dark [class*="text-[#0"],
-html.dark [class*="text-[#1"],
-html.dark [class*="text-[#2"],
-html.dark [class*="text-[#3"],
-html.dark [class*="text-[#4"] {
-  color: #f1f5f9 !important;
-}
-
-/*  
-    SPECIFIC CARDS - Force Text Visibility
-  
-    */
-
-html.dark .bg-\[\#f8fafc\] h1,
-html.dark .bg-\[\#f8fafc\] h2,
-html.dark .bg-\[\#f8fafc\] h3,
-html.dark .bg-\[\#f8fafc\] h4,
-html.dark .bg-\[\#f8fafc\] h5,
-html.dark .bg-\[\#f8fafc\] h6 {
-  color: #ffffff !important;
-}
-
-html.dark .bg-\[\#f8fafc\] p,
-html.dark .bg-\[\#f8fafc\] span,
-html.dark .bg-\[\#f8fafc\] div {
-  color: #cbd5e1;
-}
-
-/* Universal - Any hex bg with dark text inside */
-html.dark [class*="bg-[#f"] h1,
-html.dark [class*="bg-[#f"] h2,
-html.dark [class*="bg-[#f"] h3,
-html.dark [class*="bg-[#f"] h4 {
-  color: #ffffff !important;
-}
-
-/* 
-    NESTED DARK CARDS
- */
-
-html.dark .bg-slate-900,
-html.dark .bg-slate-800,
-html.dark .bg-\[\#0f172a\],
-html.dark .bg-\[\#1e293b\] {
-  background-color: #0f172a !important;
-}
-
-/* 
-    BORDERS for hex backgrounds
-    */
-
-html.dark .border-slate-200,
-html.dark .border-slate-100 {
-  border-color: #334155 !important;
-}
-
-/* Fix "Get Started Now" button text */
-html.dark .text-blue-950 {
-  color: #ffffff !important;
-}@import "tailwindcss";
-@variant dark (&:where(.dark, .dark *));
-
-/* 
-   BASE THEME
-    */
-html, body {
-  transition: background-color 0.3s ease, color 0.3s ease;
-  min-height: 100vh;
-}
-
-html {
-  background-color: #ffffff;
-  color: #0f172a;
-}
-
-html.dark,
-html.dark body {
-  background-color: #0f172a;
-  color: #f1f5f9;
-}
-
-/* 
-   BACKGROUNDS
-   */
 html.dark .bg-white,
 html.dark [class*="bg-[#f"],
 html.dark [class*="bg-[#F"],
@@ -522,34 +192,33 @@ html.dark .bg-slate-100 {
   background-color: #1e293b !important;
 }
 
-/* Transparent white backgrounds (bg-white/10 to bg-white/90) */
 html.dark [class*="bg-white\/"] {
   background-color: rgba(30, 41, 59, 0.6) !important;
 }
 
-/* Nested dark cards - keep dark */
 html.dark .bg-slate-900,
 html.dark .bg-slate-800 {
   background-color: #0f172a !important;
 }
 
-/* Icon backgrounds */
 html.dark .bg-blue-50,
 html.dark .bg-blue-100 {
   background-color: rgba(30, 58, 138, 0.3) !important;
 }
 
-/* 
-   GRADIENTS
-    */
+/* ============================================
+   10. DARK MODE - GRADIENTS
+   ============================================ */
 html.dark [class*="from-slate-50"],
 html.dark [class*="from-slate-100"],
-html.dark [class*="from-white"] {
+html.dark [class*="from-white"],
+html.dark [class*="from-blue-50"] {
   --tw-gradient-from: #0f172a !important;
 }
 
 html.dark [class*="via-white"],
-html.dark [class*="via-slate-100"] {
+html.dark [class*="via-slate-100"],
+html.dark [class*="via-blue-50"] {
   --tw-gradient-via: #1e293b !important;
 }
 
@@ -559,9 +228,9 @@ html.dark [class*="to-slate-100"] {
   --tw-gradient-to: #0f172a !important;
 }
 
-/* 
-   HEADINGS - Always White
-    */
+/* ============================================
+   11. DARK MODE - TEXT COLORS
+   ============================================ */
 html.dark h1,
 html.dark h2,
 html.dark h3,
@@ -571,11 +240,6 @@ html.dark h6 {
   color: #ffffff !important;
 }
 
-/* 
-   TEXT COLORS
-    */
-
-/* Dark text -> White */
 html.dark .text-black,
 html.dark .text-slate-900,
 html.dark .text-slate-800,
@@ -590,7 +254,6 @@ html.dark [class*="text-[#3"] {
   color: #f1f5f9 !important;
 }
 
-/* Medium text -> Light Gray */
 html.dark .text-slate-600,
 html.dark .text-slate-500,
 html.dark .text-gray-600,
@@ -598,7 +261,6 @@ html.dark .text-gray-500 {
   color: #cbd5e1 !important;
 }
 
-/* Light text -> Medium Gray */
 html.dark .text-slate-400,
 html.dark .text-slate-300,
 html.dark .text-gray-400,
@@ -606,7 +268,6 @@ html.dark .text-gray-300 {
   color: #94a3b8 !important;
 }
 
-/* Keep colored text visible */
 html.dark .text-blue-600,
 html.dark .text-blue-700,
 html.dark .text-blue-800,
@@ -626,9 +287,9 @@ html.dark .text-white {
   color: #ffffff !important;
 }
 
-/* 
-   BORDERS
-    */
+/* ============================================
+   12. DARK MODE - BORDERS
+   ============================================ */
 html.dark .border-gray-100,
 html.dark .border-gray-200,
 html.dark .border-gray-300,
@@ -642,9 +303,9 @@ html.dark [class*="border-white\/"] {
   border-color: rgba(148, 163, 184, 0.3) !important;
 }
 
-/* 
-   FORM ELEMENTS
-   */
+/* ============================================
+   13. DARK MODE - FORMS
+   ============================================ */
 html.dark input,
 html.dark textarea,
 html.dark select {
@@ -658,9 +319,9 @@ html.dark textarea::placeholder {
   color: #94a3b8 !important;
 }
 
-/* 
-   SHADOWS
-    */
+/* ============================================
+   14. DARK MODE - SHADOWS
+   ============================================ */
 html.dark .shadow,
 html.dark .shadow-sm,
 html.dark .shadow-md,
@@ -671,170 +332,8 @@ html.dark .shadow-2xl {
               0 2px 4px -1px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 
-   ABOUT PAGE FIXES
-    */
-
-/* Fix section backgrounds */
-html.dark section {
-  background-color: transparent;
-}
-
-/* Force ALL text visibility in About page */
-html.dark section p,
-html.dark section span,
-html.dark section li {
-  color: #cbd5e1 !important;
-}
-
-/* Strong/bold text - brighter */
-html.dark section strong,
-html.dark section b {
-  color: #ffffff !important;
-}
-
-/* Fix decorative blur blobs - reduce brightness */
-html.dark .bg-blue-300\/20,
-html.dark .bg-cyan-300\/20,
-html.dark .bg-blue-400\/20,
-html.dark .bg-cyan-400\/20 {
-  background-color: rgba(30, 58, 138, 0.1) !important;
-}
-
-/* Fix badge backgrounds (PRECISION MARITIME SYSTEMS, INNOVATION AT SEA) */
-html.dark .bg-blue-100\/50,
-html.dark .bg-blue-100\/60,
-html.dark .bg-blue-100\/70,
-html.dark .bg-blue-100\/80 {
-  background-color: rgba(30, 58, 138, 0.4) !important;
-}
-
-/* Fix check icon backgrounds */
-html.dark .bg-blue-500\/10,
-html.dark .bg-blue-500\/20,
-html.dark .bg-cyan-500\/10,
-html.dark .bg-cyan-500\/20 {
-  background-color: rgba(59, 130, 246, 0.2) !important;
-}
-
-/* Fix feature list text (Intelligent AI-driven..., etc.) */
-html.dark .text-slate-700,
-html.dark .text-slate-600 {
-  color: #e2e8f0 !important;
-}
-
-/* Fix the light gradient page background */
-html.dark [class*="from-blue-50"],
-html.dark [class*="via-blue-50"],
-html.dark [class*="to-blue-50"] {
-  --tw-gradient-from: #0f172a !important;
-  --tw-gradient-via: #1e293b !important;
-  --tw-gradient-to: #0f172a !important;
-}
-
-/* Custom animations for footer */
-@keyframes wave {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(20px, -20px); }
-}
-
-.animate-wave {
-  animation: wave 3s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes float-delayed {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float-delayed 5s ease-in-out infinite;
-  animation-delay: 1s;
-}
-
-
-{/*Admin AreaA styles*/}
 /* ============================================
-   THEME CONFIGURATION (Colors, Fonts, etc.)
-   ============================================ */
-@theme {
-  /* Custom Colors */
-  --color-brand-primary: #667eea;
-  --color-brand-secondary: #764ba2;
-  --color-brand-accent: #f093fb;
-  
-  /* Custom Fonts */
-  --font-family-display: 'Poppins', sans-serif;
-  --font-family-body: 'Inter', sans-serif;
-  
-  /* Custom Spacing */
-  --spacing-18: 4.5rem;
-  --spacing-88: 22rem;
-  
-  /* Custom Border Radius */
-  --radius-4xl: 2rem;
-  
-  /* Custom Shadows */
-  --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.5);
-  --shadow-neon: 0 0 30px rgba(240, 147, 251, 0.6);
-}
-
-/* ============================================
-   CUSTOM ANIMATIONS
-   ============================================ */
-@theme {
-  /* Shake Animation */
-  --animate-shake: shake 0.5s ease-in-out;
-  
-  /* Fade In */
-  --animate-fade-in: fadeIn 0.5s ease-in-out;
-  
-  /* Slide Down */
-  --animate-slide-down: slideDown 0.3s ease-out;
-  
-  /* Slide Up */
-  --animate-slide-up: slideUp 0.3s ease-out;
-  
-  /* Bounce Slow */
-  --animate-bounce-slow: bounce 2s infinite;
-  
-  /* Pulse Slow */
-  --animate-pulse-slow: pulse 3s infinite;
-  
-  /* Spin Slow */
-  --animate-spin-slow: spin 3s linear infinite;
-  
-  /* Wiggle */
-  --animate-wiggle: wiggle 1s ease-in-out infinite;
-  
-  /* Float */
-  --animate-float: float 3s ease-in-out infinite;
-  
-  /* Gradient */
-  --animate-gradient: gradient 8s ease infinite;
-}
-
-/* ============================================
-   KEYFRAMES
+   15. ANIMATIONS - KEYFRAMES (CONSOLIDATED)
    ============================================ */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
@@ -843,30 +342,65 @@ html.dark [class*="to-blue-50"] {
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideDown {
-  0% { 
-    opacity: 0; 
-    transform: translateY(-20px); 
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideUp {
-  0% { 
-    opacity: 0; 
-    transform: translateY(20px); 
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.85); }
+  60% { transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes softGlow {
+  0%, 100% { box-shadow: 0 0 20px 0 rgba(59,130,246,0.15); }
+  50% { box-shadow: 0 0 30px 6px rgba(59,130,246,0.25); }
+}
+
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+  70% { box-shadow: 0 0 0 14px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes bounceSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 @keyframes wiggle {
@@ -874,219 +408,17 @@ html.dark [class*="to-blue-50"] {
   50% { transform: rotate(3deg); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 /* ============================================
-   BASE STYLES (Global)
+   16. ANIMATION UTILITY CLASSES
    ============================================ */
-@layer base {
-  /* Root Variables (Light Mode Default) */
-  :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --border-color: #e5e7eb;
-  }
-
-  /* Dark Mode Variables */
-  .dark {
-    --bg-primary: #1f2937;
-    --bg-secondary: #111827;
-    --text-primary: #f9fafb;
-    --text-secondary: #d1d5db;
-    --border-color: #374151;
-  }
-
-  /* Body Styles */
-  body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-family: system-ui, -apple-system, sans-serif;
-  }
-
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  .dark ::-webkit-scrollbar-track {
-    background: #1f2937;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #667eea;
-    border-radius: 5px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #764ba2;
-  }
-
-  /* Selection Color */
-  ::selection {
-    background: #667eea;
-    color: white;
-  }
-}
-
-/* ============================================
-   CUSTOM COMPONENTS (Reusable Classes)
-   ============================================ */
-@layer components {
-  
-  /* Gradient Button */
-  .btn-gradient {
-    @apply px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 
-           text-white font-semibold rounded-lg shadow-lg 
-           hover:shadow-xl transform hover:-translate-y-0.5 
-           transition-all duration-200;
-  }
-
-  /* Card */
-  .card {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md 
-           p-6 border border-gray-200 dark:border-gray-700
-           transition-all duration-300;
-  }
-
-  /* Input Field */
-  .input-field {
-    @apply w-full px-4 py-3 border-2 border-gray-200 
-           dark:border-gray-600 rounded-lg 
-           focus:outline-none focus:border-indigo-500 
-           focus:ring-2 focus:ring-indigo-200 
-           dark:focus:ring-indigo-800
-           bg-white dark:bg-gray-700
-           text-gray-800 dark:text-white
-           transition-all duration-200;
-  }
-
-  /* Gradient Text */
-  .gradient-text {
-    @apply bg-gradient-to-r from-indigo-600 to-purple-600 
-           bg-clip-text text-transparent;
-  }
-
-  /* Glass Effect */
-  .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
-  }
-
-  /* Glow Effect */
-  .glow {
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
-  }
-}
-
-/* ============================================
-   UTILITIES (Custom Utility Classes)
-   ============================================ */
-@layer utilities {
-  
-  /* Text Balance */
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  /* Hide Scrollbar */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  /* Custom Gradient Backgrounds */
-  .bg-gradient-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-
-  .bg-gradient-secondary {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  }
-
-  .bg-gradient-animated {
-    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
-    background-size: 400% 400%;
-    animation: gradient 8s ease infinite;
-  }
-}
-
-
-/* src/index.css — replace/add these animations */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes popIn {
-  0%   { opacity: 0; transform: scale(0.85); }
-  60%  { transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-8px); }
-}
-
-@keyframes softGlow {
-  0%, 100% { box-shadow: 0 0 20px 0 rgba(59,130,246,0.15); }
-  50%      { box-shadow: 0 0 30px 6px rgba(59,130,246,0.25); }
-}
-
-@keyframes pulseRing {
-  0%   { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
-  70%  { box-shadow: 0 0 0 14px rgba(239,68,68,0); }
-  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
-}
-
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes gradientMove {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
-}
-
-@keyframes bounceSoft {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
-}
-
-.anim-fade-up    { animation: fadeUp .6s cubic-bezier(.16,1,.3,1) both; }
-.anim-fade-in    { animation: fadeIn .8s ease both; }
-.anim-pop        { animation: popIn .5s cubic-bezier(.16,1,.3,1) both; }
-.anim-float      { animation: floatY 3s ease-in-out infinite; }
-.anim-glow       { animation: softGlow 2.5s ease-in-out infinite; }
-.anim-ring       { animation: pulseRing 2s infinite; }
-.anim-bounce     { animation: bounceSoft 2s ease-in-out infinite; }
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-wave { animation: wave 3s ease-in-out infinite; }
+.anim-fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-fade-in { animation: fadeIn 0.8s ease both; }
+.anim-pop { animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-glow { animation: softGlow 2.5s ease-in-out infinite; }
+.anim-ring { animation: pulseRing 2s infinite; }
+.anim-bounce { animation: bounceSoft 2s ease-in-out infinite; }
 
 .anim-shimmer {
   background: linear-gradient(90deg, #0284c7, #06b6d4, #0ea5e9, #0284c7);
@@ -1098,17 +430,318 @@ html.dark [class*="to-blue-50"] {
 
 .anim-gradient-bg {
   background-size: 200% 200%;
-  animation: gradientMove 8s ease infinite;
+  animation: gradient 8s ease infinite;
 }
 
-/* Smooth scrollbar */
+/* ============================================
+   17. SCROLLBAR & MISC
+   ============================================ */
 html { scroll-behavior: smooth; }
 
-/* Card lift effect */
-.card-lift {
-  transition: all 0.4s cubic-bezier(.16,1,.3,1);
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
+}
+
+::selection {
+  background: #667eea;
+  color: white;
+}
+
+.card-lift {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .card-lift:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   18. GOOGLE TRANSLATE HIDE
+   ============================================ */
+#google_translate_element {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -9999;
+}
+
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.notranslate {
+  translate: no;
+}
+
+/* ============================================
+   19. UTILITY CLASSES
+   ============================================ */
+.text-balance {
+  text-wrap: balance;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+}
+
+/* ============================================
+   🌊 OCEAN & FISHING THEME ANIMATIONS
+   (Reusable across all pages)
+   ============================================ */
+
+/* 🐟 Fish Swim Animation */
+@keyframes swim {
+  0% { transform: translateX(-100vw) scaleX(1); }
+  45% { transform: translateX(50vw) scaleX(1); }
+  50% { transform: translateX(50vw) scaleX(-1); }
+  95% { transform: translateX(-100vw) scaleX(-1); }
+  100% { transform: translateX(-100vw) scaleX(1); }
+}
+
+/* 🫧 Bubble Rise Animation */
+@keyframes bubbleRise {
+  0% { transform: translateY(0) scale(0); opacity: 0; }
+  10% { opacity: 0.6; transform: translateY(-20px) scale(1); }
+  100% { transform: translateY(-500px) scale(0.3); opacity: 0; }
+}
+
+/* ✨ Shimmer Effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* 🌊 Gradient Flow */
+@keyframes gradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* 🚢 Boat Rocking */
+@keyframes rock {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* 🌊 Ocean Wave (Floating) */
+@keyframes oceanWave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ⚓ Anchor Drop */
+@keyframes anchorDrop {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(8px) rotate(-10deg); }
+}
+
+/* 📡 Radar Pulse (Royal Blue) */
+@keyframes radarPulse {
+  0% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(29, 78, 216, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0); }
+}
+
+/* 🎣 Sway (Fishing Hook) */
+@keyframes sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+/* 🌊 Wave Motion */
+@keyframes wave {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-25px) translateY(-10px); }
+}
+
+/* ============================================
+   🎨 ANIMATION UTILITY CLASSES
+   ============================================ */
+.animate-swim { 
+  animation: swim 25s linear infinite; 
+}
+
+.animate-swim-slow { 
+  animation: swim 40s linear infinite; 
+}
+
+.animate-bubble { 
+  animation: bubbleRise 6s ease-in infinite; 
+}
+
+.animate-rock { 
+  animation: rock 4s ease-in-out infinite; 
+}
+
+.animate-ocean { 
+  animation: oceanWave 4s ease-in-out infinite; 
+}
+
+.animate-anchor { 
+  animation: anchorDrop 3s ease-in-out infinite; 
+}
+
+.animate-radar { 
+  animation: radarPulse 2s infinite; 
+}
+
+.animate-sway { 
+  animation: sway 3s ease-in-out infinite; 
+}
+
+.animate-wave { 
+  animation: wave 8s ease-in-out infinite; 
+}
+
+.animate-float { 
+  animation: oceanWave 4s ease-in-out infinite; 
+}
+
+/* ============================================
+   🌊 CUSTOM GRADIENT CLASSES
+   ============================================ */
+
+/* ✨ Shimmer Text Effect (Royal Blue → Cyan) */
+.shimmer-text {
+  background: linear-gradient(90deg, #1e40af, #2563eb, #3b82f6, #06b6d4, #1e40af);
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 🌊 Royal Ocean Gradient (Animated) */
+.royal-ocean-gradient {
+  background: linear-gradient(-45deg, #1e3a8a, #1e40af, #1d4ed8, #2563eb, #0891b2);
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+/* 🌊 Deep Ocean Gradient (Static) */
+.deep-ocean-gradient {
+  background: linear-gradient(135deg, #0c1e42 0%, #1e3a8a 30%, #1e40af 60%, #1d4ed8 100%);
+}
+
+/* 🌊 Ocean Gradient (Bright) */
+.ocean-gradient {
+  background: linear-gradient(-45deg, #0ea5e9, #0284c7, #06b6d4, #22d3ee, #0891b2);
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+/* ============================================
+   🎨 SPECIAL CONTAINERS
+   ============================================ */
+
+/* QR Code Container */
+.qr-container {
+  background: linear-gradient(135deg, #f0f9ff, #ffffff, #ecfeff);
+  box-shadow: 0 20px 60px -15px rgba(30, 64, 175, 0.3);
+}
+
+/* Wave Background */
+.wave-bg {
+  background: linear-gradient(180deg, transparent 0%, rgba(6, 182, 212, 0.1) 100%);
+}
+
+/* ============================================
+   🌊 SVG WAVE DIVIDER
+   ============================================ */
+.wave-divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   🖨️ PRINT STYLES (For QR Code Page)
+   ============================================ */
+@media print {
+  body * { 
+    visibility: hidden; 
+  }
+  
+  #print-area, 
+  #print-area * { 
+    visibility: visible; 
+  }
+  
+  #print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
 }

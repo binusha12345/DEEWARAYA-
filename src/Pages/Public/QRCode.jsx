@@ -518,7 +518,7 @@ const VesselQRCode = () => {
         </div>
       </section>
 
-      {/* ===== 🎨 CUSTOMIZATION SECTION ===== */}
+      {/* ===== 🎨 CUSTOMIZATION SECTION ===== 
       <section className="max-w-7xl mx-auto px-5 md:px-10 py-8">
         <div className="bg-white rounded-3xl p-6 md:p-8 border border-blue-100 shadow-xl shadow-blue-500/5">
           <div className="flex items-center gap-3 mb-6">
@@ -532,7 +532,7 @@ const VesselQRCode = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* QR Color */}
+            {/* QR Color 
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-3">
                 QR Code Color
@@ -557,7 +557,7 @@ const VesselQRCode = () => {
               </div>
             </div>
 
-            {/* Background Color */}
+            {/* Background Color 
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-3">
                 Background Color
@@ -576,7 +576,7 @@ const VesselQRCode = () => {
               </div>
             </div>
 
-            {/* Logo Toggle */}
+            {/* Logo Toggle 
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-3">
                 Center Logo
@@ -601,7 +601,7 @@ const VesselQRCode = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ===== 🔒 PRIVACY & SECURITY SECTION ===== */}
       <section className="max-w-7xl mx-auto px-5 md:px-10 py-8">

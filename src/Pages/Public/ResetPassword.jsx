@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const ResetPassword = () => {
-  const { token } = useParams();      // Get token from URL
+  const { t, i18n } = useTranslation();
+  const { token } = useParams();
   const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
@@ -17,23 +19,28 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
+  const handleLanguageToggle = () => {
+    const newLang = i18n.language === "en" ? "si" : "en";
+    i18n.changeLanguage(newLang);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     // Frontend validation
     if (!password || !confirmPassword) {
-      setError("Please fill all fields");
+      setError(t("resetPassword.fillAllFields"));
       return;
     }
 
     if (password.length < 5) {
-      setError("Password must be at least 5 characters");
+      setError(t("resetPassword.passwordMinLength"));
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(t("resetPassword.passwordMismatch"));
       return;
     }
 
@@ -54,31 +61,46 @@ const ResetPassword = () => {
           navigate("/login");
         }, 3000);
       }
-
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      setError(
+        err.response?.data?.message || t("resetPassword.somethingWrong")
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
-  //  Success Screen
+  // Success Screen
   if (isSuccess) {
     return (
       <div style={styles.container}>
+        {/* Language Toggle Button */}
+        <div style={styles.langWrapper}>
+          <button onClick={handleLanguageToggle} style={styles.langButton}>
+            {i18n.language === "en" ? "🇱🇰 සිංහල" : "🇬🇧 English"}
+          </button>
+        </div>
+
         <div style={styles.card}>
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: "60px", margin: "10px 0" }}>✅</p>
-            <h2 style={{ color: "#16a34a" }}>Password Reset!</h2>
+            <h2 style={{ color: "#16a34a" }}>
+              {t("resetPassword.successTitle")}
+            </h2>
             <p style={{ color: "#374151", margin: "15px 0" }}>{message}</p>
             <p style={{ color: "#6b7280", fontSize: "14px" }}>
-              Redirecting to login page...
+              {t("resetPassword.redirecting")}
             </p>
             <button
               onClick={() => navigate("/login")}
-              style={{ ...styles.button, background: "#1e40af", marginTop: "20px" }}
+              style={{
+                ...styles.button,
+                background: "#1e40af",
+                marginTop: "20px",
+                cursor: "pointer",
+              }}
             >
-              🔐 Go to Login
+              {t("resetPassword.goToLogin")}
             </button>
           </div>
         </div>
@@ -88,16 +110,23 @@ const ResetPassword = () => {
 
   return (
     <div style={styles.container}>
+      {/* Language Toggle Button */}
+      <div style={styles.langWrapper}>
+        <button onClick={handleLanguageToggle} style={styles.langButton}>
+          {i18n.language === "en" ? "🇱🇰 සිංහල" : "🇬🇧 English"}
+        </button>
+      </div>
+
       <div style={styles.card}>
-        <h2 style={styles.title}>🔒 Reset Your Password</h2>
-        <p style={styles.subtitle}>
-          Enter a new password for your account below.
-        </p>
+        <h2 style={styles.title}>{t("resetPassword.title")}</h2>
+        <p style={styles.subtitle}>{t("resetPassword.subtitle")}</p>
 
         <form onSubmit={handleSubmit}>
           {/* New Password */}
           <div style={{ marginBottom: "20px" }}>
-            <label style={styles.label}>New Password</label>
+            <label style={styles.label}>
+              {t("resetPassword.newPasswordLabel")}
+            </label>
             <div style={{ position: "relative" }}>
               <input
                 type={showPassword ? "text" : "password"}
@@ -106,11 +135,13 @@ const ResetPassword = () => {
                   setPassword(e.target.value);
                   setError("");
                 }}
-                placeholder="Min 5 characters"
+                placeholder={t("resetPassword.newPasswordPlaceholder")}
                 style={{
                   ...styles.input,
                   paddingRight: "40px",
-                  border: error ? "2px solid #ef4444" : "1px solid #d1d5db",
+                  border: error
+                    ? "2px solid #ef4444"
+                    : "1px solid #d1d5db",
                 }}
               />
               <button
@@ -125,7 +156,9 @@ const ResetPassword = () => {
 
           {/* Confirm Password */}
           <div style={{ marginBottom: "20px" }}>
-            <label style={styles.label}>Confirm New Password</label>
+            <label style={styles.label}>
+              {t("resetPassword.confirmPasswordLabel")}
+            </label>
             <div style={{ position: "relative" }}>
               <input
                 type={showConfirm ? "text" : "password"}
@@ -134,11 +167,13 @@ const ResetPassword = () => {
                   setConfirmPassword(e.target.value);
                   setError("");
                 }}
-                placeholder="Re-enter password"
+                placeholder={t("resetPassword.confirmPasswordPlaceholder")}
                 style={{
                   ...styles.input,
                   paddingRight: "40px",
-                  border: error ? "2px solid #ef4444" : "1px solid #d1d5db",
+                  border: error
+                    ? "2px solid #ef4444"
+                    : "1px solid #d1d5db",
                 }}
               />
               <button
@@ -161,14 +196,22 @@ const ResetPassword = () => {
               cursor: isLoading ? "not-allowed" : "pointer",
             }}
           >
-            {isLoading ? "⏳ Resetting..." : "🔒 Reset Password"}
+            {isLoading
+              ? t("resetPassword.resetting")
+              : t("resetPassword.resetButton")}
           </button>
         </form>
 
-        <p style={{ textAlign: "center", marginTop: "20px", color: "#6b7280" }}>
-          Remember your password?{" "}
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            color: "#6b7280",
+          }}
+        >
+          {t("resetPassword.rememberPassword")}{" "}
           <Link to="/login" style={styles.link}>
-            Login here
+            {t("resetPassword.loginHere")}
           </Link>
         </p>
       </div>
@@ -181,9 +224,28 @@ const styles = {
     minHeight: "100vh",
     background: "#f0f9ff",
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     padding: "20px",
+  },
+  langWrapper: {
+    position: "fixed",
+    top: "16px",
+    right: "16px",
+    zIndex: 1000,
+  },
+  langButton: {
+    padding: "8px 16px",
+    background: "#1e40af",
+    color: "white",
+    border: "none",
+    borderRadius: "20px",
+    cursor: "pointer",
+    fontSize: "14px",
+    fontWeight: "600",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+    transition: "background 0.3s ease",
   },
   card: {
     background: "white",

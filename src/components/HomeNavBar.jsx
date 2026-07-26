@@ -1,17 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Ship, Moon, Sun, User, LayoutDashboard, LogOut, ChevronDown, Menu, X } from "lucide-react";
 import { useThemeContext } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext"; 
-import LanguageSwitcher from "../components/LanguageSwitcher"; // ✅ ADD THIS
+import { useAuth } from "../context/AuthContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-
-const API_URL = "http://localhost:5000"; 
+const API_URL = "http://localhost:5000";
 
 const HomeNavBar = () => {
+  const { t } = useTranslation();
   const { mode, toggleTheme } = useThemeContext();
-  const { user, isLoggedIn, logout } = useAuth(); 
-  const navigate = useNavigate(); 
+  const { user, isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -79,14 +80,10 @@ const HomeNavBar = () => {
         {/* ===== MAIN NAV ROW ===== */}
         <div className="flex items-center justify-between">
 
-          {/* Logo */}
+          {/* Logo — Brand name stays in English */}
           <Link
             to="/"
-            className="
-              flex items-center gap-5
-              font-bold text-xl md:text-2xl
-              text-blue-900 dark:text-blue-300
-            "
+            className="flex items-center gap-5 font-bold text-xl md:text-2xl text-blue-900 dark:text-blue-300"
           >
             <img
               src="/logo.png"
@@ -97,17 +94,11 @@ const HomeNavBar = () => {
           </Link>
 
           {/* Center Nav Links */}
-          <div
-            className="
-              hidden md:flex items-center gap-6
-              text-base md:text-lg font-medium
-              text-slate-900 dark:text-slate-100
-            "
-          >
-            <NavLink to="/" className={navLinkClass}>Home</NavLink>
-            <NavLink to="/about" className={navLinkClass}>About</NavLink>
-            <NavLink to="/features" className={navLinkClass}>Features</NavLink>
-            <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
+          <div className="hidden md:flex items-center gap-6 text-base md:text-lg font-medium text-slate-900 dark:text-slate-100">
+            <NavLink to="/" className={navLinkClass}>{t('navbar.home')}</NavLink>
+            <NavLink to="/about" className={navLinkClass}>{t('navbar.about')}</NavLink>
+            <NavLink to="/features" className={navLinkClass}>{t('navbar.features')}</NavLink>
+            <NavLink to="/contact" className={navLinkClass}>{t('navbar.contact')}</NavLink>
           </div>
 
           {/* Right Side */}
@@ -115,14 +106,8 @@ const HomeNavBar = () => {
             <div className="hidden md:flex items-center gap-3">
               <button
                 onClick={toggleTheme}
-                aria-label="Toggle Theme"
-                className="
-                  p-2 rounded-lg
-                  text-slate-500 dark:text-slate-400
-                  hover:text-slate-800 dark:hover:text-white
-                  hover:bg-slate-100 dark:hover:bg-slate-800
-                  transition-all duration-300
-                "
+                aria-label={t('navbar.toggleTheme')}
+                className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"
               >
                 {mode === "dark" ? (
                   <Sun className="w-4 h-4 text-yellow-400" />
@@ -131,47 +116,30 @@ const HomeNavBar = () => {
                 )}
               </button>
             </div>
-                      <button data-tour="profile-icon" onClick={() => setShowDropdown(!showDropdown)}></button>
-                      <LanguageSwitcher />
+            <button data-tour="profile-icon" onClick={() => setShowDropdown(!showDropdown)}></button>
+            <LanguageSwitcher />
 
             {!isLoggedIn() ? (
               <>
                 <Link
                   to="/login"
-                  className="
-                    text-sm md:text-base font-medium
-                    text-slate-900 dark:text-slate-100
-                    hover:text-blue-600 dark:hover:text-blue-400
-                    transition-colors
-                  "
+                  className="text-sm md:text-base font-medium text-slate-900 dark:text-slate-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  Login
+                  {t('navbar.login')}
                 </Link>
 
                 <Link
                   to="/register"
-                  className="
-                    px-6 py-1.5 rounded-md
-                    text-sm md:text-base font-medium
-                    bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-white
-                    transition-colors
-                  "
+                  className="px-6 py-1.5 rounded-md text-sm md:text-base font-medium bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-white transition-colors"
                 >
-                  Register
+                  {t('navbar.register')}
                 </Link>
               </>
             ) : (
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="
-                    flex items-center gap-2 px-3 py-1.5 rounded-full
-                    bg-gradient-to-r from-blue-500 to-cyan-500
-                    hover:from-blue-600 hover:to-cyan-600
-                    text-white font-medium text-sm md:text-base
-                    transition-all duration-300
-                    shadow-md hover:shadow-lg
-                  "
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium text-sm md:text-base transition-all duration-300 shadow-md hover:shadow-lg"
                 >
                   <div data-tour="profile-icon" className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center overflow-hidden border-2 border-white/40">
                     {user?.profilePicture ? (
@@ -193,26 +161,10 @@ const HomeNavBar = () => {
                 </button>
 
                 {showDropdown && (
-                  <div className="
-                    absolute right-0 mt-3 w-64 
-                    bg-white dark:bg-slate-800 
-                    rounded-xl shadow-2xl 
-                    border border-slate-200 dark:border-slate-700
-                    overflow-hidden
-                    animate-in fade-in slide-in-from-top-2 duration-200
-                  ">
-                    <div className="
-                      bg-gradient-to-r from-blue-500 to-cyan-500 
-                      p-4 text-white
-                    ">
+                  <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-4 text-white">
                       <div className="flex items-center gap-3">
-                        <div className="
-                          w-12 h-12 rounded-full 
-                          bg-white/20 backdrop-blur-md
-                          flex items-center justify-center
-                          border-2 border-white/30
-                          overflow-hidden
-                        ">
+                        <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border-2 border-white/30 overflow-hidden">
                           {user?.profilePicture ? (
                             <img
                               src={`${API_URL}${user.profilePicture}`}
@@ -230,13 +182,10 @@ const HomeNavBar = () => {
                       </div>
                       
                       <div className="mt-3">
-                        <span className="
-                          inline-block px-3 py-1 
-                          bg-white/20 backdrop-blur-md
-                          rounded-full text-xs font-semibold
-                          border border-white/30
-                        ">
-                          {user?.role === "owner" ? "🚤 Boat Owner" : "⚓ Boat Driver"}
+                        <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold border border-white/30">
+                          {user?.role === "owner" 
+                            ? `🚤 ${t('navbar.boatOwner')}` 
+                            : `⚓ ${t('navbar.boatDriver')}`}
                         </span>
                       </div>
                     </div>
@@ -244,64 +193,34 @@ const HomeNavBar = () => {
                     <div className="py-2">
                       <button
                         onClick={handleProfileClick}
-                        className="
-                          w-full flex items-center gap-3 px-4 py-3
-                          text-slate-700 dark:text-slate-200
-                          hover:bg-slate-100 dark:hover:bg-slate-700
-                          transition-colors duration-200
-                          text-sm font-medium
-                        "
+                        className="w-full flex items-center gap-3 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-200 text-sm font-medium"
                       >
-                        <div className="
-                          w-8 h-8 rounded-lg 
-                          bg-blue-100 dark:bg-blue-900/50
-                          flex items-center justify-center
-                        ">
+                        <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center">
                           <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                         </div>
-                        My Profile
+                        {t('navbar.myProfile')}
                       </button>
 
                       <button
                         onClick={handleDashboardClick}
-                        className="
-                          w-full flex items-center gap-3 px-4 py-3
-                          text-slate-700 dark:text-slate-200
-                          hover:bg-slate-100 dark:hover:bg-slate-700
-                          transition-colors duration-200
-                          text-sm font-medium
-                        "
+                        className="w-full flex items-center gap-3 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-200 text-sm font-medium"
                       >
-                        <div className="
-                          w-8 h-8 rounded-lg 
-                          bg-cyan-100 dark:bg-cyan-900/50
-                          flex items-center justify-center
-                        ">
+                        <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/50 flex items-center justify-center">
                           <LayoutDashboard className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                         </div>
-                        Dashboard
+                        {t('navbar.dashboard')}
                       </button>
 
                       <div className="my-2 border-t border-slate-200 dark:border-slate-700"></div>
 
                       <button
                         onClick={handleLogout}
-                        className="
-                          w-full flex items-center gap-3 px-4 py-3
-                          text-red-600 dark:text-red-400
-                          hover:bg-red-50 dark:hover:bg-red-900/20
-                          transition-colors duration-200
-                          text-sm font-medium
-                        "
+                        className="w-full flex items-center gap-3 px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 text-sm font-medium"
                       >
-                        <div className="
-                          w-8 h-8 rounded-lg 
-                          bg-red-100 dark:bg-red-900/50
-                          flex items-center justify-center
-                        ">
+                        <div className="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/50 flex items-center justify-center">
                           <LogOut className="w-4 h-4 text-red-600 dark:text-red-400" />
                         </div>
-                        Logout
+                        {t('navbar.logout')}
                       </button>
                     </div>
                   </div>
@@ -312,7 +231,7 @@ const HomeNavBar = () => {
             {/* Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle Mobile Menu"
+              aria-label={t('navbar.toggleMobileMenu')}
               className="hamburger-btn"
             >
               {mobileMenuOpen ? (
@@ -329,7 +248,6 @@ const HomeNavBar = () => {
         {mobileMenuOpen && (
           <div className="mobile-menu">
 
-            {/* Mobile Nav Links */}
             <NavLink
               to="/"
               onClick={() => setMobileMenuOpen(false)}
@@ -337,7 +255,7 @@ const HomeNavBar = () => {
                 `mobile-nav-link ${isActive ? "mobile-nav-link-active" : ""}`
               }
             >
-              🏠 Home
+              🏠 {t('navbar.home')}
             </NavLink>
 
             <NavLink
@@ -347,7 +265,7 @@ const HomeNavBar = () => {
                 `mobile-nav-link ${isActive ? "mobile-nav-link-active" : ""}`
               }
             >
-              ℹ️ About
+              ℹ️ {t('navbar.about')}
             </NavLink>
 
             <NavLink
@@ -357,7 +275,7 @@ const HomeNavBar = () => {
                 `mobile-nav-link ${isActive ? "mobile-nav-link-active" : ""}`
               }
             >
-              ⚡ Features
+              ⚡ {t('navbar.features')}
             </NavLink>
 
             <NavLink
@@ -367,38 +285,34 @@ const HomeNavBar = () => {
                 `mobile-nav-link ${isActive ? "mobile-nav-link-active" : ""}`
               }
             >
-              📞 Contact
+              📞 {t('navbar.contact')}
             </NavLink>
 
-            {/* Divider */}
             <div className="mobile-menu-divider"></div>
 
-            {/* Bottom Row - Theme + Login */}
             <div className="mobile-bottom-row">
 
-              {/* Theme Toggle */}
               <button onClick={toggleTheme} className="mobile-theme-btn">
                 {mode === "dark" ? (
                   <>
                     <Sun className="w-4 h-4 text-yellow-400" />
-                    <span>Light Mode</span>
+                    <span>{t('navbar.lightMode')}</span>
                   </>
                 ) : (
                   <>
                     <Moon className="w-4 h-4 text-slate-600" />
-                    <span>Dark Mode</span>
+                    <span>{t('navbar.darkMode')}</span>
                   </>
                 )}
               </button>
 
-              {/* Login Button */}
               {!isLoggedIn() && (
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
                   className="mobile-login-btn"
                 >
-                  Login →
+                  {t('navbar.login')} →
                 </Link>
               )}
 
@@ -412,17 +326,7 @@ const HomeNavBar = () => {
   );
 };
 
-
-// ============================================================
-// ✅ RESPONSIVE STYLES - Proper & Attractive
-// ============================================================
-
 const responsiveStyles = `
-
-  /* ==============================
-     HAMBURGER BUTTON
-     ============================== */
-
   .hamburger-btn {
     display: none;
     align-items: center;
@@ -447,11 +351,6 @@ const responsiveStyles = `
     box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
   }
 
-
-  /* ==============================
-     MOBILE MENU PANEL
-     ============================== */
-
   .mobile-menu {
     display: flex;
     flex-direction: column;
@@ -463,20 +362,9 @@ const responsiveStyles = `
   }
 
   @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-
-
-  /* ==============================
-     MOBILE NAV LINKS
-     ============================== */
 
   .mobile-nav-link {
     display: flex;
@@ -509,27 +397,12 @@ const responsiveStyles = `
     box-shadow: 0 1px 6px rgba(37, 99, 235, 0.1);
   }
 
-
-  /* ==============================
-     DIVIDER
-     ============================== */
-
   .mobile-menu-divider {
     margin: 0.375rem 0.5rem;
     height: 1px;
-    background: linear-gradient(
-      to right, 
-      transparent, 
-      rgba(148, 163, 184, 0.35), 
-      transparent
-    );
+    background: linear-gradient(to right, transparent, rgba(148, 163, 184, 0.35), transparent);
     border: none;
   }
-
-
-  /* ==============================
-     BOTTOM ROW
-     ============================== */
 
   .mobile-bottom-row {
     display: flex;
@@ -538,11 +411,6 @@ const responsiveStyles = `
     padding: 0.375rem 0.25rem 0.25rem;
     gap: 0.5rem;
   }
-
-
-  /* ==============================
-     THEME TOGGLE BUTTON
-     ============================== */
 
   .mobile-theme-btn {
     display: flex;
@@ -567,11 +435,6 @@ const responsiveStyles = `
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   }
 
-
-  /* ==============================
-     LOGIN BUTTON
-     ============================== */
-
   .mobile-login-btn {
     display: inline-flex;
     align-items: center;
@@ -595,83 +458,24 @@ const responsiveStyles = `
     transform: translateY(-1px);
   }
 
-
-  /* ==============================
-     SHOW ON MOBILE (max-width: 767px)
-     ============================== */
-
   @media (max-width: 767px) {
-
-    .hamburger-btn {
-      display: flex !important;
-    }
-
+    .hamburger-btn { display: flex !important; }
   }
-
-
-  /* ==============================
-     SMALL MOBILE (max-width: 480px)
-     ============================== */
 
   @media (max-width: 480px) {
-
-    .mobile-menu {
-      padding: 0.75rem 0.25rem 0.5rem;
-      gap: 0.2rem;
-    }
-
-    .mobile-nav-link {
-      font-size: 0.875rem !important;
-      padding: 0.625rem 0.875rem !important;
-    }
-
-    .mobile-nav-link:hover {
-      padding-left: 1.125rem !important;
-    }
-
-    .mobile-theme-btn {
-      font-size: 0.75rem !important;
-      padding: 0.4rem 0.75rem !important;
-    }
-
-    .mobile-login-btn {
-      font-size: 0.75rem !important;
-      padding: 0.4rem 0.875rem !important;
-    }
-
-    .hamburger-btn {
-      width: 2rem !important;
-      height: 2rem !important;
-    }
+    .mobile-menu { padding: 0.75rem 0.25rem 0.5rem; gap: 0.2rem; }
+    .mobile-nav-link { font-size: 0.875rem !important; padding: 0.625rem 0.875rem !important; }
+    .mobile-nav-link:hover { padding-left: 1.125rem !important; }
+    .mobile-theme-btn { font-size: 0.75rem !important; padding: 0.4rem 0.75rem !important; }
+    .mobile-login-btn { font-size: 0.75rem !important; padding: 0.4rem 0.875rem !important; }
+    .hamburger-btn { width: 2rem !important; height: 2rem !important; }
   }
 
-
-  /* ==============================
-     VERY SMALL (max-width: 360px)
-     ============================== */
-
   @media (max-width: 360px) {
-
-    .mobile-nav-link {
-      font-size: 0.8125rem !important;
-      padding: 0.5rem 0.75rem !important;
-    }
-
-    .mobile-bottom-row {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      gap: 0.5rem !important;
-    }
-
-    .mobile-theme-btn {
-      justify-content: center !important;
-      width: 100% !important;
-    }
-
-    .mobile-login-btn {
-      justify-content: center !important;
-      text-align: center !important;
-    }
+    .mobile-nav-link { font-size: 0.8125rem !important; padding: 0.5rem 0.75rem !important; }
+    .mobile-bottom-row { flex-direction: column !important; align-items: stretch !important; gap: 0.5rem !important; }
+    .mobile-theme-btn { justify-content: center !important; width: 100% !important; }
+    .mobile-login-btn { justify-content: center !important; text-align: center !important; }
   }
 `;
 

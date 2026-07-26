@@ -1,14 +1,30 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-i18n.use(initReactI18next).init({
-  resources: {
-    en: { translation: {} },
-    si: { translation: {} },
-  },
-  lng: localStorage.getItem("language") || "en", // ✅ Load saved language
-  fallbackLng: "en",
-  interpolation: { escapeValue: false },
+import en from "./locales/en.json";
+import si from "./locales/si.json";
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: en },
+      si: { translation: si },
+    },
+    fallbackLng: "en",
+    supportedLngs: ["en", "si"],
+    interpolation: { escapeValue: false },
+    detection: {
+      order: ["localStorage", "navigator"],
+      caches: ["localStorage"],
+      lookupLocalStorage: "appLang",
+    },
+  });
+
+  i18n.on("languageChanged", (lng) => {
+  document.documentElement.setAttribute("lang", lng);
 });
 
 export default i18n;

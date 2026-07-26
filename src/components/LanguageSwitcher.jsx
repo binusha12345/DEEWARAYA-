@@ -1,53 +1,67 @@
-// client/src/components/LanguageSwitcher.jsx
-
-import React, { useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { FaGlobe } from "react-icons/fa";
+import { Globe, Check } from "lucide-react";
+
+const languages = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "si", label: "සිංහල",   flag: "🇱🇰" },
+];
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
-  const currentLang = i18n.language;
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  const currentLang =
+    languages.find((l) => l.code === i18n.language) || languages[0];
 
   useEffect(() => {
-    document.documentElement.lang = currentLang;
-  }, [currentLang]);
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
-  const changeLanguage = (lang) => {
-    if (lang === currentLang) return; // Same language, do nothing
-
-    localStorage.setItem("language", lang);
-
-    // ✅ Reload page for BOTH directions (clean & reliable)
-    // - EN → SI: Page loads in EN, then auto-translates
-    // - SI → EN: Page loads fresh in EN
-    window.location.reload();
+  const changeLanguage = (code) => {
+    i18n.changeLanguage(code);
+    localStorage.setItem("appLang", code);
+    setOpen(false);
   };
 
   return (
-    <div className="flex items-center gap-2 notranslate">
-      <FaGlobe className="text-white/70" />
-      <div className="flex rounded-lg overflow-hidden border border-white/20">
-        <button
-          onClick={() => changeLanguage("en")}
-          className={`px-3 py-1.5 text-sm font-semibold transition-all ${
-            currentLang === "en"
-              ? "bg-white text-blue-700"
-              : "text-white/80 hover:bg-white/10"
-          }`}
-        >
-          🇬🇧 EN
-        </button>
-        <button
-          onClick={() => changeLanguage("si")}
-          className={`px-3 py-1.5 text-sm font-semibold transition-all ${
-            currentLang === "si"
-              ? "bg-white text-blue-700"
-              : "text-white/80 hover:bg-white/10"
-          }`}
-        >
-          🇱🇰 සිං
-        </button>
-      </div>
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 px-4 py-2 rounded-full
+                   bg-blue-600 hover:bg-blue-700 text-white text-sm
+                   font-medium transition-all shadow-md"
+      >
+        <Globe size={16} />
+        <span>{currentLang.flag}</span>
+        <span>{currentLang.label}</span>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl
+                        shadow-2xl border border-gray-100 overflow-hidden z-[9999]">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => changeLanguage(lang.code)}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm
+                          hover:bg-blue-50 transition
+                          ${i18n.language === lang.code
+                            ? "bg-blue-50 text-blue-600 font-bold"
+                            : "text-gray-700"}`}
+            >
+              <span className="text-lg">{lang.flag}</span>
+              <span className="flex-1 text-left">{lang.label}</span>
+              {i18n.language === lang.code && <Check size={16} />}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

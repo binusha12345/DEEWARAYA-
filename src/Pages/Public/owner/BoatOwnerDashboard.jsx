@@ -10,14 +10,19 @@ import {
   Crosshair, 
   Cloud
 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 import OwnerSidebar from '../../../components/OwnerSidebar';
 import DashboardNav from '../../../components/DashboardNav';
-import { useAuth } from '../../../context/AuthContext'; // ✅ ADD THIS
+import { useAuth } from '../../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const BoatOwnerDashboard = () => {
-  const { user } = useAuth(); // ✅ ADD THIS
-  const { t } = useTranslation();
+  const { user } = useAuth();
+  const { t, i18n } = useTranslation();
+
+  const handleLanguageToggle = () => {
+    const newLang = i18n.language === "en" ? "si" : "en";
+    i18n.changeLanguage(newLang);
+  };
 
   return (
     <div data-tour="dashboard-overview" className="flex h-screen bg-slate-100 font-sans text-slate-800 overflow-hidden">
@@ -34,24 +39,33 @@ const BoatOwnerDashboard = () => {
 
         {/* Dashboard Main Area */}
         <main className="flex-1 overflow-y-auto p-8">
+
+          {/* Language Toggle Button */}
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={handleLanguageToggle}
+              className="px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold rounded-full shadow-md transition-all"
+            >
+              {i18n.language === "en" ? "🇱🇰 සිංහල" : "🇬🇧 English"}
+            </button>
+          </div>
           
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
             <div>
               <p className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">
-                {t("dashboard.overview")}
+                {t("ownerDashboard.overview")}
               </p>
-              {/* ✅ Dynamic welcome message */}
               <h1 className="text-3xl font-black text-slate-900">
-                {t("dashboard.welcome", { name: user?.name || "Owner" })} 🚤
+                {t("ownerDashboard.welcome", { name: user?.name || "Owner" })} 🚤
               </h1>
               <p className="text-sm text-slate-500 mt-1">
-                {t("dashboard.manageFleet")}
+                {t("ownerDashboard.manageFleet")}
               </p>
             </div>
             <div className="flex gap-3">
               <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-[16px] font-bold shadow-md hover:shadow-lg hover:scale-[1.02] transition cursor-pointer">
-                <Download size={16} /> {t("dashboard.downloadReport")}
+                <Download size={16} /> {t("ownerDashboard.downloadReport")}
               </button>
             </div>
           </div>
@@ -59,30 +73,32 @@ const BoatOwnerDashboard = () => {
           {/* Key Metrics Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
             <StatCard 
-              title={t("dashboard.totalBoats")} 
+              title={t("ownerDashboard.stats.totalBoats")} 
               value="24" 
-              sub={t("dashboard.vessels")} 
+              sub={t("ownerDashboard.stats.vessels")} 
             />
             <StatCard 
-              title={t("dashboard.activeBoats")} 
+              title={t("ownerDashboard.stats.activeBoats")} 
               value="5" 
-              sub={t("dashboard.live")} 
+              sub={t("ownerDashboard.stats.live")} 
               indicator="bg-green-500" 
             />
             <StatCard 
-              title={t("dashboard.monthlyIncome")} 
+              title={t("ownerDashboard.stats.monthlyIncome")} 
               value="$12.4k" 
               sub={<TrendingUp size={14} className="text-green-500 inline ml-1" />} 
             />
             <StatCard 
-              title={t("dashboard.monthlyExpenses")} 
+              title={t("ownerDashboard.stats.monthlyExpenses")} 
               value="$4.2k" 
               sub={<TrendingDown size={14} className="text-red-500 inline ml-1" />} 
             />
             
             {/* Net Profit Card */}
             <div className="bg-gradient-to-br from-blue-900 to-cyan-600 p-5 rounded-xl text-white shadow-lg flex flex-col justify-between">
-              <p className="text-[10px] font-bold uppercase text-white/60">{t("dashboard.netProfit")}</p>
+              <p className="text-[10px] font-bold uppercase text-white/60">
+                {t("ownerDashboard.stats.netProfit")}
+              </p>
               <div className="flex items-baseline gap-1 mt-2">
                 <span className="text-sm font-medium text-white/60">$</span>
                 <span className="text-2xl font-black">8,200</span>
@@ -106,13 +122,13 @@ const BoatOwnerDashboard = () => {
               <div className="absolute top-6 left-6 flex bg-white/90 backdrop-blur rounded-xl shadow-md border border-white/40">
                 <div className="p-3 border-r border-slate-200">
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                    Current Location
+                    {t("ownerDashboard.map.currentLocation")}
                   </p>
                   <p className="text-xs font-bold text-slate-900">Andaman Sea, TH</p>
                 </div>
                 <div className="p-3">
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                    Wind Speed
+                    {t("ownerDashboard.map.windSpeed")}
                   </p>
                   <p className="text-xs font-bold text-slate-900">12 knots NW</p>
                 </div>
@@ -153,25 +169,27 @@ const BoatOwnerDashboard = () => {
               {/* Maintenance Required Card */}
               <div className="bg-[#f8fafc] rounded-3xl p-6 border border-slate-200 shadow-sm">
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-sm font-bold text-slate-900">{t("dashboard.maintenanceRequired")}</h3>
+                  <h3 className="text-sm font-bold text-slate-900">
+                    {t("ownerDashboard.maintenance.title")}
+                  </h3>
                   <button className="text-[10px] font-bold text-blue-600 uppercase hover:underline">
-                    {t("dashboard.seeAll")}
+                    {t("ownerDashboard.maintenance.seeAll")}
                   </button>
                 </div>
 
                 <div className="space-y-3">
                   <MaintenanceItem 
                     title="Ocean Queen" 
-                    desc="Engine service overdue" 
-                    tag="Urgent" 
+                    desc={t("ownerDashboard.maintenance.engineOverdue")}
+                    tag={t("ownerDashboard.maintenance.urgent")}
                     tagColor="bg-red-50 text-red-600"
                     iconColor="bg-red-100 text-red-600"
                     border="border-l-4 border-l-red-500"
                   />
                   <MaintenanceItem 
                     title="The Mariner" 
-                    desc="Hull cleaning scheduled" 
-                    tag="2 days" 
+                    desc={t("ownerDashboard.maintenance.hullCleaning")}
+                    tag={t("ownerDashboard.maintenance.twoDays")}
                     tagColor="bg-slate-100 text-slate-600"
                     iconColor="bg-blue-100 text-blue-600"
                     border="border-l-4 border-l-blue-900"
@@ -183,27 +201,29 @@ const BoatOwnerDashboard = () => {
               {/* Weather Forecast Card */}
               <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-900 rounded-3xl p-6 text-white shadow-4xl">
                 <p className="text-[10px] font-bold uppercase text-white/60 tracking-widest mb-1">
-                  {t("dashboard.weatherForecast")}
+                  {t("ownerDashboard.weather.title")}
                 </p>
 
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-lg font-bold">Partly Cloudy</h3>
+                  <h3 className="text-lg font-bold">
+                    {t("ownerDashboard.weather.condition")}
+                  </h3>
                   <Cloud className="text-white/70" size={32} />
                 </div>
 
                 <div className="flex items-center gap-4 mb-6">
                   <span className="text-5xl font-black">28°C</span>
                   <div className="text-[10px] text-white/60 space-y-0.5">
-                    <p>Humidity: 65%</p>
-                    <p>UV Index: 4 Low</p>
+                    <p>{t("ownerDashboard.weather.humidity", { value: 65 })}</p>
+                    <p>{t("ownerDashboard.weather.uvIndex")}</p>
                   </div>
                 </div>
 
                 <div className="flex justify-between border-t border-white/20 pt-4">
-                  <DayForecast day="MON" temp="31°" />
-                  <DayForecast day="TUE" temp="29°" />
-                  <DayForecast day="WED" temp="24°" />
-                  <DayForecast day="THU" temp="32°" />
+                  <DayForecast day={t("ownerDashboard.weather.days.mon")} temp="31°" />
+                  <DayForecast day={t("ownerDashboard.weather.days.tue")} temp="29°" />
+                  <DayForecast day={t("ownerDashboard.weather.days.wed")} temp="24°" />
+                  <DayForecast day={t("ownerDashboard.weather.days.thu")} temp="32°" />
                 </div>
               </div>
 
@@ -217,7 +237,7 @@ const BoatOwnerDashboard = () => {
 };
 
 // ===============================================
-// ✅ Reusable Components
+// ✅ Reusable Components (unchanged)
 // ===============================================
 
 const StatCard = ({ title, value, sub, indicator }) => (
@@ -269,7 +289,7 @@ const DayForecast = ({ day, temp }) => (
 );
 
 // ============================================================
-// ✅ RESPONSIVE STYLES - Proper & Clean
+// ✅ RESPONSIVE STYLES - Unchanged
 // ============================================================
 
 const ownerDashboardStyles = `

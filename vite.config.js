@@ -6,5 +6,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
    assetsInclude: ['**/*.mp4'],
-})
 
+  server: {
+    host: '192.168.41.199',  // Allow network access
+    port: 5173
+  }
+})

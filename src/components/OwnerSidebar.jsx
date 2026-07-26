@@ -1,5 +1,3 @@
-// client/src/components/OwnerSidebar.jsx
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -59,13 +57,13 @@ const OwnerSidebar = () => {
 
   return (
     <>
-      {/* ✅ Inject styles ONCE at component level */}
+      {/* Inject styles ONCE at component level */}
       <style>{sidebarResponsiveStyles}</style>
 
       <aside
         className="w-72 h-full flex flex-col 
           bg-gradient-to-b from-blue-800 to-cyan-700
-          text-white shadow-xl "
+          text-white shadow-xl"
       >
         {/* Logo Section */}
         <div className="px-8 py-8 border-b border-blue-700">
@@ -74,7 +72,7 @@ const OwnerSidebar = () => {
               DEEWARAYA
             </h1>
             <p className="text-blue-300 text-xs tracking-widest uppercase mt-1">
-              Fleet Management
+              {t("sidebar.fleetManagement")}
             </p>
           </Link>
         </div>
@@ -84,70 +82,70 @@ const OwnerSidebar = () => {
           <SidebarLink
             to="/boatownerdashboard"
             icon={LayoutDashboard}
-            text="Dashboard"
+            text={t("sidebar.dashboard")}
             iconColor="text-cyan-300"
           />
 
           <SidebarLink
             to="/boatownerboats"
             icon={Ship}
-            text="My Boats"
+            text={t("sidebar.myBoats")}
             iconColor="text-emerald-300"
           />
 
           <SidebarLink
             to="/gps-tracking"
             icon={MapPin}
-            text="GPS Tracking"
+            text={t("sidebar.gpsTracking")}
             iconColor="text-yellow-300"
           />
 
           <SidebarLink
             to="/maintenance"
             icon={Wrench}
-            text="Maintenance"
+            text={t("sidebar.maintenance")}
             iconColor="text-orange-300"
           />
 
           <SidebarLink
             to="/weather"
             icon={CloudRain}
-            text="Weather"
+            text={t("sidebar.weather")}
             iconColor="text-sky-300"
           />
 
           <SidebarLink
             to="/owner/finance"
             icon={Wallet}
-            text="Finance"
+            text={t("sidebar.finance")}
             iconColor="text-green-300"
           />
 
           <SidebarLink
             to="/notification"
             icon={Bell}
-            text="Notifications"
+            text={t("sidebar.notifications")}
             iconColor="text-pink-300"
           />
 
           <SidebarLink
             to="/qr-code"
             icon={QrCode}
-            text="QR Code"
+            text={t("sidebar.qrCode")}
             iconColor="text-purple-300"
           />
 
           <SidebarLink
             to="/settings"
             icon={Settings}
-            text="Settings"
+            text={t("sidebar.settings")}
             iconColor="text-gray-300"
           />
         </nav>
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-blue-700 text-center">
-          <p className="text-blue-300 text-xs">© 2026 Deewaraya</p>
+          <p className="text-blue-300 text-xs">{t("sidebar.footer")}</p>
         </div>
       </aside>
     </>
@@ -155,7 +153,7 @@ const OwnerSidebar = () => {
 };
 
 // ============================================================
-// ✅ RESPONSIVE STYLES
+// ✅ RESPONSIVE STYLES - Unchanged
 // ============================================================
 const sidebarResponsiveStyles = `
 
