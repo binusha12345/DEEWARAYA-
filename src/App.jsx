@@ -11,7 +11,7 @@ import ResetPassword from "./Pages/Public/ResetPassword";
 import Features from './Pages/Public/Features';
 import FleetSupport from "./Pages/Public/FleetSupport";
 import QRCode from './Pages/Public/QRCode'
-import VesselDetailsPublic from './pages/public/VesselDetailsPublic';
+import VesselDetailsPublic from './Pages/Public/VesselDetailsPublic';
 
 // Owner Pages
 import BoatOwnerDashboard from "./Pages/Public/owner/BoatOwnerDashboard";

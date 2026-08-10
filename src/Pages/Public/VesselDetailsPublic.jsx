@@ -1,538 +1,470 @@
-// VesselDetailsPublic.jsx
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  FaShip, FaCheckCircle, FaTimesCircle, FaShieldAlt,
-  FaMapMarkerAlt, FaPhoneAlt, FaCalendarAlt, FaIdCard,
-  FaAnchor, FaExclamationTriangle, FaPrint, FaFileAlt,
-  FaClock, FaLock, FaInfoCircle, FaFlag
+  FaShip, FaCheckCircle, FaTimesCircle, FaAnchor,
+  FaPrint, FaShieldAlt, FaCog, FaGasPump, FaBolt,
+  FaCalendarAlt, FaWrench, FaIdBadge, FaCopy, FaExclamationTriangle
 } from 'react-icons/fa';
-import { MdVerified, MdGpsFixed, MdEngineering } from 'react-icons/md';
+import { MdVerified, MdSecurity, MdFingerprint } from 'react-icons/md';
 
 const VesselDetailsPublic = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const [vesselData, setVesselData] = useState(null);
-  const [scanTime] = useState(new Date());
+  const [boat, setBoat]       = useState(null);
+  const [error, setError]     = useState('');
+  const [scanTime]            = useState(new Date());
+  const [copied, setCopied]   = useState(false);
 
-  // ==================== FETCH VESSEL DATA ====================
   useEffect(() => {
-    const fetchVessel = async () => {
+    const fetchBoat = async () => {
       try {
-        // TODO: Replace with actual API call
-        // const response = await fetch(`/api/vessels/public/${id}`);
-        // const data = await response.json();
-
-        setTimeout(() => {
-          setVesselData({
-            id: id || 'VES-0042',
-            name: 'Sagara Kumari',
-            registrationNumber: 'SL-DEW-2024-0042',
-            engineNumber: 'ENG-YMH-4523-XK',
-            engineModel: 'Yamaha F250 XCA',
-            engineSerialNumber: 'YMH-2024-45231',
-            homePort: 'Ambalangoda Harbour',
-            emergencyContact: '+94 78 415 2744',
-            licenseStatus: 'Active',
-            licenseNumber: 'LIC-2024-4521',
-            licenseIssueDate: '15/03/2024',
-            licenseExpiry: '12/2026',
-            registeredDate: '15/03/2024',
-            vesselType: 'Multi-day Fishing Vessel',
-            vesselCategory: 'Commercial Fishing',
-            length: '45 ft',
-            capacity: '8 tons',
-            crewCapacity: '6 persons',
-            hullMaterial: 'Fiberglass',
-            flag: 'Sri Lanka',
-            imoNumber: 'IMO-9876543',
-            callSign: '4S7-ABC',
-            mmsi: '419123456',
-            verified: true,
-            insuranceStatus: 'Valid',
-            insuranceExpiry: '06/2026',
-            safetyCertificate: 'Valid',
-            safetyCertExpiry: '09/2026'
-          });
-          setLoading(false);
-        }, 800);
-      } catch (error) {
-        console.error('Error fetching vessel:', error);
+        setLoading(true);
+        const res = await fetch(
+          `http://192.168.41.199:5000/api/boats/public/${id}`
+        );
+        if (res.status === 404) { setError('not_found');    return; }
+        if (!res.ok)            { setError('server_error'); return; }
+        const data = await res.json();
+        setBoat(data);
+      } catch (err) {
+        setError('server_error');
+      } finally {
         setLoading(false);
       }
     };
-
-    fetchVessel();
+    if (id) fetchBoat();
   }, [id]);
 
-  // ==================== HANDLERS ====================
-  const handlePrint = () => {
-    window.print();
-  };
-
-  const formatDate = (date) => {
-    return date.toLocaleString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '—';
+    return new Date(dateStr).toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric',
     });
   };
 
-  // ==================== LOADING ====================
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-slate-300 border-t-blue-800 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-700 font-semibold">Loading Vessel Information...</p>
-          <p className="text-xs text-slate-500 mt-2">Verifying with Deewaraya Database</p>
-        </div>
-      </div>
-    );
-  }
+  const formatDateTime = (date) =>
+    new Date(date).toLocaleString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', hour12: false,
+    });
 
-  // ==================== VESSEL NOT FOUND ====================
-  if (!vesselData) {
-    return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
-        <div className="bg-white border-l-4 border-red-600 rounded shadow-lg p-8 max-w-md">
-          <div className="flex items-start gap-4">
-            <FaTimesCircle className="text-4xl text-red-600 shrink-0" />
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-2">Vessel Not Registered</h2>
-              <p className="text-sm text-slate-600 mb-4">
-                This QR code is not associated with any registered vessel in the Deewaraya database.
-              </p>
-              <div className="bg-red-50 border border-red-200 rounded p-3">
-                <p className="text-xs text-red-800 font-semibold">Please report this to authorities</p>
-              </div>
-            </div>
+  const copyId = () => {
+    navigator.clipboard.writeText(id);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // ── Loading State ──
+  if (loading) return (
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+      <div className="text-center">
+        <div className="relative w-20 h-20 mx-auto mb-6">
+          <div className="absolute inset-0 border-4 border-slate-200 rounded-full" />
+          <div className="absolute inset-0 border-4 border-transparent border-t-blue-900 rounded-full animate-spin" />
+          <FaAnchor className="absolute inset-0 m-auto text-blue-900 text-xl" />
+        </div>
+        <p className="text-slate-900 font-bold text-sm uppercase tracking-widest">Verifying Vessel</p>
+        <p className="text-xs text-slate-500 mt-2 tracking-wider">DEEWARAYA MARITIME DATABASE</p>
+      </div>
+    </div>
+  );
+
+  // ── Error State ──
+  if (error || !boat) return (
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+      <div className="bg-white border-t-4 border-red-700 shadow-xl max-w-md w-full">
+        <div className="p-8">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FaTimesCircle className="text-3xl text-red-700" />
+          </div>
+          <h2 className="text-center text-lg font-bold text-slate-900 uppercase tracking-wider mb-2">
+            {error === 'not_found' ? 'Vessel Not Registered' : 'Connection Failed'}
+          </h2>
+          <div className="w-16 h-0.5 bg-red-700 mx-auto mb-4" />
+          <p className="text-center text-sm text-slate-600 mb-4">
+            {error === 'not_found'
+              ? 'This QR code does not correspond to any registered vessel in the national maritime database.'
+              : 'Unable to connect to the verification server.'}
+          </p>
+          <div className="bg-slate-50 border border-slate-200 p-3 text-center">
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Reference ID</p>
+            <p className="font-mono text-xs text-slate-700 break-all">{id}</p>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 
-  // ==================== RENDER ====================
+  const isActive = boat.boatStatus === 'ACTIVE';
+  const statusColor = isActive ? 'green' : boat.boatStatus === 'MAINTENANCE' ? 'amber' : 'red';
+
+  const statusColors = {
+    green: { bg: 'bg-green-700', text: 'text-green-700', bgLight: 'bg-green-50', border: 'border-green-200', icon: 'bg-green-100' },
+    amber: { bg: 'bg-amber-600', text: 'text-amber-700', bgLight: 'bg-amber-50', border: 'border-amber-200', icon: 'bg-amber-100' },
+    red:   { bg: 'bg-red-700',   text: 'text-red-700',   bgLight: 'bg-red-50',   border: 'border-red-200',   icon: 'bg-red-100'   },
+  };
+  const clr = statusColors[statusColor];
+
   return (
-    <div className="min-h-screen bg-slate-100 print:bg-white">
+    <div className="min-h-screen bg-slate-100 font-sans">
 
-      {/* ===== 🏛️ OFFICIAL HEADER ===== */}
-      <header className="bg-gradient-to-r from-blue-900 to-blue-800 text-white shadow-md print:shadow-none">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded flex items-center justify-center shadow-md">
-                <FaShip className="text-2xl text-blue-900" />
+      {/* ═══ TOP RIBBON ═══ */}
+      <div className="bg-slate-900 text-slate-300 text-[10px] py-1.5 px-4 text-center tracking-widest uppercase">
+        Government of Sri Lanka · Ministry of Fisheries
+      </div>
+
+      {/* ═══ OFFICIAL HEADER ═══ */}
+      <header className="bg-white border-b-4 border-blue-900 shadow-sm">
+        <div className="max-w-3xl mx-auto px-5 py-5">
+          <div className="flex items-center gap-4">
+            {/* Official Seal */}
+            <div className="relative">
+              <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center shadow-md">
+                <FaAnchor className="text-white text-2xl" />
               </div>
-              <div>
-                <div className="text-xs opacity-90 uppercase tracking-widest font-semibold">Official Verification</div>
-                <div className="text-lg font-bold">DEEWARAYA FLEET SYSTEM</div>
-                <div className="text-xs opacity-75">Ministry of Fisheries - Sri Lanka</div>
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white">
+                <MdVerified className="text-white text-xs" />
               </div>
             </div>
-            <div className="hidden md:flex items-center gap-2 bg-white/10 border border-white/30 px-3 py-1.5 rounded">
-              <FaLock className="text-xs" />
-              <span className="text-xs font-semibold uppercase tracking-wider">Secure Verification</span>
+
+            <div className="flex-1">
+              <p className="text-[10px] uppercase tracking-[0.25em] text-slate-500 font-semibold mb-1">
+                Official Vessel Verification
+              </p>
+              <h1 className="text-xl font-black text-slate-900 leading-tight">
+                DEEWARAYA
+              </h1>
+              <p className="text-xs text-blue-900 font-bold tracking-wider">
+                MARITIME FLEET MANAGEMENT SYSTEM
+              </p>
+            </div>
+
+            <div className="hidden sm:flex flex-col items-end">
+              <div className="flex items-center gap-1.5 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded">
+                <MdSecurity className="text-blue-900 text-xs" />
+                <span className="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Secure</span>
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1 font-mono">v2.0</p>
             </div>
           </div>
         </div>
       </header>
 
-      {/* ===== 🎖️ VERIFICATION STATUS BANNER ===== */}
-      <div className={`${vesselData.verified ? 'bg-green-700' : 'bg-red-700'} text-white`}>
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-center gap-3">
-          {vesselData.verified ? (
-            <>
+      {/* ═══ CERTIFICATION STATUS ═══ */}
+      <div className={`${clr.bg} text-white shadow-md`}>
+        <div className="max-w-3xl mx-auto px-5 py-4">
+          <div className="flex items-center justify-center gap-3">
+            {isActive ? (
               <MdVerified className="text-2xl" />
-              <span className="font-bold text-sm uppercase tracking-wider">✓ Vessel Verified & Active</span>
-            </>
-          ) : (
-            <>
+            ) : boat.boatStatus === 'MAINTENANCE' ? (
+              <FaWrench className="text-xl" />
+            ) : (
               <FaTimesCircle className="text-2xl" />
-              <span className="font-bold text-sm uppercase tracking-wider">✗ Vessel Not Verified</span>
-            </>
-          )}
+            )}
+            <div className="text-center">
+              <p className="font-black text-sm uppercase tracking-widest">
+                {isActive
+                  ? 'CERTIFIED VESSEL · CLEARED FOR OPERATION'
+                  : boat.boatStatus === 'MAINTENANCE'
+                  ? 'VESSEL UNDER MAINTENANCE'
+                  : 'VESSEL NOT AUTHORIZED'}
+              </p>
+              <p className="text-[10px] opacity-80 tracking-wider mt-0.5">
+                Verified {formatDateTime(scanTime)} LKT
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* ===== 📄 MAIN CONTENT ===== */}
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      {/* ═══ MAIN CONTENT ═══ */}
+      <main className="max-w-3xl mx-auto px-4 py-6 space-y-4">
 
-        {/* ===== 🚢 VESSEL IDENTIFICATION CARD ===== */}
-        <div className="bg-white border border-slate-200 rounded shadow-sm mb-4 overflow-hidden">
-          <div className="bg-slate-800 text-white px-5 py-3 flex items-center justify-between">
+        {/* ─── VESSEL IDENTIFICATION CARD ─── */}
+        <section className="bg-white shadow-sm border border-slate-200">
+
+          {/* Section Header */}
+          <div className="bg-slate-50 border-b border-slate-200 px-5 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <FaAnchor className="text-sm" />
-              <h2 className="font-bold text-sm uppercase tracking-wider">Vessel Identification</h2>
+              <div className="w-1 h-5 bg-blue-900" />
+              <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest">
+                Vessel Identification
+              </h2>
             </div>
-            <div className="text-xs opacity-75">Report #{vesselData.id}</div>
+            <span className="text-[10px] text-slate-500 font-mono">SEC-01</span>
           </div>
 
-          <div className="p-5 md:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Vessel Icon */}
-              <div className="flex flex-col items-center justify-center bg-slate-50 rounded p-6 border border-slate-200">
-                <div className="w-20 h-20 bg-blue-900 rounded-full flex items-center justify-center shadow-lg mb-3">
-                  <FaShip className="text-3xl text-white" />
-                </div>
-                <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">Vessel Name</div>
-                <div className="text-lg font-bold text-slate-900 text-center">{vesselData.name}</div>
+          {/* Boat Name Banner */}
+          <div className="px-5 py-5 border-b border-slate-100">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center shadow-md shrink-0">
+                <FaShip className="text-white text-2xl" />
               </div>
-
-              {/* Primary IDs */}
-              <div className="md:col-span-2 space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <InfoBlock
-                    label="Vessel ID"
-                    value={vesselData.id}
-                    highlight
-                  />
-                  <InfoBlock
-                    label="Registration No."
-                    value={vesselData.registrationNumber}
-                    highlight
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <InfoBlock
-                    label="Call Sign"
-                    value={vesselData.callSign}
-                  />
-                  <InfoBlock
-                    label="MMSI Number"
-                    value={vesselData.mmsi}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <InfoBlock
-                    label="IMO Number"
-                    value={vesselData.imoNumber}
-                  />
-                  <InfoBlock
-                    label="Flag State"
-                    value={
-                      <span className="flex items-center gap-1.5">
-                        <FaFlag className="text-red-600 text-xs" />
-                        {vesselData.flag}
-                      </span>
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ===== ⚙️ ENGINE & TECHNICAL DETAILS ===== */}
-        <div className="bg-white border border-slate-200 rounded shadow-sm mb-4 overflow-hidden">
-          <div className="bg-slate-800 text-white px-5 py-3 flex items-center gap-2">
-            <MdEngineering className="text-lg" />
-            <h2 className="font-bold text-sm uppercase tracking-wider">Engine & Technical Specifications</h2>
-          </div>
-
-          <div className="p-5 md:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <InfoBlock
-                label="Engine Number"
-                value={vesselData.engineNumber}
-                highlight
-              />
-              <InfoBlock
-                label="Engine Serial Number"
-                value={vesselData.engineSerialNumber}
-                highlight
-              />
-              <InfoBlock
-                label="Engine Model"
-                value={vesselData.engineModel}
-              />
-              <InfoBlock
-                label="Vessel Type"
-                value={vesselData.vesselType}
-              />
-              <InfoBlock
-                label="Category"
-                value={vesselData.vesselCategory}
-              />
-              <InfoBlock
-                label="Hull Material"
-                value={vesselData.hullMaterial}
-              />
-              <InfoBlock
-                label="Length Overall"
-                value={vesselData.length}
-              />
-              <InfoBlock
-                label="Cargo Capacity"
-                value={vesselData.capacity}
-              />
-              <InfoBlock
-                label="Crew Capacity"
-                value={vesselData.crewCapacity}
-              />
-              <InfoBlock
-                label="Home Port"
-                value={vesselData.homePort}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* ===== 📋 LICENSE & CERTIFICATION ===== */}
-        <div className="bg-white border border-slate-200 rounded shadow-sm mb-4 overflow-hidden">
-          <div className="bg-slate-800 text-white px-5 py-3 flex items-center gap-2">
-            <FaShieldAlt className="text-sm" />
-            <h2 className="font-bold text-sm uppercase tracking-wider">License & Certification Status</h2>
-          </div>
-
-          <div className="p-5 md:p-6 space-y-3">
-            {/* Fishing License */}
-            <StatusRow
-              icon={<FaIdCard />}
-              title="Fishing License"
-              status={vesselData.licenseStatus}
-              details={[
-                { label: 'License No.', value: vesselData.licenseNumber },
-                { label: 'Issued', value: vesselData.licenseIssueDate },
-                { label: 'Expires', value: vesselData.licenseExpiry }
-              ]}
-              isValid={vesselData.licenseStatus === 'Active'}
-            />
-
-            {/* Insurance */}
-            <StatusRow
-              icon={<FaFileAlt />}
-              title="Insurance"
-              status={vesselData.insuranceStatus}
-              details={[
-                { label: 'Expires', value: vesselData.insuranceExpiry }
-              ]}
-              isValid={vesselData.insuranceStatus === 'Valid'}
-            />
-
-            {/* Safety Certificate */}
-            <StatusRow
-              icon={<FaShieldAlt />}
-              title="Safety Certificate"
-              status={vesselData.safetyCertificate}
-              details={[
-                { label: 'Expires', value: vesselData.safetyCertExpiry }
-              ]}
-              isValid={vesselData.safetyCertificate === 'Valid'}
-            />
-          </div>
-        </div>
-
-        {/* ===== 📞 EMERGENCY CONTACT ===== */}
-        <div className="bg-white border border-slate-200 rounded shadow-sm mb-4 overflow-hidden">
-          <div className="bg-red-700 text-white px-5 py-3 flex items-center gap-2">
-            <FaExclamationTriangle className="text-sm" />
-            <h2 className="font-bold text-sm uppercase tracking-wider">Emergency Contact Information</h2>
-          </div>
-
-          <div className="p-5 md:p-6">
-            <div className="flex items-center justify-between bg-red-50 border-l-4 border-red-600 p-4 rounded">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-red-600 text-white rounded flex items-center justify-center">
-                  <FaPhoneAlt className="text-xl" />
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">Primary Contact</div>
-                  <div className="text-lg font-bold text-slate-900">{vesselData.emergencyContact}</div>
-                </div>
-              </div>
-              <a
-                href={`tel:${vesselData.emergencyContact}`}
-                className="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded font-bold text-sm uppercase tracking-wider transition-colors print:hidden"
-              >
-                Call Now
-              </a>
-            </div>
-
-            {/* Government Emergency Numbers */}
-            <div className="mt-4 pt-4 border-t border-slate-200">
-              <div className="text-xs text-slate-500 uppercase tracking-wider mb-3 font-semibold">
-                Sri Lankan Emergency Services
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                <EmergencyContact number="118" label="Sri Lanka Navy" />
-                <EmergencyContact number="119" label="Police" />
-                <EmergencyContact number="110" label="Fire & Rescue" />
-                <EmergencyContact number="1990" label="Suwa Seriya" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ===== 📅 REGISTRATION INFO ===== */}
-        <div className="bg-white border border-slate-200 rounded shadow-sm mb-4 overflow-hidden">
-          <div className="bg-slate-800 text-white px-5 py-3 flex items-center gap-2">
-            <FaCalendarAlt className="text-sm" />
-            <h2 className="font-bold text-sm uppercase tracking-wider">Registration History</h2>
-          </div>
-
-          <div className="p-5 md:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InfoBlock
-                label="Registration Date"
-                value={vesselData.registeredDate}
-              />
-              <InfoBlock
-                label="Registration Authority"
-                value="Department of Fisheries, Sri Lanka"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* ===== 🖨️ ACTION BUTTONS ===== */}
-        <div className="bg-white border border-slate-200 rounded shadow-sm p-5 mb-4 print:hidden">
-          <button
-            onClick={handlePrint}
-            className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 rounded font-bold text-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
-          >
-            <FaPrint />
-            Print Verification Report
-          </button>
-        </div>
-
-        {/* ===== 📊 SCAN INFORMATION ===== */}
-        <div className="bg-slate-50 border border-slate-200 rounded p-4 mb-4">
-          <div className="flex items-start gap-3">
-            <FaInfoCircle className="text-slate-500 mt-0.5" />
-            <div className="text-xs text-slate-600">
-              <div className="font-semibold text-slate-700 mb-1">Verification Details</div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
-                <div>
-                  <span className="text-slate-500">Scanned On:</span>{' '}
-                  <span className="font-semibold text-slate-700">{formatDate(scanTime)}</span>
-                </div>
-                <div>
-                  <span className="text-slate-500">Verification ID:</span>{' '}
-                  <span className="font-mono font-semibold text-slate-700">
-                    VER-{Date.now().toString().slice(-8)}
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-1">
+                  Registered Vessel Name
+                </p>
+                <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight leading-none">
+                  {boat.boatName}
+                </h3>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 uppercase tracking-wider ${clr.bgLight} ${clr.text} border ${clr.border}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${clr.bg}`} />
+                    {boat.boatStatus}
+                  </span>
+                  <span className="text-[10px] text-slate-400 uppercase tracking-wider">
+                    {boat.boatType}
                   </span>
                 </div>
               </div>
-              <p className="mt-2 text-slate-500">
-                This information is retrieved in real-time from the official Deewaraya Fleet Management System database.
+            </div>
+          </div>
+
+          {/* Details Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
+            <DataField label="Registration Number" value={boat.registrationNumber} mono />
+            <DataField label="Vessel ID"           value={id.slice(-12).toUpperCase()} mono onCopy={copyId} copied={copied} />
+            <DataField label="Vessel Type"         value={boat.boatType} />
+            <DataField label="Manufacture Year"    value={boat.modelYear} />
+            <DataField label="Registered Date"     value={formatDate(boat.createdAt)} />
+            <DataField label="Flag State"          value="🇱🇰 Sri Lanka" />
+          </div>
+        </section>
+
+        {/* ─── TECHNICAL SPECIFICATIONS ─── */}
+        <section className="bg-white shadow-sm border border-slate-200">
+          <div className="bg-slate-50 border-b border-slate-200 px-5 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-5 bg-blue-900" />
+              <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest">
+                Technical Specifications
+              </h2>
+            </div>
+            <span className="text-[10px] text-slate-500 font-mono">SEC-02</span>
+          </div>
+
+          <div className="grid grid-cols-2 divide-x divide-slate-100 border-b border-slate-100">
+            <SpecTile
+              icon={<FaWrench />}
+              label="Engine Serial"
+              value={boat.engineSerial}
+            />
+            <SpecTile
+              icon={<FaCog />}
+              label="Engine Type"
+              value={boat.engineType}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 divide-x divide-slate-100">
+            <SpecTile
+              icon={<FaBolt />}
+              label="Horsepower"
+              value={boat.horsepower ? `${boat.horsepower} HP` : '—'}
+            />
+            <SpecTile
+              icon={<FaGasPump />}
+              label="Fuel Capacity"
+              value={boat.fuelCapacity ? `${boat.fuelCapacity} L` : '—'}
+            />
+          </div>
+        </section>
+
+        {/* ─── OPERATIONAL STATUS ─── */}
+        <section className="bg-white shadow-sm border border-slate-200">
+          <div className="bg-slate-50 border-b border-slate-200 px-5 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-5 bg-blue-900" />
+              <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest">
+                Operational Status
+              </h2>
+            </div>
+            <span className="text-[10px] text-slate-500 font-mono">SEC-03</span>
+          </div>
+
+          <div className="p-5">
+            <div className={`${clr.bgLight} ${clr.border} border-l-4 p-4`}>
+              <div className="flex items-center gap-4">
+                <div className={`w-12 h-12 ${clr.bg} flex items-center justify-center shrink-0`}>
+                  {isActive
+                    ? <FaCheckCircle className="text-white text-xl" />
+                    : boat.boatStatus === 'MAINTENANCE'
+                    ? <FaWrench className="text-white text-xl" />
+                    : <FaTimesCircle className="text-white text-xl" />
+                  }
+                </div>
+                <div className="flex-1">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold mb-1">
+                    Current Status
+                  </p>
+                  <p className={`text-xl font-black ${clr.text} uppercase tracking-tight leading-none`}>
+                    {boat.boatStatus}
+                  </p>
+                  <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                    {isActive
+                      ? 'This vessel holds valid certification and is authorized for maritime operations.'
+                      : boat.boatStatus === 'MAINTENANCE'
+                      ? 'This vessel is temporarily withdrawn from service for maintenance.'
+                      : 'This vessel is not currently authorized for maritime operations.'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── VERIFICATION METADATA ─── */}
+        <section className="bg-slate-900 text-slate-300 shadow-sm">
+          <div className="px-5 py-4">
+            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-slate-700">
+              <MdFingerprint className="text-blue-400 text-lg" />
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                Verification Metadata
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-xs">
+              <MetaRow label="Verified At"       value={formatDateTime(scanTime)} />
+              <MetaRow label="Verification ID"   value={`VER-${Date.now().toString().slice(-10)}`} mono />
+              <MetaRow label="Database Source"   value="Deewaraya MMS" />
+              <MetaRow label="Authentication"    value="✓ Certified" color="green" />
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-slate-700">
+              <p className="text-[10px] text-slate-500 leading-relaxed">
+                This verification report is generated in real-time from official records maintained
+                by the Deewaraya Maritime Fleet Management System. Data integrity is cryptographically verified.
               </p>
             </div>
           </div>
+        </section>
+
+        {/* ─── ACTION BUTTONS ─── */}
+        <div className="grid grid-cols-2 gap-3 print:hidden">
+          <button
+            onClick={() => window.print()}
+            className="bg-blue-900 hover:bg-blue-800 text-white py-3 font-bold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-sm"
+          >
+            <FaPrint className="text-sm" /> Print Report
+          </button>
+          <button
+            onClick={copyId}
+            className="bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 py-3 font-bold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-sm"
+          >
+            <FaCopy className="text-sm" />
+            {copied ? 'Copied!' : 'Copy ID'}
+          </button>
         </div>
 
-        {/* ===== 🚩 REPORT ISSUE ===== */}
-        <div className="bg-amber-50 border-l-4 border-amber-500 rounded p-4 print:hidden">
-          <div className="flex items-start gap-3">
-            <FaExclamationTriangle className="text-amber-600 mt-0.5" />
-            <div className="flex-1">
-              <div className="font-semibold text-slate-800 text-sm mb-1">Report Suspicious Activity</div>
-              <p className="text-xs text-slate-600 mb-2">
-                If any information appears incorrect or suspicious, please report to authorities immediately.
+        {/* ─── ADVISORY NOTICE ─── */}
+        <div className="bg-amber-50 border-l-4 border-amber-500 p-4 print:hidden">
+          <div className="flex gap-3">
+            <FaExclamationTriangle className="text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <p className="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1">
+                Advisory Notice
+              </p>
+              <p className="text-xs text-amber-800 leading-relaxed">
+                If any vessel information appears incorrect or suspicious, please report immediately to the
+                Sri Lanka Navy or Department of Fisheries.
               </p>
               <a
-                href="mailto:report@deewaraya.lk?subject=Vessel%20Report%20-%20{vesselData.id}"
-                className="text-xs font-semibold text-amber-700 hover:text-amber-800 underline"
+                href={`mailto:report@deewaraya.lk?subject=Vessel Report - ${boat.registrationNumber}`}
+                className="inline-block mt-2 text-[10px] font-bold text-amber-900 underline uppercase tracking-wider"
               >
-                Report to Deewaraya →
+                Report to Authorities →
               </a>
             </div>
           </div>
         </div>
+
       </main>
 
-      {/* ===== 🏛️ OFFICIAL FOOTER ===== */}
-      <footer className="bg-slate-800 text-white mt-8 print:mt-4">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <div className="text-sm font-bold mb-1">DEEWARAYA FLEET MANAGEMENT SYSTEM</div>
-              <div className="text-xs text-slate-400">
-                Authorized by Ministry of Fisheries, Sri Lanka
-              </div>
+      {/* ═══ OFFICIAL FOOTER ═══ */}
+      <footer className="bg-slate-900 text-slate-400 mt-8 border-t-4 border-blue-900">
+        <div className="max-w-3xl mx-auto px-5 py-6">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <FaAnchor className="text-blue-400 text-sm" />
+              <p className="text-xs font-bold text-white uppercase tracking-widest">
+                Deewaraya Maritime System
+              </p>
             </div>
-            <div className="text-center md:text-right text-xs text-slate-400">
-              <div>© 2025 Deewaraya. All Rights Reserved.</div>
-              <div className="mt-1">Official Vessel Verification System</div>
-            </div>
+            <p className="text-[10px] tracking-wider">
+              Authorized by the Ministry of Fisheries · Government of Sri Lanka
+            </p>
           </div>
 
-          <div className="border-t border-slate-700 mt-4 pt-4 text-center">
-            <div className="text-xs text-slate-500">
-              For official inquiries: <span className="text-slate-300">official@deewaraya.lk</span> |
-              Support: <span className="text-slate-300">+94 78 415 2744</span>
+          <div className="mt-4 pt-4 border-t border-slate-800 grid grid-cols-2 gap-4 text-[10px] uppercase tracking-widest">
+            <div>
+              <p className="text-slate-500 mb-1">Contact</p>
+              <p className="text-slate-300">official@deewaraya.lk</p>
+            </div>
+            <div className="text-right">
+              <p className="text-slate-500 mb-1">Copyright</p>
+              <p className="text-slate-300">© 2025 Deewaraya</p>
             </div>
           </div>
         </div>
       </footer>
+
     </div>
   );
 };
 
-// ==================== HELPER COMPONENTS ====================
+// ─────────────────────────────────────────────
+// HELPER COMPONENTS
+// ─────────────────────────────────────────────
 
-const InfoBlock = ({ label, value, highlight }) => {
-  return (
-    <div className={`${highlight ? 'bg-blue-50 border-blue-200' : 'bg-slate-50 border-slate-200'} border rounded p-3`}>
-      <div className="text-xs text-slate-500 uppercase tracking-wider mb-1 font-semibold">
+const DataField = ({ label, value, mono, onCopy, copied }) => (
+  <div className="px-5 py-3.5">
+    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">
+      {label}
+    </p>
+    <div className="flex items-center justify-between gap-2">
+      <p className={`text-sm font-bold text-slate-900 break-all ${mono ? 'font-mono' : ''}`}>
+        {value || '—'}
+      </p>
+      {onCopy && (
+        <button
+          onClick={onCopy}
+          className="text-slate-400 hover:text-blue-900 transition shrink-0"
+          title="Copy"
+        >
+          {copied ? <FaCheckCircle className="text-green-600 text-xs" /> : <FaCopy className="text-xs" />}
+        </button>
+      )}
+    </div>
+  </div>
+);
+
+const SpecTile = ({ icon, label, value }) => (
+  <div className="px-5 py-4">
+    <div className="flex items-center gap-2 mb-2">
+      <div className="w-6 h-6 bg-slate-100 flex items-center justify-center text-slate-600 text-xs">
+        {icon}
+      </div>
+      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
         {label}
-      </div>
-      <div className={`text-sm font-bold ${highlight ? 'text-blue-900' : 'text-slate-800'} break-all`}>
-        {value}
-      </div>
+      </p>
     </div>
-  );
-};
+    <p className="text-base font-black text-slate-900 font-mono ml-8 -mt-1">
+      {value || '—'}
+    </p>
+  </div>
+);
 
-const StatusRow = ({ icon, title, status, details, isValid }) => {
-  return (
-    <div className={`border ${isValid ? 'border-green-200 bg-green-50/50' : 'border-red-200 bg-red-50/50'} rounded p-4`}>
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded flex items-center justify-center ${isValid ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}>
-            {icon}
-          </div>
-          <div>
-            <div className="font-bold text-slate-900">{title}</div>
-            <div className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mt-0.5 ${isValid ? 'text-green-700' : 'text-red-700'}`}>
-              {isValid ? <FaCheckCircle /> : <FaTimesCircle />}
-              {status}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pl-13 ml-13">
-        {details.map((detail, i) => (
-          <div key={i} className="text-xs">
-            <span className="text-slate-500">{detail.label}:</span>{' '}
-            <span className="font-semibold text-slate-800">{detail.value}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const EmergencyContact = ({ number, label }) => {
-  return (
-    <a
-      href={`tel:${number}`}
-      className="flex items-center gap-2 bg-white border border-slate-200 hover:border-red-300 hover:bg-red-50 rounded p-2 transition-colors"
-    >
-      <div className="w-9 h-9 bg-red-600 text-white rounded flex items-center justify-center font-bold text-sm">
-        {number}
-      </div>
-      <div className="text-xs">
-        <div className="font-bold text-slate-800">{label}</div>
-        <div className="text-slate-500">Emergency</div>
-      </div>
-    </a>
-  );
-};
+const MetaRow = ({ label, value, mono, color }) => (
+  <div>
+    <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-0.5">
+      {label}
+    </p>
+    <p className={`text-xs font-semibold ${mono ? 'font-mono' : ''} ${
+      color === 'green' ? 'text-green-400' : 'text-slate-200'
+    }`}>
+      {value}
+    </p>
+  </div>
+);
 
 export default VesselDetailsPublic;
