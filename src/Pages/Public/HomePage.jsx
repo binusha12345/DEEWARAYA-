@@ -47,7 +47,7 @@ const HomePage = () => {
               alt="Fishing Fleet"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-950/25 via-blue-900/20 to-blue-950/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-blue-900/20 to-blue-950/30"></div>
           </motion.div>
 
           <div className="absolute top-0 left-0 w-full z-20">
