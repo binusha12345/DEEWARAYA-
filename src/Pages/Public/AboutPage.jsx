@@ -240,7 +240,7 @@ const AboutPage = () => {
 
             {/* Track Locations Card */}
             <div
-              className={`bg-gradient-to-br from-blue-50 to-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group ${
+              className={`bg-gradient-to-br from-blue-200 to-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group ${
                 isVisible['feature-cards'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}
               style={{ transitionDelay: '200ms' }}
@@ -271,7 +271,7 @@ const AboutPage = () => {
                 {/* Right Image */}
                 <div className="w-24 sm:w-28 rounded-xl overflow-hidden flex-shrink-0">
                   <img
-                    src="src/assets/About2.png"
+                    src="src/assets/About3.jpeg"
                     alt="Map tracking"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -281,7 +281,7 @@ const AboutPage = () => {
 
             {/* Monitor Vessels Card */}
             <div
-              className={`bg-gradient-to-br from-blue-50 to-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group ${
+              className={`bg-gradient-to-br from-blue-100 to-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group ${
                 isVisible['feature-cards'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}
               style={{ transitionDelay: '400ms' }}
