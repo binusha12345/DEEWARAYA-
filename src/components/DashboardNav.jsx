@@ -1,349 +1,170 @@
-import React from "react";
+// src/components/DashboardNav.jsx
+
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
 
+/* ─────────────────────────────────────────────
+   NAV LINKS DATA
+   ───────────────────────────────────────────── */
+const NAV_LINKS = [
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About" },
+  { to: "/contact", label: "Contact" },
+];
+
+/* ─────────────────────────────────────────────
+   DESKTOP NAV LINK
+   ───────────────────────────────────────────── */
+const DesktopNavLink = ({ to, label }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `relative transition-colors duration-300 ${
+        isActive ? "text-white" : "text-blue-200 hover:text-white"
+      }`
+    }
+  >
+    {({ isActive }) => (
+      <span className="relative">
+        {label}
+        {isActive && (
+          <span className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
+        )}
+      </span>
+    )}
+  </NavLink>
+);
+
+/* ─────────────────────────────────────────────
+   MOBILE NAV LINK (used inside mobile dropdown)
+   ───────────────────────────────────────────── */
+const MobileNavLink = ({ to, label, onNavigate }) => (
+  <NavLink
+    to={to}
+    onClick={onNavigate}
+    className={({ isActive }) =>
+      `block rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
+        isActive
+          ? "bg-white/15 text-white"
+          : "text-blue-100 hover:bg-white/10 hover:text-white"
+      }`
+    }
+  >
+    {label}
+  </NavLink>
+);
+
+/* ─────────────────────────────────────────────
+   MAIN NAVBAR
+   ───────────────────────────────────────────── */
 const DashboardNav = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const openMobileMenu = () => setIsMobileMenuOpen(true);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  // Close mobile menu on route change if user navigates
+  useEffect(() => {
+    return () => setIsMobileMenuOpen(false);
+  }, []);
+
+  // Trigger sidebar open (uses global exposed by OwnerSidebar)
+const openSidebar = () => {
+  if (typeof window === "undefined") return;
+
+  if (window.__openOwnerSidebar) {
+    window.__openOwnerSidebar();
+  } else if (window.__openDriverSidebar) {
+    window.__openDriverSidebar();
+  }
+};
+
   return (
-    <header className="flex justify-between items-center px-10 py-4 
-      bg-gradient-to-r from-blue-900 via-cyan-600 to-blue-950
-      shadow-md border-1 border-white">
-
-        <style>{navResponsiveStyles}</style> 
-
-      {/* Logo */}
-      <h2 className="text-white text-2xl font-bold tracking-wide">
-        Maritime <span className="text-cyan-300">Precision</span>
-      </h2>
-
-      
-      <div className="flex items-center gap-4">
-        <LanguageSwitcher />
-        {/* other items */}
-      </div>
-
-      <div className="flex items-center gap-10">
-
-        {/* Navigation */}
-        <nav className="hidden md:flex gap-8 text-[18px] font-medium">
-          
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `relative transition-all duration-300 ${
-                isActive
-                  ? "text-white"
-                  : "text-blue-200 hover:text-white"
-              }`
-            }
+    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-gradient-to-r from-blue-900 via-cyan-700 to-blue-950 shadow-md">
+      <div className="flex h-14 items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-10">
+        {/* ─────────── LEFT: hamburger (mobile) + logo ─────────── */}
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+          {/* Sidebar hamburger — visible only when sidebar is present (mobile/tablet) */}
+          <button
+            onClick={openSidebar}
+            aria-label="Open sidebar"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/10 lg:hidden"
           >
-            {({ isActive }) => (
-              <span className="relative">
-                Home
-                {isActive && (
-                  <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_#22d3ee]"></span>
-                )}
-              </span>
-            )}
-          </NavLink>
+            <Menu size={20} />
+          </button>
 
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              `relative transition-all duration-300 ${
-                isActive
-                  ? "text-white"
-                  : "text-blue-200 hover:text-white"
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <span className="relative">
-                About
-                {isActive && (
-                  <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_#22d3ee]"></span>
-                )}
-              </span>
-            )}
-          </NavLink>
-
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              `relative transition-all duration-300 ${
-                isActive
-                  ? "text-white"
-                  : "text-blue-200 hover:text-white"
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <span className="relative">
-                Contact
-                {isActive && (
-                  <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_#22d3ee]"></span>
-                )}
-              </span>
-            )}
-          </NavLink>
-
-        </nav>
-
-        {/* Profile */}
-        <div className="relative group w-11 h-11 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 to-blue-500 shadow-md cursor-pointer">
-          <div className="w-full h-full rounded-full overflow-hidden border-2 border-blue-900">
-            <img
-              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
-              alt="User Profile"
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-            />
-          </div>
+          {/* Logo */}
+          <h2 className="truncate text-base font-bold tracking-wide text-white sm:text-lg md:text-xl lg:text-2xl">
+            Maritime <span className="text-cyan-300">Precision</span>
+          </h2>
         </div>
 
+        {/* ─────────── CENTER: desktop nav ─────────── */}
+        <nav className="hidden items-center gap-6 text-[15px] font-medium md:flex lg:gap-8 lg:text-[17px]">
+          {NAV_LINKS.map((link) => (
+            <DesktopNavLink key={link.to} {...link} />
+          ))}
+        </nav>
+
+        {/* ─────────── RIGHT: language + menu toggle + avatar ─────────── */}
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+          {/* Language switcher */}
+          <div className="hidden sm:block">
+            <LanguageSwitcher />
+          </div>
+
+          {/* Mobile menu toggle (for Home/About/Contact) - shown on small screens only */}
+          <button
+            onClick={() =>
+              isMobileMenuOpen ? closeMobileMenu() : openMobileMenu()
+            }
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/10 md:hidden"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+
+          {/* Avatar */}
+          <button
+            aria-label="User profile"
+            className="group relative h-9 w-9 shrink-0 cursor-pointer rounded-full bg-gradient-to-tr from-cyan-400 to-blue-500 p-[2px] shadow-md sm:h-10 sm:w-10 lg:h-11 lg:w-11"
+          >
+            <div className="h-full w-full overflow-hidden rounded-full border-2 border-blue-900">
+              <img
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                alt="User Profile"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* ─────────── MOBILE MENU (below navbar, slides down) ─────────── */}
+      <div
+        className={`overflow-hidden border-t border-white/10 bg-blue-950/95 backdrop-blur-sm transition-all duration-300 md:hidden ${
+          isMobileMenuOpen ? "max-h-[400px]" : "max-h-0"
+        }`}
+      >
+        <nav className="space-y-1 px-4 py-3">
+          {NAV_LINKS.map((link) => (
+            <MobileNavLink
+              key={link.to}
+              {...link}
+              onNavigate={closeMobileMenu}
+            />
+          ))}
+
+          {/* Language switcher inside menu on very small screens */}
+          <div className="border-t border-white/10 pt-3 sm:hidden">
+            <LanguageSwitcher />
+          </div>
+        </nav>
       </div>
     </header>
   );
 };
 
-const navResponsiveStyles = `
-
-  /* ==============================
-     BASE - Navbar foundation
-     ============================== */
-
-  header {
-    position: relative;
-    z-index: 50;
-    width: 100%;
-    flex-shrink: 0;
-  }
-
-  header h2 {
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  header nav a {
-    white-space: nowrap;
-  }
-
-  /* Avatar base */
-  header .w-11.h-11 {
-    flex-shrink: 0;
-  }
-
-
-  /* ==============================
-     LARGE DESKTOP (1280px+)
-     - Everything stays original
-     ============================== */
-
-
-  /* ==============================
-     LAPTOP (max-width: 1280px)
-     ============================== */
-  @media (max-width: 1280px) {
-
-    header {
-      padding-left: 2rem !important;
-      padding-right: 2rem !important;
-    }
-
-    header h2 {
-      font-size: 1.375rem !important;
-    }
-
-    header nav {
-      gap: 1.5rem !important;
-      font-size: 1rem !important;
-    }
-
-    /* Right side wrapper gap */
-    header > div.flex.items-center {
-      gap: 1.75rem !important;
-    }
-  }
-
-
-  /* ==============================
-     SMALL LAPTOP (max-width: 1024px)
-     ============================== */
-  @media (max-width: 1024px) {
-
-    header {
-      padding-left: 1.5rem !important;
-      padding-right: 1.5rem !important;
-      padding-top: 0.75rem !important;
-      padding-bottom: 0.75rem !important;
-    }
-
-    header h2 {
-      font-size: 1.25rem !important;
-    }
-
-    header nav {
-      gap: 1.25rem !important;
-      font-size: 0.9375rem !important;
-    }
-
-    /* Right side gap */
-    header > div.flex.items-center {
-      gap: 1.25rem !important;
-    }
-
-    /* Avatar */
-    header .w-11.h-11 {
-      width: 2.25rem !important;
-      height: 2.25rem !important;
-    }
-  }
-
-
-  /* ==============================
-     TABLET (max-width: 768px)
-     - Hide desktop nav
-     - Compact header
-     ============================== */
-  @media (max-width: 768px) {
-
-    header {
-      padding-left: 1.25rem !important;
-      padding-right: 1.25rem !important;
-      padding-top: 0.75rem !important;
-      padding-bottom: 0.75rem !important;
-    }
-
-    header h2 {
-      font-size: 1.125rem !important;
-    }
-
-    /* Hide desktop nav links */
-    header nav.hidden.md\\:flex {
-      display: none !important;
-    }
-
-    /* Right side gap */
-    header > div.flex.items-center {
-      gap: 0.75rem !important;
-    }
-
-    /* Avatar */
-    header .w-11.h-11 {
-      width: 2rem !important;
-      height: 2rem !important;
-    }
-  }
-
-
-  /* ==============================
-     MOBILE (max-width: 640px)
-     ============================== */
-  @media (max-width: 640px) {
-
-    header {
-      padding-left: 1rem !important;
-      padding-right: 1rem !important;
-      padding-top: 0.625rem !important;
-      padding-bottom: 0.625rem !important;
-    }
-
-    header h2 {
-      font-size: 1rem !important;
-    }
-
-    /* Right side gap */
-    header > div.flex.items-center {
-      gap: 0.5rem !important;
-    }
-
-    /* Avatar */
-    header .w-11.h-11 {
-      width: 1.875rem !important;
-      height: 1.875rem !important;
-    }
-  }
-
-
-  /* ==============================
-     SMALL MOBILE (max-width: 480px)
-     ============================== */
-  @media (max-width: 480px) {
-
-    header {
-      padding-left: 0.875rem !important;
-      padding-right: 0.875rem !important;
-    }
-
-    header h2 {
-      font-size: 0.9375rem !important;
-    }
-
-    /* Avatar */
-    header .w-11.h-11 {
-      width: 1.75rem !important;
-      height: 1.75rem !important;
-    }
-
-    /* Right side gap */
-    header > div.flex.items-center {
-      gap: 0.5rem !important;
-    }
-  }
-
-
-  /* ==============================
-     VERY SMALL (max-width: 360px)
-     ============================== */
-  @media (max-width: 360px) {
-
-    header {
-      padding-left: 0.625rem !important;
-      padding-right: 0.625rem !important;
-    }
-
-    header h2 {
-      font-size: 0.875rem !important;
-    }
-
-    /* Right side gap */
-    header > div.flex.items-center {
-      gap: 0.375rem !important;
-    }
-
-    /* Avatar */
-    header .w-11.h-11 {
-      width: 1.625rem !important;
-      height: 1.625rem !important;
-    }
-  }
-
-
-  /* ==============================
-     ANIMATIONS
-     ============================== */
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0);    }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0);    }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to   { opacity: 1; transform: scale(1);    }
-  }
-
-  .animate-slideDown { animation: slideDown 0.22s ease forwards; }
-  .animate-fadeIn    { animation: fadeIn    0.25s ease forwards; }
-  .animate-slideUp   { animation: slideUp   0.28s ease forwards; }
-  .animate-scaleIn   { animation: scaleIn   0.22s ease forwards; }
-
-  /* Scrollbar hide */
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-`;
 export default DashboardNav;

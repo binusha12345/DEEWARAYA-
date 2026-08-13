@@ -1,4 +1,6 @@
-import React from "react";
+// src/components/OwnerSidebar.jsx
+
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,429 +13,165 @@ import {
   Bell,
   QrCode,
   Settings,
+  Menu,
+  X,
 } from "lucide-react";
 
-// ============================================================
-// SIDEBAR LINK COMPONENT
-// ============================================================
-const SidebarLink = ({ to, icon: Icon, text, iconColor }) => {
+/* ─────────────────────────────────────────────
+   NAV ITEMS
+   ───────────────────────────────────────────── */
+const getNavItems = (t) => [
+  { to: "/boatownerdashboard", icon: LayoutDashboard, label: t("sidebar.dashboard"), iconColor: "text-cyan-300" },
+  { to: "/boatownerboats", icon: Ship, label: t("sidebar.myBoats"), iconColor: "text-emerald-300" },
+  { to: "/gps-tracking", icon: MapPin, label: t("sidebar.gpsTracking"), iconColor: "text-yellow-300" },
+  { to: "/maintenance", icon: Wrench, label: t("sidebar.maintenance"), iconColor: "text-orange-300" },
+  { to: "/weather", icon: CloudRain, label: t("sidebar.weather"), iconColor: "text-sky-300" },
+  { to: "/owner/finance", icon: Wallet, label: t("sidebar.finance"), iconColor: "text-green-300" },
+  { to: "/notification", icon: Bell, label: t("sidebar.notifications"), iconColor: "text-pink-300" },
+  { to: "/qr-code", icon: QrCode, label: t("sidebar.qrCode"), iconColor: "text-purple-300" },
+  { to: "/settings", icon: Settings, label: t("sidebar.settings"), iconColor: "text-gray-300" },
+];
+
+/* ─────────────────────────────────────────────
+   SIDEBAR LINK
+   ───────────────────────────────────────────── */
+const SidebarLink = ({ item, onNavigate }) => {
   const location = useLocation();
-  const isActive = location.pathname === to;
+  const isActive = location.pathname === item.to;
+  const Icon = item.icon;
 
   return (
     <Link
-      to={to}
-      data-tooltip={text}
-      className={`relative flex items-center gap-4 px-6 py-3 rounded-lg transition-all duration-300 ${
+      to={item.to}
+      onClick={onNavigate}
+      className={`relative flex items-center gap-4 rounded-lg px-6 py-3 transition-all duration-300 ${
         isActive
           ? "bg-white text-blue-900 shadow-md"
           : "text-blue-100 hover:bg-blue-800 hover:text-white"
       }`}
     >
-      {/* Active Indicator */}
       {isActive && (
-        <span className="absolute left-0 top-0 h-full w-1 bg-cyan-400 rounded-r-md"></span>
+        <span className="absolute left-0 top-0 h-full w-1 rounded-r-md bg-cyan-400" />
       )}
 
       <Icon
         size={20}
-        className={`transition-transform duration-300 ${
-          isActive ? "text-blue-900" : iconColor
+        className={`shrink-0 transition-transform duration-300 ${
+          isActive ? "text-blue-900" : item.iconColor
         }`}
       />
 
-      <span className="text-[15px] font-medium tracking-wide sidebar-link-text">
-        {text}
+      <span className="text-[15px] font-medium tracking-wide">
+        {item.label}
       </span>
     </Link>
   );
 };
 
-// ============================================================
-// MAIN SIDEBAR COMPONENT
-// ============================================================
-const OwnerSidebar = () => {
+/* ─────────────────────────────────────────────
+   SIDEBAR CONTENT
+   ───────────────────────────────────────────── */
+const SidebarContent = ({ onNavigate }) => {
   const { t } = useTranslation();
+  const navItems = getNavItems(t);
+
+  return (
+    <div className="flex h-full flex-col bg-gradient-to-b from-blue-800 to-cyan-700 text-white">
+      {/* Logo */}
+      <div className="border-b border-blue-700 px-8 py-8">
+        <Link to="/" onClick={onNavigate}>
+          <h1 className="text-2xl font-bold tracking-wide text-white">
+            DEEWARAYA
+          </h1>
+          <p className="mt-1 text-xs uppercase tracking-widest text-blue-300">
+            {t("sidebar.fleetManagement")}
+          </p>
+        </Link>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 space-y-2 overflow-y-auto px-4 py-6">
+        {navItems.map((item) => (
+          <SidebarLink key={item.to} item={item} onNavigate={onNavigate} />
+        ))}
+      </nav>
+
+      {/* Footer */}
+      <div className="border-t border-blue-700 px-6 py-4 text-center">
+        <p className="text-xs text-blue-300">{t("sidebar.footer")}</p>
+      </div>
+    </div>
+  );
+};
+
+/* ─────────────────────────────────────────────
+   MAIN COMPONENT
+   ───────────────────────────────────────────── */
+const OwnerSidebar = () => {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  const openMobile = () => setIsMobileOpen(true);
+  const closeMobile = () => setIsMobileOpen(false);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileOpen]);
+
+  // Expose the open function globally so your top navbar can trigger it
+  useEffect(() => {
+    window.__openOwnerSidebar = openMobile;
+    return () => {
+      delete window.__openOwnerSidebar;
+    };
+  }, []);
 
   return (
     <>
-      {/* Inject styles ONCE at component level */}
-      <style>{sidebarResponsiveStyles}</style>
-
-      <aside
-        className="w-72 h-full flex flex-col 
-          bg-gradient-to-b from-blue-800 to-cyan-700
-          text-white shadow-xl"
+      {/* ═════════════ FLOATING HAMBURGER (fallback, high z-index) ═════════════ */}
+      <button
+        onClick={openMobile}
+        aria-label="Open menu"
+        className="fixed left-3 top-3 z-[100] flex h-11 w-11 items-center justify-center rounded-xl bg-blue-900 text-white shadow-2xl ring-2 ring-white/40 transition-colors hover:bg-blue-800 lg:hidden"
       >
-        {/* Logo Section */}
-        <div className="px-8 py-8 border-b border-blue-700">
-          <Link to="/">
-            <h1 className="text-2xl font-bold tracking-wide text-white">
-              DEEWARAYA
-            </h1>
-            <p className="text-blue-300 text-xs tracking-widest uppercase mt-1">
-              {t("sidebar.fleetManagement")}
-            </p>
-          </Link>
-        </div>
+        <Menu size={22} />
+      </button>
 
-        {/* Navigation */}
-        <nav className="flex-1 px-4 py-6 space-y-2">
-          <SidebarLink
-            to="/boatownerdashboard"
-            icon={LayoutDashboard}
-            text={t("sidebar.dashboard")}
-            iconColor="text-cyan-300"
-          />
+      {/* ═════════════ MOBILE + TABLET DRAWER ═════════════ */}
+      {/* Backdrop */}
+      <div
+        onClick={closeMobile}
+        className={`fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+          isMobileOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
 
-          <SidebarLink
-            to="/boatownerboats"
-            icon={Ship}
-            text={t("sidebar.myBoats")}
-            iconColor="text-emerald-300"
-          />
+      {/* Drawer */}
+      <aside
+        className={`fixed left-0 top-0 z-[120] h-full w-72 shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
+          isMobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <button
+          onClick={closeMobile}
+          aria-label="Close menu"
+          className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-white/20"
+        >
+          <X size={18} />
+        </button>
 
-          <SidebarLink
-            to="/gps-tracking"
-            icon={MapPin}
-            text={t("sidebar.gpsTracking")}
-            iconColor="text-yellow-300"
-          />
+        <SidebarContent onNavigate={closeMobile} />
+      </aside>
 
-          <SidebarLink
-            to="/maintenance"
-            icon={Wrench}
-            text={t("sidebar.maintenance")}
-            iconColor="text-orange-300"
-          />
-
-          <SidebarLink
-            to="/weather"
-            icon={CloudRain}
-            text={t("sidebar.weather")}
-            iconColor="text-sky-300"
-          />
-
-          <SidebarLink
-            to="/owner/finance"
-            icon={Wallet}
-            text={t("sidebar.finance")}
-            iconColor="text-green-300"
-          />
-
-          <SidebarLink
-            to="/notification"
-            icon={Bell}
-            text={t("sidebar.notifications")}
-            iconColor="text-pink-300"
-          />
-
-          <SidebarLink
-            to="/qr-code"
-            icon={QrCode}
-            text={t("sidebar.qrCode")}
-            iconColor="text-purple-300"
-          />
-
-          <SidebarLink
-            to="/settings"
-            icon={Settings}
-            text={t("sidebar.settings")}
-            iconColor="text-gray-300"
-          />
-        </nav>
-
-        {/* Footer */}
-        <div className="px-6 py-4 border-t border-blue-700 text-center">
-          <p className="text-blue-300 text-xs">{t("sidebar.footer")}</p>
-        </div>
+      {/* ═════════════ DESKTOP SIDEBAR ═════════════ */}
+      <aside className="hidden h-full w-72 shrink-0 shadow-xl lg:flex lg:flex-col">
+        <SidebarContent />
       </aside>
     </>
   );
 };
-
-// ============================================================
-// ✅ RESPONSIVE STYLES - Unchanged
-// ============================================================
-const sidebarResponsiveStyles = `
-
-  aside {
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-  }
-
-  /* ==============================
-     LAPTOP (max-width: 1280px)
-     ============================== */
-  @media (max-width: 1280px) {
-    aside {
-      width: 16rem !important;
-    }
-
-    aside h1 {
-      font-size: 1.375rem !important;
-    }
-
-    aside .px-8 {
-      padding-left: 1.5rem !important;
-      padding-right: 1.5rem !important;
-    }
-
-    aside a span.sidebar-link-text {
-      font-size: 0.875rem !important;
-    }
-  }
-
-  /* ==============================
-     SMALL LAPTOP (max-width: 1024px)
-     ============================== */
-  @media (max-width: 1024px) {
-    aside {
-      width: 14rem !important;
-    }
-
-    aside h1 {
-      font-size: 1.25rem !important;
-    }
-
-    aside p.text-blue-300 {
-      font-size: 0.65rem !important;
-    }
-
-    aside .px-8 {
-      padding-left: 1.25rem !important;
-      padding-right: 1.25rem !important;
-      padding-top: 1.25rem !important;
-      padding-bottom: 1.25rem !important;
-    }
-
-    aside .px-4 {
-      padding-left: 0.75rem !important;
-      padding-right: 0.75rem !important;
-    }
-
-    aside a {
-      padding-left: 1rem !important;
-      padding-right: 1rem !important;
-      padding-top: 0.625rem !important;
-      padding-bottom: 0.625rem !important;
-      gap: 0.75rem !important;
-    }
-
-    aside a span.sidebar-link-text {
-      font-size: 0.8125rem !important;
-    }
-
-    aside svg {
-      width: 1rem !important;
-      height: 1rem !important;
-    }
-
-    aside .px-6.py-4 {
-      padding-left: 1rem !important;
-      padding-right: 1rem !important;
-    }
-  }
-
-  /* ==============================
-     TABLET (max-width: 768px)
-     ============================== */
-  @media (max-width: 768px) {
-    aside {
-      width: 4.5rem !important;
-      min-width: 4.5rem !important;
-    }
-
-    aside h1 {
-      display: none !important;
-    }
-
-    aside p.text-blue-300 {
-      display: none !important;
-    }
-
-    aside .px-8 {
-      padding: 1rem 0 !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-    }
-
-    aside .px-8 a::before {
-      content: "D" !important;
-      font-size: 1.25rem !important;
-      font-weight: 900 !important;
-      color: white !important;
-      display: block !important;
-    }
-
-    aside .px-4 {
-      padding-left: 0.5rem !important;
-      padding-right: 0.5rem !important;
-    }
-
-    aside nav a {
-      padding: 0.75rem !important;
-      justify-content: center !important;
-      gap: 0 !important;
-      border-radius: 0.75rem !important;
-    }
-
-    aside nav a span.sidebar-link-text {
-      display: none !important;
-    }
-
-    aside svg {
-      width: 1.25rem !important;
-      height: 1.25rem !important;
-      flex-shrink: 0 !important;
-    }
-
-    aside a span.absolute {
-      display: none !important;
-    }
-
-    aside .px-6.py-4 {
-      padding: 0.75rem 0.25rem !important;
-      text-align: center !important;
-    }
-
-    aside .px-6.py-4 p {
-      display: none !important;
-    }
-
-    /* Tooltip on hover */
-    aside nav a {
-      position: relative !important;
-    }
-
-    aside nav a:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      left: calc(100% + 0.75rem);
-      top: 50%;
-      transform: translateY(-50%);
-      background: #0f172a;
-      color: white;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.375rem 0.75rem;
-      border-radius: 0.5rem;
-      white-space: nowrap;
-      z-index: 999;
-      pointer-events: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    aside nav a:hover::before {
-      content: '';
-      position: absolute;
-      left: calc(100% + 0.375rem);
-      top: 50%;
-      transform: translateY(-50%);
-      border: 5px solid transparent;
-      border-right-color: #0f172a;
-      z-index: 999;
-    }
-  }
-
-  /* ==============================
-     MOBILE (max-width: 640px)
-     ============================== */
-  @media (max-width: 640px) {
-    aside {
-      width: 4rem !important;
-      min-width: 4rem !important;
-    }
-
-    aside .px-8 {
-      padding: 0.875rem 0 !important;
-    }
-
-    aside nav a {
-      padding: 0.625rem !important;
-      border-radius: 0.625rem !important;
-    }
-
-    aside svg {
-      width: 1.125rem !important;
-      height: 1.125rem !important;
-    }
-
-    aside .space-y-2 > * + * {
-      margin-top: 0.25rem !important;
-    }
-  }
-
-  /* ==============================
-     SMALL MOBILE (max-width: 480px)
-     ============================== */
-  @media (max-width: 480px) {
-    aside {
-      width: 3.5rem !important;
-      min-width: 3.5rem !important;
-    }
-
-    aside .px-8 {
-      padding: 0.75rem 0 !important;
-    }
-
-    aside nav a {
-      padding: 0.5rem !important;
-      border-radius: 0.5rem !important;
-    }
-
-    aside svg {
-      width: 1rem !important;
-      height: 1rem !important;
-    }
-
-    aside .px-4 {
-      padding-left: 0.375rem !important;
-      padding-right: 0.375rem !important;
-    }
-
-    aside .space-y-2 > * + * {
-      margin-top: 0.125rem !important;
-    }
-  }
-
-  /* ==============================
-     VERY SMALL (max-width: 360px)
-     ============================== */
-  @media (max-width: 360px) {
-    aside {
-      width: 3rem !important;
-      min-width: 3rem !important;
-    }
-
-    aside nav a {
-      padding: 0.375rem !important;
-      border-radius: 0.375rem !important;
-    }
-
-    aside svg {
-      width: 0.875rem !important;
-      height: 0.875rem !important;
-    }
-
-    aside .px-4 {
-      padding-left: 0.25rem !important;
-      padding-right: 0.25rem !important;
-    }
-  }
-
-  /* ==============================
-     ANIMATIONS
-     ============================== */
-  @keyframes sidebarFadeIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to   { opacity: 1; transform: translateX(0);     }
-  }
-
-  aside {
-    animation: sidebarFadeIn 0.3s ease forwards;
-  }
-`;
 
 export default OwnerSidebar;
